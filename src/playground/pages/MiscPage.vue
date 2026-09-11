@@ -95,7 +95,7 @@ defineExpose({
             </h2>
             <Image
                 src="https://picsum.photos/seed/my-ui/320/180"
-                class="h-[120px] w-[213px] rounded-md"
+                class="h-48 w-64 rounded-md"
                 previewable
             />
         </section>

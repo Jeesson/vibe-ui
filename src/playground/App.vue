@@ -125,7 +125,7 @@ const active = computed(() => pages[currentPage.value]);
 
         <Navbar :page-title="active.title" />
 
-        <div class="mx-auto flex max-w-[1400px]">
+        <div class="mx-auto flex max-w-350">
             <Sidebar v-model="currentPage" />
 
             <main class="min-w-0 flex-1 px-8 py-8">

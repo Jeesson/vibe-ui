@@ -1,0 +1,43 @@
+{
+    "name": "my-ui",
+    "version": "0.1.0",
+    "type": "module",
+    "main": "./dist/my-ui.cjs.js",
+    "module": "./dist/my-ui.es.js",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "exports": {
+        ".": {
+            "import": "./dist/my-ui.es.js",
+            "require": "./dist/my-ui.cjs.js",
+            "types": "./dist/index.d.ts"
+        },
+        "./style.css": "./dist/my-ui.css"
+    },
+    "peerDependencies": {
+        "vue": "^3.4.0"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc -p tsconfig.json --noEmit && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@heroicons/vue": "^2.2.0",
+        "lucide-vue-next": "^1.0.0",
+        "vue-sonner": "^2.0.9"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.3.3",
+        "@vitejs/plugin-vue": "^6.0.8",
+        "prettier-plugin-tailwindcss": "^0.8.1",
+        "tailwindcss": "^4.3.3",
+        "typescript": "^6.0.3",
+        "vite": "^8.3.0",
+        "vite-plugin-dts": "^5.1.0",
+        "vue": "^3.5.42",
+        "vue-tsc": "^3.3.11"
+    }
+}

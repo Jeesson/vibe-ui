@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, type Component } from "vue";
+import { ref, computed, nextTick, type Component } from "vue";
 import { Toaster } from "vue-sonner";
 import "vue-sonner/style.css";
 import Navbar from "./layout/Navbar.vue";
 import Sidebar from "./layout/Sidebar.vue";
 import Backtop from "../components/Backtop/Backtop.vue";
 import Anchor from "../components/Anchor/Anchor.vue";
+import { useLocale } from "./composables/ui-locale";
 
+import OverviewPage from "./pages/OverviewPage.vue";
 import BasicPage from "./pages/BasicPage.vue";
 import FormPage from "./pages/FormPage.vue";
 import DataPage from "./pages/DataPage.vue";
@@ -15,19 +17,36 @@ import FeedbackPage from "./pages/FeedbackPage.vue";
 import MiscPage from "./pages/MiscPage.vue";
 import DateTimePage from "./pages/DateTimePage.vue";
 
-const currentPage = ref("basic");
+const { t } = useLocale();
+
+const currentPage = ref<string>("overview");
 
 interface PageEntry {
     component: Component;
-    title: string;
+    titleKey: string;
     description: string;
     anchors: { href: string; title: string }[];
 }
 
 const pages: Record<string, PageEntry> = {
+    overview: {
+        component: OverviewPage,
+        titleKey: "overview.title",
+        description:
+            "Все компоненты complex-ui: поиск, группы и мини-превью. Клик по карточке — переход к живым примерам.",
+        anchors: [
+            { href: "#ov-group-basic", title: "Basic" },
+            { href: "#ov-group-form", title: "Form" },
+            { href: "#ov-group-data", title: "Data" },
+            { href: "#ov-group-navigation", title: "Navigation" },
+            { href: "#ov-group-feedback", title: "Feedback" },
+            { href: "#ov-group-misc", title: "Misc" },
+            { href: "#ov-group-datetime", title: "Date & Time" },
+        ],
+    },
     basic: {
         component: BasicPage,
-        title: "Базовые",
+        titleKey: "nav.basic",
         description: "Button, Avatar, Badge, Tag, Tooltip, Divider, Progress",
         anchors: [
             { href: "#basic-button", title: "Button" },
@@ -39,19 +58,19 @@ const pages: Record<string, PageEntry> = {
     },
     form: {
         component: FormPage,
-        title: "Форма",
+        titleKey: "nav.form",
         description:
             "Input, Select, Checkbox, Radio, Switch, Slider, Rate, Form",
         anchors: [
             { href: "#form-input", title: "Input / Select" },
             { href: "#form-checkbox", title: "Checkbox / Radio / Switch" },
             { href: "#form-slider", title: "Slider / Number / Rate" },
-            { href: "#form-validation", title: "Form с валидацией" },
+            { href: "#form-validation", title: "Form" },
         ],
     },
     data: {
         component: DataPage,
-        title: "Данные",
+        titleKey: "nav.data",
         description:
             "Card, Skeleton, Collapse, Table, Timeline, Pagination, Empty",
         anchors: [
@@ -66,7 +85,7 @@ const pages: Record<string, PageEntry> = {
     },
     navigation: {
         component: NavigationPage,
-        title: "Навигация",
+        titleKey: "nav.navigation",
         description: "Menu, Popover, Dropdown",
         anchors: [
             { href: "#nav-menu", title: "Menu" },
@@ -75,7 +94,7 @@ const pages: Record<string, PageEntry> = {
     },
     feedback: {
         component: FeedbackPage,
-        title: "Feedback",
+        titleKey: "nav.feedback",
         description: "Alert, Toast, Dialog, Drawer, Loading, MessageBox",
         anchors: [
             { href: "#feedback-alert", title: "Alert" },
@@ -87,7 +106,7 @@ const pages: Record<string, PageEntry> = {
     },
     misc: {
         component: MiscPage,
-        title: "Разное",
+        titleKey: "nav.misc",
         description: "Autocomplete, InputTag, InputOtp, Image, Scrollbar",
         anchors: [
             { href: "#misc-autocomplete", title: "Autocomplete" },
@@ -99,7 +118,7 @@ const pages: Record<string, PageEntry> = {
     },
     datetime: {
         component: DateTimePage,
-        title: "Дата и время",
+        titleKey: "nav.datetime",
         description:
             "Cascader, ColorPicker, DatePicker, Calendar, TimeSelect, Upload, Carousel, Mention, Affix",
         anchors: [
@@ -114,8 +133,19 @@ const pages: Record<string, PageEntry> = {
         ],
     },
 };
+const active = computed(() => pages[currentPage.value] ?? pages.overview);
 
-const active = computed(() => pages[currentPage.value]);
+/* переход по подссылке из сайдбара: сменить страницу и проскроллить к якорю */
+function navigate(page: string, anchor: string) {
+    currentPage.value = page;
+    nextTick(() =>
+        setTimeout(() => {
+            document
+                .querySelector("#" + anchor)
+                ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 60),
+    );
+}
 </script>
 
 <template>
@@ -123,22 +153,26 @@ const active = computed(() => pages[currentPage.value]);
         <Toaster position="top-right" />
         <Backtop :visibility-height="150" />
 
-        <Navbar :page-title="active.title" />
+        <Navbar :page-title="t(active.titleKey)" />
 
         <div class="mx-auto flex max-w-350">
-            <Sidebar v-model="currentPage" />
+            <Sidebar v-model="currentPage" @navigate="navigate" />
 
             <main class="min-w-0 flex-1 px-8 py-8">
                 <div class="mb-6">
                     <h1 class="text-lg font-semibold text-gray-900">
-                        {{ active.title }}
+                        {{ t(active.titleKey) }}
                     </h1>
                     <p class="mt-0.5 text-sm text-gray-400">
                         {{ active.description }}
                     </p>
                 </div>
 
-                <component :is="active.component" />
+                <OverviewPage
+                    v-if="currentPage === 'overview'"
+                    @navigate="navigate"
+                />
+                <component v-else :is="active.component" />
             </main>
 
             <!-- правая колонка — оглавление текущей страницы -->
@@ -147,7 +181,7 @@ const active = computed(() => pages[currentPage.value]);
                     <p
                         class="mb-2 text-xs font-medium tracking-wide text-gray-400 uppercase"
                     >
-                        На странице
+                        {{ t("page.onPage") }}
                     </p>
                     <Anchor :key="currentPage" :links="active.anchors" />
                 </div>

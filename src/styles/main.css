@@ -5,7 +5,86 @@
     --color-primary-500: oklch(0.6 0.19 264);
     --color-primary-600: oklch(0.53 0.2 264);
     --color-primary-700: oklch(0.46 0.19 264);
+    --color-primary-400: oklch(0.7 0.17 264);
+    --color-primary-800: oklch(0.32 0.1 264);
 
     --radius-md: 0.5rem;
     --font-sans: "Inter", system-ui, sans-serif;
+}
+
+/* dark/light режим: класс `.dark` на <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+.dark {
+    color-scheme: dark;
+
+    /*
+        Инверсия серой шкалы. Утилиты Tailwind v4 компилируются в
+        var(--color-gray-*), поэтому переопределение переменных
+        автоматически перекрашивает bg/text/border/ring/divide и
+        hover-варианты во всех компонентах.
+    */
+    --color-gray-50: oklch(0.21 0.02 264);
+    --color-gray-100: oklch(0.26 0.02 264);
+    --color-gray-200: oklch(0.31 0.02 264);
+    --color-gray-300: oklch(0.42 0.02 264);
+    --color-gray-400: oklch(0.56 0.02 264);
+    --color-gray-500: oklch(0.66 0.02 264);
+    --color-gray-600: oklch(0.76 0.02 264);
+    --color-gray-700: oklch(0.84 0.01 264);
+    --color-gray-800: oklch(0.92 0.01 264);
+    --color-gray-900: oklch(0.97 0.01 264);
+
+    /* primary: светлая подложка -> тёмная, акцентный текст -> светлый */
+    --color-primary-50: oklch(0.3 0.06 264);
+    --color-primary-100: oklch(0.36 0.08 264);
+    --color-primary-700: oklch(0.68 0.16 264);
+
+    /* поверхности статусов: заливка -50 -> тёмная, текст -700/-800 -> светлый */
+    --color-green-50: oklch(0.3 0.05 155);
+    --color-green-200: oklch(0.4 0.07 155);
+    --color-green-700: oklch(0.85 0.13 155);
+    --color-green-800: oklch(0.88 0.12 155);
+
+    --color-amber-50: oklch(0.3 0.05 75);
+    --color-amber-200: oklch(0.4 0.07 75);
+    --color-amber-700: oklch(0.85 0.12 80);
+    --color-amber-800: oklch(0.88 0.11 80);
+
+    --color-red-50: oklch(0.3 0.06 25);
+    --color-red-200: oklch(0.4 0.08 25);
+    --color-red-700: oklch(0.83 0.13 25);
+    --color-red-800: oklch(0.87 0.12 25);
+
+    --color-blue-50: oklch(0.3 0.06 255);
+    --color-blue-200: oklch(0.4 0.08 255);
+    --color-blue-700: oklch(0.83 0.12 255);
+    --color-blue-800: oklch(0.87 0.11 255);
+
+    --color-rose-50: oklch(0.3 0.06 15);
+    --color-rose-200: oklch(0.4 0.08 15);
+    --color-rose-700: oklch(0.83 0.12 15);
+
+    --color-violet-50: oklch(0.3 0.06 300);
+    --color-violet-200: oklch(0.4 0.08 300);
+    --color-violet-700: oklch(0.83 0.12 300);
+}
+
+/* bg-white компилируется в var(--color-white), общий для text-white
+   на кнопках — поэтому светлую поверхность перекрашиваем точечно. */
+.dark .bg-white {
+    background-color: oklch(0.24 0.03 264);
+}
+.dark .bg-white\/80 {
+    background-color: oklch(0.24 0.03 264 / 0.8);
+}
+.dark .hover\:bg-white:hover {
+    background-color: oklch(0.32 0.03 264);
+}
+
+/* Сохранение места под скроллбар при блокировке прокрутки оверлеями
+   (Drawer, Dialog, ..). Паз всегда зарезервирован — скроллбар не
+   появляется/не исчезает при открытии модалок, контент не прыгает. */
+html {
+    scrollbar-gutter: stable;
 }

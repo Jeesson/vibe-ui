@@ -94,7 +94,7 @@ defineExpose({
                 Image (ленивая загрузка + превью по клику)
             </h2>
             <Image
-                src="https://picsum.photos/seed/my-ui/320/180"
+                src="https://picsum.photos/seed/complex-ui/320/180"
                 class="h-48 w-64 rounded-md"
                 previewable
             />

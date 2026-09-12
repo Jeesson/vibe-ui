@@ -17,7 +17,7 @@ const props = withDefaults(
 const emit = defineEmits<{ "update:modelValue": [string] }>();
 
 const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel(
-    "my-ui-timeselect-panel",
+    "complex-ui-timeselect-panel",
     220,
 );
 
@@ -58,7 +58,7 @@ function select(v: string) {
         <Teleport to="body">
             <ul
                 v-if="open && rect"
-                class="my-ui-timeselect-panel fixed z-70 max-h-52 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+                class="complex-ui-timeselect-panel fixed z-70 max-h-52 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

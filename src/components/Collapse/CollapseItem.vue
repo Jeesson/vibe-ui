@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { inject } from "vue";
+import { ChevronDownIcon } from "@heroicons/vue/24/outline";
+
 import { CollapseKey } from "./context";
 
 const props = defineProps<{ name: string; title: string }>();
@@ -17,8 +19,9 @@ const ctx = inject(CollapseKey, null);
             <span
                 class="text-gray-400 transition-transform duration-200"
                 :class="ctx?.isActive(props.name) && 'rotate-180'"
-                >▾</span
             >
+                <ChevronDownIcon class="h-4 w-4" />
+            </span>
         </button>
 
         <!--

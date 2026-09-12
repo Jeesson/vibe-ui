@@ -15,7 +15,7 @@ const props = withDefaults(
 const emit = defineEmits<{ "update:modelValue": [string]; select: [string] }>();
 
 const { open, triggerRef, rect, openPanel, closePanel } = useFloatingPanel(
-    "my-ui-autocomplete-panel",
+    "complex-ui-autocomplete-panel",
     240,
 );
 
@@ -53,7 +53,7 @@ function select(value: string) {
         <Teleport to="body">
             <ul
                 v-if="open && filtered.length && rect"
-                class="my-ui-autocomplete-panel fixed z-[70] max-h-60 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+                class="complex-ui-autocomplete-panel fixed z-[70] max-h-60 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

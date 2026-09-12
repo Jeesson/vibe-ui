@@ -6,5 +6,5 @@ export interface CheckboxGroupContext {
 }
 
 export const CheckboxGroupKey: InjectionKey<CheckboxGroupContext> = Symbol(
-    "my-ui-checkbox-group",
+    "complex-ui-checkbox-group",
 );

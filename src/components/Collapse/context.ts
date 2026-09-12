@@ -5,5 +5,6 @@ export interface CollapseContext {
     toggle: (name: string) => void;
 }
 
-export const CollapseKey: InjectionKey<CollapseContext> =
-    Symbol("my-ui-collapse");
+export const CollapseKey: InjectionKey<CollapseContext> = Symbol(
+    "complex-ui-collapse",
+);

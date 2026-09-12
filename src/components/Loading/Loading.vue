@@ -8,7 +8,7 @@ withDefaults(
 <template>
     <div :class="!fullscreen && 'relative'">
         <slot />
-        <Transition name="my-ui-tooltip-fade">
+        <Transition name="complex-ui-tooltip-fade">
             <div
                 v-if="loading"
                 :class="[
@@ -45,12 +45,12 @@ withDefaults(
 </template>
 
 <style>
-.my-ui-tooltip-fade-enter-active,
-.my-ui-tooltip-fade-leave-active {
+.complex-ui-tooltip-fade-enter-active,
+.complex-ui-tooltip-fade-leave-active {
     transition: opacity 0.15s ease;
 }
-.my-ui-tooltip-fade-enter-from,
-.my-ui-tooltip-fade-leave-to {
+.complex-ui-tooltip-fade-enter-from,
+.complex-ui-tooltip-fade-leave-to {
     opacity: 0;
 }
 </style>

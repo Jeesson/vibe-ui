@@ -16,8 +16,8 @@ export default defineConfig(({ command }) => ({
     build: {
         lib: {
             entry: resolve(import.meta.dirname, "src/index.ts"),
-            name: "MyUI",
-            fileName: (format) => `my-ui.${format}.js`,
+            name: "ComplexUI",
+            fileName: (format) => `complex-ui.${format}.js`,
             formats: ["es", "cjs"],
         },
         rollupOptions: {

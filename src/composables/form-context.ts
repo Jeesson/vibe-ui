@@ -23,7 +23,8 @@ export interface FormContext {
     unregisterItem: (prop: string) => void;
 }
 
-export const FormContextKey: InjectionKey<FormContext> = Symbol("my-ui-form");
+export const FormContextKey: InjectionKey<FormContext> =
+    Symbol("complex-ui-form");
 
 export function runRules(
     value: unknown,

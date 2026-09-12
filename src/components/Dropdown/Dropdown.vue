@@ -22,7 +22,7 @@ const props = withDefaults(
 const emit = defineEmits<{ select: [string] }>();
 
 const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel(
-    "my-ui-dropdown-panel",
+    "complex-ui-dropdown-panel",
     200,
     160,
     () => props.placement,
@@ -42,7 +42,7 @@ function select(item: DropdownItem) {
     <Teleport to="body">
         <ul
             v-if="open && rect"
-            class="my-ui-dropdown-panel fixed z-70 min-w-40 rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+            class="complex-ui-dropdown-panel fixed z-70 min-w-40 rounded-md border border-gray-200 bg-white py-1 shadow-lg"
             :style="{
                 top: rect.top + 'px',
                 left: rect.left + 'px',

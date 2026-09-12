@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { MinusIcon, PlusIcon } from "@heroicons/vue/24/solid";
+
 const props = withDefaults(
     defineProps<{
         modelValue: number;
@@ -30,7 +32,7 @@ function onInput(e: Event) {
 
 <template>
     <div
-        class="inline-flex items-center overflow-hidden rounded-md border border-gray-300"
+        class="inline-flex w-fit max-w-full items-center overflow-hidden rounded-md border border-gray-300"
         :class="disabled && 'opacity-50'"
     >
         <button
@@ -39,14 +41,14 @@ function onInput(e: Event) {
             class="flex h-8 w-7 shrink-0 items-center justify-center text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-transparent"
             @click="change(-step)"
         >
-            −
+            <MinusIcon class="h-4 w-4" />
         </button>
         <input
             type="number"
             :value="modelValue"
             :disabled="disabled"
             :style="{ width }"
-            class="my-ui-number-input shrink-0 border-x border-gray-200 py-1.5 text-center text-sm outline-none"
+            class="complex-ui-number-input shrink-0 border-x border-gray-200 py-1.5 text-center text-sm outline-none"
             @change="onInput"
         />
         <button
@@ -55,7 +57,7 @@ function onInput(e: Event) {
             class="flex h-8 w-7 shrink-0 items-center justify-center text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-transparent"
             @click="change(step)"
         >
-            +
+            <PlusIcon class="h-4 w-4" />
         </button>
     </div>
 </template>
@@ -63,12 +65,12 @@ function onInput(e: Event) {
 <style>
 /* Прячем нативные стрелки type=number — свои кнопки уже есть, а нативные
    в Chrome/Safari добавляли собственную ширину и визуально плавали. */
-.my-ui-number-input::-webkit-inner-spin-button,
-.my-ui-number-input::-webkit-outer-spin-button {
+.complex-ui-number-input::-webkit-inner-spin-button,
+.complex-ui-number-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-.my-ui-number-input {
+.complex-ui-number-input {
     -moz-appearance: textfield;
 }
 </style>

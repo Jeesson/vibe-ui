@@ -5,5 +5,6 @@ export interface RadioGroupContext {
     select: (value: string | number) => void;
 }
 
-export const RadioGroupKey: InjectionKey<RadioGroupContext> =
-    Symbol("my-ui-radio-group");
+export const RadioGroupKey: InjectionKey<RadioGroupContext> = Symbol(
+    "complex-ui-radio-group",
+);

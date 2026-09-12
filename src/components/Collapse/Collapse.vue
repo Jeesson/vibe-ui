@@ -17,7 +17,9 @@ provide(CollapseKey, {
 </script>
 
 <template>
-    <div class="divide-y divide-gray-100 rounded-md border border-gray-100">
+    <div
+        class="divide-y divide-gray-100 overflow-hidden rounded-md border border-gray-100"
+    >
         <slot />
     </div>
 </template>

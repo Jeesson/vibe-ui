@@ -49,7 +49,7 @@ const dashboardDash = computed(() => dashboardGap * (clamped.value / 100));
         <div class="h-2 flex-1 overflow-hidden rounded-full bg-gray-100">
             <div
                 v-if="indeterminate"
-                class="animate-my-ui-progress-indeterminate h-full w-1/3 rounded-full"
+                class="animate-complex-ui-progress-indeterminate h-full w-1/3 rounded-full"
                 :style="{ backgroundColor: color }"
             />
             <div
@@ -124,7 +124,7 @@ const dashboardDash = computed(() => dashboardGap * (clamped.value / 100));
 </template>
 
 <style>
-@keyframes my-ui-progress-indeterminate {
+@keyframes complex-ui-progress-indeterminate {
     0% {
         transform: translateX(-100%);
     }
@@ -132,7 +132,7 @@ const dashboardDash = computed(() => dashboardGap * (clamped.value / 100));
         transform: translateX(300%);
     }
 }
-.animate-my-ui-progress-indeterminate {
-    animation: my-ui-progress-indeterminate 1.2s ease-in-out infinite;
+.animate-complex-ui-progress-indeterminate {
+    animation: complex-ui-progress-indeterminate 1.2s ease-in-out infinite;
 }
 </style>

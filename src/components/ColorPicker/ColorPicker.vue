@@ -5,7 +5,7 @@ const props = defineProps<{ modelValue: string }>();
 const emit = defineEmits<{ "update:modelValue": [string] }>();
 
 const { open, triggerRef, rect, togglePanel } = useFloatingPanel(
-    "my-ui-colorpicker-panel",
+    "complex-ui-colorpicker-panel",
     180,
     208,
 );
@@ -36,7 +36,7 @@ function apply(value: string) {
         <Teleport to="body">
             <div
                 v-if="open && rect"
-                class="my-ui-colorpicker-panel fixed z-[70] w-52 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
+                class="complex-ui-colorpicker-panel fixed z-[70] w-52 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

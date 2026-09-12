@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "my-ui",
+      "name": "complex-ui",
       "dependencies": {
         "@heroicons/vue": "^2.2.0",
         "lucide-vue-next": "^1.0.0",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { ChevronDownIcon } from "@heroicons/vue/24/outline";
 
 export interface MenuItem {
     key: string;
@@ -51,8 +52,9 @@ function select(item: MenuItem) {
                     v-if="item.children?.length"
                     class="text-gray-400 transition-transform"
                     :class="openKeys.has(item.key) && 'rotate-180'"
-                    >▾</span
                 >
+                    <ChevronDownIcon class="h-3 w-3" />
+                </span>
             </button>
             <div
                 v-if="item.children?.length && openKeys.has(item.key)"

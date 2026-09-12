@@ -3,7 +3,7 @@ withDefaults(defineProps<{ maxHeight?: string }>(), { maxHeight: "240px" });
 </script>
 
 <template>
-    <div class="my-ui-scrollbar overflow-auto" :style="{ maxHeight }">
+    <div class="complex-ui-scrollbar overflow-auto" :style="{ maxHeight }">
         <slot />
     </div>
 </template>
@@ -18,34 +18,34 @@ withDefaults(defineProps<{ maxHeight?: string }>(), { maxHeight: "240px" });
   кастомный тонкий скроллбар ниже — он изначально без стрелок.
 */
 @supports not selector(::-webkit-scrollbar) {
-    .my-ui-scrollbar {
+    .complex-ui-scrollbar {
         scrollbar-width: thin;
         scrollbar-color: #d1d5db transparent;
     }
 }
-.my-ui-scrollbar::-webkit-scrollbar {
+.complex-ui-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
-.my-ui-scrollbar::-webkit-scrollbar-track {
+.complex-ui-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
-.my-ui-scrollbar::-webkit-scrollbar-thumb {
+.complex-ui-scrollbar::-webkit-scrollbar-thumb {
     background-color: #d1d5db;
     border-radius: 9999px;
     -webkit-appearance: none;
 }
-.my-ui-scrollbar::-webkit-scrollbar-thumb:hover {
+.complex-ui-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #9ca3af;
 }
 /* Стрелки-кнопки на Windows Chrome/Edge: без scroll lock стандартных свойств
    webkit-стилизация активна, поэтому достаточно одного правила на все кнопки. */
-.my-ui-scrollbar::-webkit-scrollbar-button {
+.complex-ui-scrollbar::-webkit-scrollbar-button {
     display: none;
     width: 0;
     height: 0;
 }
-.my-ui-scrollbar::-webkit-scrollbar-corner {
+.complex-ui-scrollbar::-webkit-scrollbar-corner {
     background: transparent;
 }
 </style>

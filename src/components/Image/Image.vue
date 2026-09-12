@@ -73,7 +73,7 @@ onBeforeUnmount(() => observer?.disconnect());
         </div>
 
         <Teleport to="body">
-            <Transition name="my-ui-image-preview">
+            <Transition name="complex-ui-image-preview">
                 <div
                     v-if="previewOpen"
                     class="fixed inset-0 z-100 flex items-center justify-center bg-black/80"
@@ -91,20 +91,20 @@ onBeforeUnmount(() => observer?.disconnect());
 </template>
 
 <style>
-.my-ui-image-preview-enter-active,
-.my-ui-image-preview-leave-active {
+.complex-ui-image-preview-enter-active,
+.complex-ui-image-preview-leave-active {
     transition: opacity 0.2s ease;
 }
-.my-ui-image-preview-enter-active img,
-.my-ui-image-preview-leave-active img {
+.complex-ui-image-preview-enter-active img,
+.complex-ui-image-preview-leave-active img {
     transition: transform 0.2s ease;
 }
-.my-ui-image-preview-enter-from,
-.my-ui-image-preview-leave-to {
+.complex-ui-image-preview-enter-from,
+.complex-ui-image-preview-leave-to {
     opacity: 0;
 }
-.my-ui-image-preview-enter-from img,
-.my-ui-image-preview-leave-to img {
+.complex-ui-image-preview-enter-from img,
+.complex-ui-image-preview-leave-to img {
     transform: scale(0.96);
 }
 </style>

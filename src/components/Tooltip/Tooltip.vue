@@ -26,7 +26,7 @@ const placementClasses = {
         @mouseleave="visible = false"
     >
         <slot />
-        <Transition name="my-ui-tooltip-fade">
+        <Transition name="complex-ui-tooltip-fade">
             <span
                 v-if="visible"
                 :class="[
@@ -41,12 +41,12 @@ const placementClasses = {
 </template>
 
 <style>
-.my-ui-tooltip-fade-enter-active,
-.my-ui-tooltip-fade-leave-active {
+.complex-ui-tooltip-fade-enter-active,
+.complex-ui-tooltip-fade-leave-active {
     transition: opacity 0.1s ease;
 }
-.my-ui-tooltip-fade-enter-from,
-.my-ui-tooltip-fade-leave-to {
+.complex-ui-tooltip-fade-enter-from,
+.complex-ui-tooltip-fade-leave-to {
     opacity: 0;
 }
 </style>

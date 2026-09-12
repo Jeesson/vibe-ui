@@ -4,4 +4,4 @@ export interface TabsContext {
     isActive: (name: string) => boolean;
 }
 
-export const TabsKey: InjectionKey<TabsContext> = Symbol("my-ui-tabs");
+export const TabsKey: InjectionKey<TabsContext> = Symbol("complex-ui-tabs");

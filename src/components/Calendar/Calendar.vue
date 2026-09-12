@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
+
 import {
     buildMonthGrid,
     WEEKDAY_LABELS,
@@ -33,13 +35,13 @@ function shiftMonth(delta: number) {
 
 <template>
     <div class="w-full rounded-md border border-gray-200 p-3">
-        <div class="mb-2 flex items-center justify-between">
+        <div class="mb-3 flex items-center justify-between">
             <button
                 type="button"
                 class="px-2 text-gray-400 hover:text-gray-700"
                 @click="shiftMonth(-1)"
             >
-                ‹
+                <ChevronLeftIcon class="h-4 w-4" />
             </button>
             <span class="text-sm font-medium text-gray-800">{{ label }}</span>
             <button
@@ -47,7 +49,7 @@ function shiftMonth(delta: number) {
                 class="px-2 text-gray-400 hover:text-gray-700"
                 @click="shiftMonth(1)"
             >
-                ›
+                <ChevronRightIcon class="h-4 w-4" />
             </button>
         </div>
         <div

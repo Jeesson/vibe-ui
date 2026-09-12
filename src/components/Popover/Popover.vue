@@ -20,7 +20,7 @@ defineExpose({ close: closePanel });
         <Transition name="my-ui-tooltip-fade">
             <div
                 v-if="open && rect"
-                class="my-ui-popover-panel fixed z-[70] min-w-[200px] rounded-md border border-gray-200 bg-white p-3 text-sm shadow-lg"
+                class="my-ui-popover-panel fixed z-70 min-w-50 rounded-md border border-gray-200 bg-white p-3 text-sm shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

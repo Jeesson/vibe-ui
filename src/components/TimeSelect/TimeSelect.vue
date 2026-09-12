@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useFloatingPanel } from "../../composables/use-floating-panel";
+import { ChevronDownIcon } from "@heroicons/vue/24/outline";
 
 const props = withDefaults(
     defineProps<{
@@ -49,15 +50,15 @@ function select(v: string) {
             class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left"
             @click="togglePanel"
         >
-            <span :class="!modelValue && 'text-gray-400'">{{
-                modelValue || placeholder || "Выберите время"
-            }}</span>
-            <span class="text-gray-400">▾</span>
+            <span :class="!modelValue && 'text-gray-400'">
+                {{ modelValue || placeholder || "Выберите время" }}
+            </span>
+            <ChevronDownIcon class="h-4 w-4 text-gray-400" />
         </button>
         <Teleport to="body">
             <ul
                 v-if="open && rect"
-                class="my-ui-timeselect-panel fixed z-[70] max-h-52 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+                class="my-ui-timeselect-panel fixed z-70 max-h-52 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

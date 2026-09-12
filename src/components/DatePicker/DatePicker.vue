@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
+
 import {
     buildMonthGrid,
     WEEKDAY_LABELS,
@@ -96,7 +98,7 @@ onBeforeUnmount(() => {
         <Teleport to="body">
             <div
                 v-if="open && rect"
-                class="my-ui-datepicker-panel fixed z-[70] rounded-md border border-gray-200 bg-white p-3 shadow-lg"
+                class="my-ui-datepicker-panel fixed z-70 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',
@@ -107,13 +109,13 @@ onBeforeUnmount(() => {
                             : undefined,
                 }"
             >
-                <div class="mb-2 flex items-center justify-between">
+                <div class="mb-3 flex items-center justify-between">
                     <button
                         type="button"
                         class="px-2 text-gray-400 hover:text-gray-700"
                         @click="shiftMonth(-1)"
                     >
-                        ‹
+                        <ChevronLeftIcon class="h-4 w-4" />
                     </button>
                     <span class="font-medium text-gray-800">{{ label }}</span>
                     <button
@@ -121,7 +123,7 @@ onBeforeUnmount(() => {
                         class="px-2 text-gray-400 hover:text-gray-700"
                         @click="shiftMonth(1)"
                     >
-                        ›
+                        <ChevronRightIcon class="h-4 w-4" />
                     </button>
                 </div>
                 <div

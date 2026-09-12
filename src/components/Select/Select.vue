@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
         <Teleport to="body">
             <ul
                 v-if="open && rect"
-                class="my-ui-select-panel fixed z-[70] max-h-60 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+                class="my-ui-select-panel fixed z-70 max-h-60 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

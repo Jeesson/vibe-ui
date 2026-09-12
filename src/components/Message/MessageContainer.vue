@@ -12,7 +12,7 @@ const typeClasses = {
 <template>
     <Teleport to="body">
         <div
-            class="fixed top-4 left-1/2 z-[100] flex -translate-x-1/2 flex-col gap-2"
+            class="fixed top-4 left-1/2 z-100 flex -translate-x-1/2 flex-col gap-2"
         >
             <TransitionGroup name="my-ui-message">
                 <div

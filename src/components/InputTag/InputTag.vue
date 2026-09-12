@@ -83,7 +83,7 @@ function onBackspace() {
             :value="draft"
             :disabled="disabled || limitReached"
             :placeholder="modelValue.length ? '' : placeholder"
-            class="min-w-[80px] flex-1 border-none py-0.5 text-sm outline-none disabled:bg-transparent"
+            class="min-w-20 flex-1 border-none py-0.5 text-sm outline-none disabled:bg-transparent"
             @input="onInput"
             @keydown.enter.prevent="onEnter"
             @keydown.backspace="onBackspace"

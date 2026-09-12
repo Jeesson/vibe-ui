@@ -12,9 +12,9 @@ defineEmits<{ confirm: []; cancel: [] }>();
 <template>
     <Teleport to="body">
         <div
-            class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40"
+            class="fixed inset-0 z-100 flex items-center justify-center bg-black/40"
         >
-            <div class="w-[360px] rounded-lg bg-white p-5 shadow-xl">
+            <div class="w-90 rounded-lg bg-white p-5 shadow-xl">
                 <h3 class="text-base font-semibold text-gray-900">
                     {{ title }}
                 </h3>

@@ -76,7 +76,7 @@ onBeforeUnmount(() => observer?.disconnect());
             <Transition name="my-ui-image-preview">
                 <div
                     v-if="previewOpen"
-                    class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80"
+                    class="fixed inset-0 z-100 flex items-center justify-center bg-black/80"
                     @click="previewOpen = false"
                 >
                     <img

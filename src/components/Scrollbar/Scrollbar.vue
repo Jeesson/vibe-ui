@@ -41,6 +41,7 @@ withDefaults(
     background-color: #d1d5db;
     border-radius: 9999px;
     -webkit-appearance: none;
+    appearance: none;
 }
 .vibe-ui-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #9ca3af;

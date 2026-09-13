@@ -68,9 +68,11 @@ function onInput(e: Event) {
 .vibe-ui-number-input::-webkit-inner-spin-button,
 .vibe-ui-number-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
+    appearance: none;
     margin: 0;
 }
 .vibe-ui-number-input {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 </style>

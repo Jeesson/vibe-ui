@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useLocale } from "../composables/ui-locale";
+const { locale, t } = useLocale();
 withDefaults(
     defineProps<{
         title: string;
@@ -19,7 +21,7 @@ withDefaults(
             </div>
             <details class="border-t border-gray-200 bg-gray-50 dark:border-gray-300 dark:bg-gray-100">
                 <summary class="cursor-pointer px-4 py-2 text-[11px] font-semibold tracking-wide text-gray-500 uppercase transition-colors hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-200">
-                    Показать код
+                    {{ t("docs.showCode") }}
                 </summary>
                 <pre class="overflow-x-auto border-t border-gray-200 px-4 py-4 text-xs leading-6 text-gray-700 dark:border-gray-300 dark:text-gray-800"><code>{{ source }}</code></pre>
             </details>

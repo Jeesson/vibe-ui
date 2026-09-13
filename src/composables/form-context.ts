@@ -24,7 +24,7 @@ export interface FormContext {
 }
 
 export const FormContextKey: InjectionKey<FormContext> =
-    Symbol("complex-ui-form");
+    Symbol("vibe-ui-form");
 
 export function runRules(
     value: unknown,

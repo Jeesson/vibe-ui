@@ -63,7 +63,7 @@ function clear(e: Event) {
 function onClickOutside(e: MouseEvent) {
     const target = e.target as Node;
     if (rootRef.value?.contains(target)) return;
-    if ((e.target as HTMLElement)?.closest?.(".complex-ui-select-panel"))
+    if ((e.target as HTMLElement)?.closest?.(".vibe-ui-select-panel"))
         return;
     open.value = false;
 }
@@ -122,7 +122,7 @@ onBeforeUnmount(() => {
         <Teleport to="body">
             <ul
                 v-if="open && rect"
-                class="complex-ui-select-panel fixed z-70 max-h-60 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
+                class="vibe-ui-select-panel fixed z-70 max-h-60 overflow-auto rounded-md border border-gray-200 bg-white py-1 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

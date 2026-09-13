@@ -66,7 +66,7 @@ function select(iso: string) {
 function onClickOutside(e: MouseEvent) {
     const target = e.target as HTMLElement;
     if (rootRef.value?.contains(target)) return;
-    if (target.closest?.(".complex-ui-datepicker-panel")) return;
+    if (target.closest?.(".vibe-ui-datepicker-panel")) return;
     open.value = false;
 }
 onMounted(() => {
@@ -98,7 +98,7 @@ onBeforeUnmount(() => {
         <Teleport to="body">
             <div
                 v-if="open && rect"
-                class="complex-ui-datepicker-panel fixed z-70 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
+                class="vibe-ui-datepicker-panel fixed z-70 rounded-md border border-gray-200 bg-white p-3 shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

@@ -129,10 +129,10 @@ function buildScript(usage: string): string {
 
     const imports = [`import { ${nestedModels.size ? "reactive, " : ""}ref } from "vue";`];
     if (declarations.some((line) => line.includes("FormRule"))) {
-        imports.push('import type { FormRule } from "complex-ui";');
+        imports.push('import type { FormRule } from "@jeesson/vibe-ui";');
     }
     if (declarations.some((line) => line.includes("SelectOption"))) {
-        imports.push('import type { SelectOption } from "complex-ui";');
+        imports.push('import type { SelectOption } from "@jeesson/vibe-ui";');
     }
     return `${imports.join("\n")}\n\n${declarations.join("\n")}`;
 }
@@ -203,9 +203,9 @@ const sourceExamples = computed(() => {
     return usages.map((example, index) => {
         if (/^(?:import\s|message\.|messageBox\.|toast\.)/.test(example.trim())) {
             const importLine = example.trim().startsWith("message.")
-                ? 'import { message } from "complex-ui";\n\n'
+                ? 'import { message } from "@jeesson/vibe-ui";\n\n'
                 : example.trim().startsWith("messageBox.")
-                  ? 'import { messageBox, toast } from "complex-ui";\n\n'
+                  ? 'import { messageBox, toast } from "@jeesson/vibe-ui";\n\n'
                   : "";
             return {
                 title: exampleTitle(example, index),

@@ -6,5 +6,5 @@ export interface CollapseContext {
 }
 
 export const CollapseKey: InjectionKey<CollapseContext> = Symbol(
-    "complex-ui-collapse",
+    "vibe-ui-collapse",
 );

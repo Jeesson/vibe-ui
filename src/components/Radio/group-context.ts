@@ -6,5 +6,5 @@ export interface RadioGroupContext {
 }
 
 export const RadioGroupKey: InjectionKey<RadioGroupContext> = Symbol(
-    "complex-ui-radio-group",
+    "vibe-ui-radio-group",
 );

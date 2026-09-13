@@ -4,7 +4,7 @@ import { useFloatingPanel } from "../../composables/use-floating-panel";
 withDefaults(defineProps<{ title?: string }>(), {});
 
 const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel(
-    "complex-ui-popover-panel",
+    "vibe-ui-popover-panel",
     160,
     220,
 );
@@ -17,10 +17,10 @@ defineExpose({ close: closePanel });
         <slot name="trigger" />
     </span>
     <Teleport to="body">
-        <Transition name="complex-ui-tooltip-fade">
+        <Transition name="vibe-ui-tooltip-fade">
             <div
                 v-if="open && rect"
-                class="complex-ui-popover-panel fixed z-70 min-w-50 rounded-md border border-gray-200 bg-white p-3 text-sm shadow-lg"
+                class="vibe-ui-popover-panel fixed z-70 min-w-50 rounded-md border border-gray-200 bg-white p-3 text-sm shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',
@@ -40,12 +40,12 @@ defineExpose({ close: closePanel });
 </template>
 
 <style>
-.complex-ui-tooltip-fade-enter-active,
-.complex-ui-tooltip-fade-leave-active {
+.vibe-ui-tooltip-fade-enter-active,
+.vibe-ui-tooltip-fade-leave-active {
     transition: opacity 0.1s ease;
 }
-.complex-ui-tooltip-fade-enter-from,
-.complex-ui-tooltip-fade-leave-to {
+.vibe-ui-tooltip-fade-enter-from,
+.vibe-ui-tooltip-fade-leave-to {
     opacity: 0;
 }
 </style>

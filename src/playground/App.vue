@@ -98,7 +98,7 @@ const pages: Record<string, PageEntry> = {
         component: OverviewPage,
         titleKey: "overview.title",
         description:
-            "All complex-ui components with search, groups, and mini previews. Click a card to open its live examples.",
+            "All vibe-ui components with search, groups, and mini previews. Click a card to open its live examples.",
         anchors: [
             { href: "#ov-group-basic", title: "Basic" },
             { href: "#ov-group-form", title: "Form" },

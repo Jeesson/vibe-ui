@@ -16,11 +16,11 @@ const dark = ref(false);
 function applyDark(next: boolean) {
     dark.value = next;
     document.documentElement.classList.toggle("dark", next);
-    localStorage.setItem("complex-ui-theme", next ? "dark" : "light");
+    localStorage.setItem("vibe-ui-theme", next ? "dark" : "light");
 }
 
 onMounted(() => {
-    const saved = localStorage.getItem("complex-ui-theme");
+    const saved = localStorage.getItem("vibe-ui-theme");
     applyDark(
         saved
             ? saved === "dark"
@@ -31,7 +31,7 @@ onMounted(() => {
 
 <template>
     <header
-        class="complex-ui-navbar sticky top-0 z-30 h-14 border-b border-gray-100 bg-white/80 backdrop-blur"
+        class="vibe-ui-navbar sticky top-0 z-30 h-14 border-b border-gray-100 bg-white/80 backdrop-blur"
     >
         <div
             class="mx-auto flex h-full max-w-350 items-center justify-between px-5"
@@ -39,7 +39,7 @@ onMounted(() => {
             <div class="flex items-center gap-3">
                 <div class="flex items-center gap-2">
                     <span class="text-sm font-semibold text-gray-900">
-                        Сomplex UI
+                        Vibe UI
                     </span>
                 </div>
 
@@ -91,7 +91,7 @@ onMounted(() => {
 
                 <!-- ссылка на GitHub -->
                 <a
-                    href="https://github.com/Jeesson/complex-ui"
+                    href="https://github.com/Jeesson/vibe-ui"
                     target="_blank"
                     rel="noopener"
                     title="GitHub"
@@ -116,13 +116,13 @@ onMounted(() => {
 <style scoped>
 /* Точечная «сетка» поверх blur-подложки. Прозрачные точки в 1px — цвет
    просвечивает из --bg-color (тот же, что у фона шапки). */
-.complex-ui-navbar {
+.vibe-ui-navbar {
     --bg-color: rgba(255, 255, 255, 0.8);
     background-image: radial-gradient(transparent 1px, var(--bg-color) 1px);
     background-size: 10px 10px;
 }
-.dark .complex-ui-navbar,
-.dark.complex-ui-navbar {
+.dark .vibe-ui-navbar,
+.dark.vibe-ui-navbar {
     --bg-color: oklch(0.21 0.02 264 / 0.8);
 }
 </style>

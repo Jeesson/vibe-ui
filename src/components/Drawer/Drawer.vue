@@ -62,15 +62,15 @@ const panelPosition = {
         <!-- Один Transition: вложенный Transition не анимируется, если он
          монтируется одновременно со своим ребёнком (оба v-if по modelValue) —
          enter-хуки внутреннего просто не вызываются. Анимация панели
-         описана в CSS через потомков (.complex-ui-drawer-panel). -->
-        <Transition name="complex-ui-drawer">
+         описана в CSS через потомков (.vibe-ui-drawer-panel). -->
+        <Transition name="vibe-ui-drawer">
             <div
                 v-if="modelValue"
                 class="fixed inset-0 z-50 bg-black/40"
                 @click.self="close"
             >
                 <div
-                    class="complex-ui-drawer-panel fixed flex flex-col bg-white shadow-xl will-change-transform"
+                    class="vibe-ui-drawer-panel fixed flex flex-col bg-white shadow-xl will-change-transform"
                     :data-placement="placement"
                     :class="panelPosition[placement]"
                     :style="isVertical ? { height: size } : { width: size }"
@@ -108,33 +108,33 @@ const panelPosition = {
 </template>
 
 <style>
-.complex-ui-drawer-enter-active,
-.complex-ui-drawer-leave-active {
+.vibe-ui-drawer-enter-active,
+.vibe-ui-drawer-leave-active {
     transition: opacity 0.28s ease;
 }
-.complex-ui-drawer-enter-from,
-.complex-ui-drawer-leave-to {
+.vibe-ui-drawer-enter-from,
+.vibe-ui-drawer-leave-to {
     opacity: 0;
 }
 
-.complex-ui-drawer-enter-active .complex-ui-drawer-panel,
-.complex-ui-drawer-leave-active .complex-ui-drawer-panel {
+.vibe-ui-drawer-enter-active .vibe-ui-drawer-panel,
+.vibe-ui-drawer-leave-active .vibe-ui-drawer-panel {
     transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
 }
-.complex-ui-drawer-enter-from .complex-ui-drawer-panel[data-placement="right"],
-.complex-ui-drawer-leave-to .complex-ui-drawer-panel[data-placement="right"] {
+.vibe-ui-drawer-enter-from .vibe-ui-drawer-panel[data-placement="right"],
+.vibe-ui-drawer-leave-to .vibe-ui-drawer-panel[data-placement="right"] {
     transform: translateX(100%);
 }
-.complex-ui-drawer-enter-from .complex-ui-drawer-panel[data-placement="left"],
-.complex-ui-drawer-leave-to .complex-ui-drawer-panel[data-placement="left"] {
+.vibe-ui-drawer-enter-from .vibe-ui-drawer-panel[data-placement="left"],
+.vibe-ui-drawer-leave-to .vibe-ui-drawer-panel[data-placement="left"] {
     transform: translateX(-100%);
 }
-.complex-ui-drawer-enter-from .complex-ui-drawer-panel[data-placement="top"],
-.complex-ui-drawer-leave-to .complex-ui-drawer-panel[data-placement="top"] {
+.vibe-ui-drawer-enter-from .vibe-ui-drawer-panel[data-placement="top"],
+.vibe-ui-drawer-leave-to .vibe-ui-drawer-panel[data-placement="top"] {
     transform: translateY(-100%);
 }
-.complex-ui-drawer-enter-from .complex-ui-drawer-panel[data-placement="bottom"],
-.complex-ui-drawer-leave-to .complex-ui-drawer-panel[data-placement="bottom"] {
+.vibe-ui-drawer-enter-from .vibe-ui-drawer-panel[data-placement="bottom"],
+.vibe-ui-drawer-leave-to .vibe-ui-drawer-panel[data-placement="bottom"] {
     transform: translateY(100%);
 }
 </style>

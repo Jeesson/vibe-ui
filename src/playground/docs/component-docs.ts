@@ -1,7 +1,7 @@
 /**
  * component-docs.ts
  * -----------------------------------------------------------------------------
- * Единый дата-движок документации complex-ui.
+ * Единый дата-движок документации vibe-ui.
  *
  * Содержит для каждого компонента:
  *   - короткое описание (description),
@@ -75,7 +75,7 @@ const AUTHOR: Contributor[] = [
     {
         name: "Jeesson",
         github: "Jeesson",
-        role: "Автор и мейнтейнер complex-ui",
+        role: "Автор и мейнтейнер vibe-ui",
     },
 ];
 
@@ -1321,7 +1321,7 @@ export const components: Record<string, ComponentDoc> = {
         description:
             "Тосты всплывающего уведомления. Реализованы на vue-sonner — в playground " +
             "экспортируются повторно как toast. Требуют <Toaster> один раз в корне приложения.",
-        usage: 'import { toast, Toaster } from "complex-ui";\n\n<Toaster position="top-right" />\ntoast.success("Успех");',
+        usage: 'import { toast, Toaster } from "@jeesson/vibe-ui";\n\n<Toaster position="top-right" />\ntoast.success("Успех");',
         contributors: contributors(),
     },
 

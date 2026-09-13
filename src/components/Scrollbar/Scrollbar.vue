@@ -7,8 +7,8 @@ withDefaults(
 
 <template>
     <div
-        class="complex-ui-scrollbar overflow-auto"
-        :class="hide && 'complex-ui-scrollbar--hidden'"
+        class="vibe-ui-scrollbar overflow-auto"
+        :class="hide && 'vibe-ui-scrollbar--hidden'"
         :style="{ maxHeight }"
     >
         <slot />
@@ -25,42 +25,42 @@ withDefaults(
   кастомный тонкий скроллбар ниже — он изначально без стрелок.
 */
 @supports not selector(::-webkit-scrollbar) {
-    .complex-ui-scrollbar {
+    .vibe-ui-scrollbar {
         scrollbar-width: thin;
         scrollbar-color: #d1d5db transparent;
     }
 }
-.complex-ui-scrollbar::-webkit-scrollbar {
+.vibe-ui-scrollbar::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
-.complex-ui-scrollbar::-webkit-scrollbar-track {
+.vibe-ui-scrollbar::-webkit-scrollbar-track {
     background: transparent;
 }
-.complex-ui-scrollbar::-webkit-scrollbar-thumb {
+.vibe-ui-scrollbar::-webkit-scrollbar-thumb {
     background-color: #d1d5db;
     border-radius: 9999px;
     -webkit-appearance: none;
 }
-.complex-ui-scrollbar::-webkit-scrollbar-thumb:hover {
+.vibe-ui-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #9ca3af;
 }
 /* Стрелки-кнопки на Windows Chrome/Edge: без scroll lock стандартных свойств
    webkit-стилизация активна, поэтому достаточно одного правила на все кнопки. */
-.complex-ui-scrollbar::-webkit-scrollbar-button {
+.vibe-ui-scrollbar::-webkit-scrollbar-button {
     display: none;
     width: 0;
     height: 0;
 }
-.complex-ui-scrollbar::-webkit-scrollbar-corner {
+.vibe-ui-scrollbar::-webkit-scrollbar-corner {
     background: transparent;
 }
-.complex-ui-scrollbar--hidden::-webkit-scrollbar {
+.vibe-ui-scrollbar--hidden::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
 @supports not selector(::-webkit-scrollbar) {
-    .complex-ui-scrollbar--hidden {
+    .vibe-ui-scrollbar--hidden {
         scrollbar-width: none;
     }
 }

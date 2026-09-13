@@ -8,8 +8,8 @@ export default defineConfig({
     build: {
         lib: {
             entry: resolve(import.meta.dirname, "src/index.ts"),
-            name: "ComplexUI",
-            fileName: (format) => `complex-ui.${format}.js`,
+            name: "VibeUI",
+            fileName: (format) => `vibe-ui.${format}.js`,
             formats: ["es", "cjs"],
         },
         rollupOptions: {

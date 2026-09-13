@@ -1,15 +1,15 @@
-# Complex UI
+# Vibe UI
 
-**Complex UI** — библиотека компонентов для **Vue 3** с интерактивной документацией-плейграундом. Тёмная/светлая темы, Tailwind CSS 4, TypeScript, Vite.
+**Vibe UI** — библиотека компонентов для **Vue 3** для вайб-кодинга: 50+ компонентов с интерактивной документацией-плейграундом. Тёмная/светлая темы, Tailwind CSS 4, TypeScript, Vite.
 
-🔗 Демо: https://complex-ui.pages.dev/ <!-- TODO: актуальный адрес сайта будет указан позже -->
-📦 npm: `complex-ui`
+🔗 Демо: https://vibe-ui.pages.dev/ <!-- TODO: актуальный адрес сайта будет указан позже -->
+📦 npm: `@jeesson/vibe-ui`
 
 ## Первоисточник
 
 Данный проект основан на первоисточнике:
 
-> **Jeesson/complex-ui** — https://github.com/Jeesson/complex-ui
+> **Jeesson/vibe-ui** — https://github.com/Jeesson/vibe-ui
 
 При использовании, копировании и распространении кода обязательно сохраняйте указание первоисточника. Условия атрибуции и разделения дохода описаны в файле [LICENSE](./LICENSE).
 
@@ -17,10 +17,10 @@
 
 Действует соглашение о разделе дохода **50% / 50%**:
 
-- **50%** — правообладателю первоисточника (https://github.com/Jeesson/complex-ui);
+- **50%** — правообладателю первоисточника (https://github.com/Jeesson/vibe-ui);
 - **50%** — авторам производных изменений / данного репозитория.
 
-Под доходом понимаются любые прямые поступления, связанные с проектом: спонсорство (GitHub Sponsors и т.п.), донаты, платные подписки, коммерческая поддержка и интеграция. Полные условия — в файле [LICENSE](./LICENSE) и в разделе [FUNDING / Revenue Sharing](https://github.com/Jeesson/complex-ui#разделение-дохода-revenue-sharing).
+Под доходом понимаются любые прямые поступления, связанные с проектом: спонсорство (GitHub Sponsors и т.п.), донаты, платные подписки, коммерческая поддержка и интеграция. Полные условия — в файле [LICENSE](./LICENSE) и в разделе [FUNDING / Revenue Sharing](https://github.com/Jeesson/vibe-ui#разделение-дохода-revenue-sharing).
 
 > ⚠️ **При нарушении условий** (атрибуция удалена/искажена, доход занижен или скрыт, выплата просрочена и т.п.) разделение **автоматически меняется на 80/20 в пользу первоисточника** — ретроактивно, со всех сумм с начала нарушения, включая обязанность компенсировать недоплату. Подробнее — разделы 3.1–3.2 [LICENSE](./LICENSE).
 >
@@ -29,9 +29,9 @@
 ## Установка
 
 ```bash
-bun add complex-ui
+bun add @jeesson/vibe-ui
 # или
-npm install complex-ui
+npm install @jeesson/vibe-ui
 ```
 
 Необходим peer-зависимый `vue ^3.4.0`.
@@ -40,11 +40,11 @@ npm install complex-ui
 
 ```ts
 import { createApp } from "vue";
-import ComplexUI from "complex-ui";
-import "complex-ui/style.css";
+import VibeUI from "@jeesson/vibe-ui";
+import "@jeesson/vibe-ui/style.css";
 import App from "./App.vue";
 
-createApp(App).use(ComplexUI).mount("#app");
+createApp(App).use(VibeUI).mount("#app");
 ```
 
 ## Разработка

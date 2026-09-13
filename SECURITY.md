@@ -4,7 +4,7 @@
 
 Используйте встроенный механизм GitHub — вкладка **Security**:
 
-1. Откройте https://github.com/Jeesson/complex-ui
+1. Откройте https://github.com/Jeesson/vibe-ui
 2. Перейдите на вкладку **Security** → **Advisories** → **Report a vulnerability**
 3. Опишите уязвимость: затронутые версии/компоненты, шаги воспроизведения, потенциальное влияние, возможный PoC.
 

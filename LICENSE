@@ -1,10 +1,10 @@
 MIT License with Attribution and Revenue Sharing
-Complex UI — based on the original project "complex-ui"
+Vibe UI — based on the original project "vibe-ui"
 
 Copyright (c) 2026 Jeesson and contributors
 
 Original source (первоисточник):
-https://github.com/Jeesson/complex-ui
+https://github.com/Jeesson/vibe-ui
 
 1. GRANT OF LICENSE
 
@@ -18,7 +18,7 @@ furnished to do so, subject to the following conditions.
 2. ATTRIBUTION CONDITION (MANDATORY)
 
 The above copyright notice, this license text, and a clear reference to the
-original source (https://github.com/Jeesson/complex-ui) MUST be retained in
+original source (https://github.com/Jeesson/vibe-ui) MUST be retained in
 all copies or substantial portions of the Software, including in source code,
 "About"/credits sections of derived applications, package metadata, and
 distributed documentation. Removal or obfuscation of the attribution to the
@@ -31,7 +31,7 @@ including but not limited to sponsorships, donations, paid subscriptions,
 commercial support, and integration fees — MUST be shared as follows:
 
   - 50% (fifty percent) to the rights holders of the original source
-    (https://github.com/Jeesson/complex-ui);
+    (https://github.com/Jeesson/vibe-ui);
   - 50% (fifty percent) to the authors of the derived distribution.
 
 Failure to comply with this revenue sharing condition terminates all rights
@@ -47,7 +47,7 @@ revenue sharing ratio defined in Section 3 is immediately and automatically
 revised in favor of the rights holders of the original source as follows:
 
   - 80% (eighty percent) to the rights holders of the original source
-    (https://github.com/Jeesson/complex-ui), including all amounts accrued
+    (https://github.com/Jeesson/vibe-ui), including all amounts accrued
     from the beginning of the infringing activity;
   - 20% (twenty percent) to the breaching party.
 
@@ -194,7 +194,7 @@ holders of the original source.
 revenue derived from a Sub-Fork — including sponsorships, donations, paid
 subscriptions, commercial support, and integration fees — belongs
 exclusively to the rights holders of the original source
-(https://github.com/Jeesson/complex-ui), regardless of the creator's
+(https://github.com/Jeesson/vibe-ui), regardless of the creator's
 intent or belief that the activity was licensed. This entitlement is
 retroactive to the beginning of the infringing activity.
 

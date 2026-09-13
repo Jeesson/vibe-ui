@@ -14,7 +14,7 @@ const typeClasses = {
         <div
             class="fixed top-4 left-1/2 z-100 flex -translate-x-1/2 flex-col items-center gap-2"
         >
-            <TransitionGroup name="complex-ui-message">
+            <TransitionGroup name="vibe-ui-message">
                 <div
                     v-for="m in messages"
                     :key="m.id"
@@ -32,12 +32,12 @@ const typeClasses = {
 </template>
 
 <style>
-.complex-ui-message-enter-active,
-.complex-ui-message-leave-active {
+.vibe-ui-message-enter-active,
+.vibe-ui-message-leave-active {
     transition: all 0.2s ease;
 }
-.complex-ui-message-enter-from,
-.complex-ui-message-leave-to {
+.vibe-ui-message-enter-from,
+.vibe-ui-message-leave-to {
     opacity: 0;
     transform: translateY(-8px);
 }

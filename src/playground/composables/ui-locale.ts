@@ -3,7 +3,7 @@ import { ref, computed } from "vue";
 export type Locale = "ru" | "en";
 
 const locale = ref<Locale>(
-    (localStorage.getItem("complex-ui-locale") as Locale) || "en",
+    (localStorage.getItem("vibe-ui-locale") as Locale) || "en",
 );
 
 const messages: Record<Locale, Record<string, string>> = {
@@ -84,7 +84,7 @@ export function useLocale() {
 
     function setLocale(next: Locale) {
         locale.value = next;
-        localStorage.setItem("complex-ui-locale", next);
+        localStorage.setItem("vibe-ui-locale", next);
         document.documentElement.lang = next;
     }
 

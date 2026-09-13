@@ -48,7 +48,7 @@ function onInput(e: Event) {
             :value="modelValue"
             :disabled="disabled"
             :style="{ width }"
-            class="complex-ui-number-input shrink-0 border-x border-gray-200 py-1.5 text-center text-sm outline-none"
+            class="vibe-ui-number-input shrink-0 border-x border-gray-200 py-1.5 text-center text-sm outline-none"
             @change="onInput"
         />
         <button
@@ -65,12 +65,12 @@ function onInput(e: Event) {
 <style>
 /* Прячем нативные стрелки type=number — свои кнопки уже есть, а нативные
    в Chrome/Safari добавляли собственную ширину и визуально плавали. */
-.complex-ui-number-input::-webkit-inner-spin-button,
-.complex-ui-number-input::-webkit-outer-spin-button {
+.vibe-ui-number-input::-webkit-inner-spin-button,
+.vibe-ui-number-input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-.complex-ui-number-input {
+.vibe-ui-number-input {
     -moz-appearance: textfield;
 }
 </style>

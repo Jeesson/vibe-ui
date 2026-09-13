@@ -52,7 +52,7 @@ onBeforeUnmount(() => {
 
 <template>
     <Teleport to="body">
-        <Transition name="complex-ui-dialog-fade">
+        <Transition name="vibe-ui-dialog-fade">
             <div
                 v-if="modelValue"
                 class="fixed inset-0 z-50 flex items-center justify-center bg-black/40"
@@ -93,12 +93,12 @@ onBeforeUnmount(() => {
 </template>
 
 <style>
-.complex-ui-dialog-fade-enter-active,
-.complex-ui-dialog-fade-leave-active {
+.vibe-ui-dialog-fade-enter-active,
+.vibe-ui-dialog-fade-leave-active {
     transition: opacity 0.15s ease;
 }
-.complex-ui-dialog-fade-enter-from,
-.complex-ui-dialog-fade-leave-to {
+.vibe-ui-dialog-fade-enter-from,
+.vibe-ui-dialog-fade-leave-to {
     opacity: 0;
 }
 </style>

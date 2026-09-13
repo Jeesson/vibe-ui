@@ -91,7 +91,7 @@ function hover(depth: number, option: CascaderOption) {
 function onClickOutside(e: MouseEvent) {
     const target = e.target as HTMLElement;
     if (triggerRef.value?.contains(target)) return;
-    if (target.closest?.(".complex-ui-cascader-panel")) return;
+    if (target.closest?.(".vibe-ui-cascader-panel")) return;
     open.value = false;
     activePath.value = [];
 }
@@ -124,7 +124,7 @@ onBeforeUnmount(() => {
         <Teleport to="body">
             <div
                 v-if="open && rect"
-                class="complex-ui-cascader-panel fixed z-70 flex rounded-md border border-gray-200 bg-white shadow-lg"
+                class="vibe-ui-cascader-panel fixed z-70 flex rounded-md border border-gray-200 bg-white shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',

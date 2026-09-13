@@ -1,0 +1,226 @@
+MIT License with Attribution and Revenue Sharing
+Complex UI — based on the original project "complex-ui"
+
+Copyright (c) 2026 Jeesson and contributors
+
+Original source (первоисточник):
+https://github.com/Jeesson/complex-ui
+
+1. GRANT OF LICENSE
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions.
+
+2. ATTRIBUTION CONDITION (MANDATORY)
+
+The above copyright notice, this license text, and a clear reference to the
+original source (https://github.com/Jeesson/complex-ui) MUST be retained in
+all copies or substantial portions of the Software, including in source code,
+"About"/credits sections of derived applications, package metadata, and
+distributed documentation. Removal or obfuscation of the attribution to the
+original source terminates this license.
+
+3. REVENUE SHARING CONDITION (MANDATORY)
+
+Any direct revenue derived from the Software or derivatives thereof —
+including but not limited to sponsorships, donations, paid subscriptions,
+commercial support, and integration fees — MUST be shared as follows:
+
+  - 50% (fifty percent) to the rights holders of the original source
+    (https://github.com/Jeesson/complex-ui);
+  - 50% (fifty percent) to the authors of the derived distribution.
+
+Failure to comply with this revenue sharing condition terminates all rights
+granted under this license.
+
+3.1. BREACH ESCALATION (MANDATORY REMEDY)
+
+If the licensee breaches any condition of this license — including, without
+limitation, failure to attribute the original source, misrepresentation of
+origin, removal or obfuscation of attribution, late or incomplete revenue
+payments, or any attempt to circumvent the revenue sharing obligations — the
+revenue sharing ratio defined in Section 3 is immediately and automatically
+revised in favor of the rights holders of the original source as follows:
+
+  - 80% (eighty percent) to the rights holders of the original source
+    (https://github.com/Jeesson/complex-ui), including all amounts accrued
+    from the beginning of the infringing activity;
+  - 20% (twenty percent) to the breaching party.
+
+The revised 80/20 ratio applies retroactively (with obligation to pay back
+the shortfall) and remains in effect permanently, unless the rights holders
+of the original source explicitly restore the original 50/50 ratio in
+writing. This escalation is without prejudice to any other legal remedies
+available to the rights holders of the original source.
+
+3.2. CIRCUMVENTION
+
+Any scheme designed to conceal, understate, or divert revenue — including
+routing income through third parties, off-book arrangements, or barter
+deals — is deemed a breach under Section 3.1. In case of dispute, the
+rights holders of the original source may require the breaching party to
+provide accounting records sufficient to verify the revenue amounts; refusal
+to provide such records is itself deemed a breach under Section 3.1.
+
+3.3. PAYMENT TERMS AND DEFAULT INTEREST
+
+Revenue shares are payable within thirty (30) days after the end of each
+calendar quarter unless otherwise agreed in writing. Overdue amounts bear
+default interest of one percent (1%) per month (or the maximum rate allowed
+by law, whichever is higher), accruing daily. Payment costs, currency
+conversion fees, and taxes (except income taxes of the payee) are borne by
+the paying party. Revenue received in cryptocurrency or foreign currency is
+valued at the exchange rate on the date of receipt; favorable or unfavorable
+subsequent rate movements do not affect the obligation.
+
+3.4. FUTURE UPDATES OF THE LICENSE
+
+The rights holders of the original source may publish updated versions of
+this license ("New Versions"). Derivatives distributed under this license
+automatically become subject to the terms of the latest New Version published
+by the rights holders of the original source, unless the licensee obtains a
+separate signed commercial agreement. Continuing to use, copy, or distribute
+the Software or derivatives after the publication of a New Version constitutes
+acceptance of its terms.
+
+3.5. BINDING ON SUCCESSORS AND FORKS
+
+The obligations under Sections 2, 3, 3.1–3.4 bind not only the original
+licensee but also any person or entity that receives, forks, re-forks,
+redistributes, or otherwise acquires the Software or derivatives from the
+licensee, directly or through intermediaries. Licensees are jointly and
+severally liable for breaches committed by parties they distributed the
+Software to, to the extent of the revenue derived from that distribution.
+
+3.6. COSTS, FEES, AND VENUE
+
+In any dispute related to this license, the breaching party reimburses the
+rights holders of the original source all reasonable costs of enforcement,
+including attorney fees, expert and audit costs, and translation fees,
+regardless of whether litigation was initiated. The rights holders of the
+original source may also publish a factual notice of the breach (including
+the project name, URL, and nature of the breach) in the original repository
+and related channels; such notice does not constitute defamation.
+
+3.7. NO WAIVER
+
+Any delay or omission by the rights holders of the original source in
+exercising their rights under this license (including acceptance of late or
+partial payments, or continued interaction with the licensee) does not
+constitute a waiver of those rights or of the escalation remedy in
+Section 3.1. The 50/50 ratio applies only while all conditions are
+continuously observed; it is never "grandfathered" by prior practice.
+
+3.8. AUDIT PREMIUM
+
+The rights holders of the original source may, at reasonable intervals and
+with no fewer than fourteen (14) days' written notice, request revenue
+records sufficient to verify the declared revenue shares. If an independent
+review reveals that the declared revenue understates actual revenue by more
+than ten percent (10%), the licensee shall pay (a) the full reasonable cost
+of the review, and (b) the underpaid revenue share amount multiplied by two
+(2). This remedy is cumulative with, not instead of, Section 3.1.
+
+3.9. REVENUE SNAPSHOT
+
+For the purpose of calculating revenue shares, the reference base for each
+payment period is the highest-grossing quarter of the preceding twelve (12)
+months, regardless of the actual revenue of the current period. Artificial
+or structural reduction of revenue in the current period (including
+suspension of monetization, transfer of income streams to related projects,
+or voluntary discontinuation of paid offerings) does not reduce the
+obligation.
+
+3.10. DERIVATIVES REGISTRY
+
+The licensee shall maintain and submit to the rights holders of the original
+source, at least quarterly (via pull request, issue, or the contact channel
+designated by the rights holders), an up-to-date list of all public
+deployments, distributions, and forks of the Software or derivatives thereof,
+including names, URLs, and versions. Failure to submit the list on time, or
+submission of an incomplete or materially inaccurate list, constitutes a
+breach under Section 3.1.
+
+3.11. GOVERNING LAW AND FORUM
+
+Any dispute arising out of or in connection with this license shall be
+resolved exclusively in the courts or arbitral forum of the place of
+residence or registered office of the rights holders of the original source,
+under the substantive law of the rights holders' jurisdiction, in the
+language of the rights holders. The breaching party irrevocably submits to
+this forum and waives any objection based on inconvenient forum.
+
+3.12. AUTOMATIC TRANSFER UPON CESSATION
+
+Upon bankruptcy, liquidation, cessation of business activity, or voluntary
+abandonment (no meaningful activity for twelve (12) consecutive months) of
+the licensee, all of the licensee's rights in and to its derivatives of the
+Software automatically transfer to the rights holders of the original
+source, without further action, consideration, or consent. The rights
+holders may rely on this Section when notifying hosting platforms or
+package registries of the termination of the derivative's license.
+
+3.13. SECURITY CLOSE-OUT
+
+If a security vulnerability of high or critical severity is discovered in a
+distributed derivative, the rights holders of the original source may notify
+the licensee; the licensee shall release a fix within thirty (30) days of
+notice. Failure to do so constitutes a breach terminating the license as to
+the derivative, whereupon the rights holders may (a) publicly designate the
+derivative as unsupported and unsafe, and (b) request takedown of the
+derivative's repository, package, or distribution from hosting platforms and
+package registries.
+
+3.14. PROHIBITION OF SECOND-LEVEL DERIVATIVES ("FORKS OF FORKS")
+
+A "Sub-Fork" is any derivative, modification, fork, re-fork, or
+re-publication of the Software created by any person or entity other than
+the first-level licensee — i.e., received from the first-level licensee,
+directly or through intermediaries.
+
+3.14.1. SUB-FORKS ARE PROHIBITED. The creation, publication,
+redistribution, sublicensing, or monetization of any Sub-Fork is strictly
+prohibited and constitutes an unlicensed infringement from the moment of
+creation. Only the first-level licensee may hold rights to a derivative;
+no party below the first-level licensee may create, hold, or distribute a
+derivative of any kind without a separate written agreement with the rights
+holders of the original source.
+
+3.14.2. NO REVENUE FROM SUB-FORKS. One hundred percent (100%) of any
+revenue derived from a Sub-Fork — including sponsorships, donations, paid
+subscriptions, commercial support, and integration fees — belongs
+exclusively to the rights holders of the original source
+(https://github.com/Jeesson/complex-ui), regardless of the creator's
+intent or belief that the activity was licensed. This entitlement is
+retroactive to the beginning of the infringing activity.
+
+3.14.3. RECIPIENTS RECEIVE USE ONLY. The first-level licensee may grant
+recipients of the Software only a right of use (internal, non-distributable
+use); recipients do not acquire any right to modify-and-republish, fork,
+redistribute, or monetize the Software. Distribution of the Software to a
+third party by anyone other than the first-level licensee is deemed
+creation of a prohibited Sub-Fork under Section 3.14.1.
+
+3.14.4. CHAIN LIABILITY. The first-level licensee must ensure that every
+recipient receives this license in full (including this Section 3.14) and
+remains jointly and severally liable for violations of this Section by the
+parties it distributed the Software to, in accordance with Section 3.5.
+
+3.14.5. ATTRIBUTION STILL MANDATORY. The attribution condition of
+Section 2 applies to all recipients without exception; any copy lacking
+full attribution to the original source is unlicensed from the moment of
+its creation.
+
+4. DISCLAIMER
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

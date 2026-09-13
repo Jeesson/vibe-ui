@@ -3,6 +3,7 @@
     "version": "0.1.0",
     "type": "module",
     "description": "A Vue 3 component library with an interactive documentation playground",
+    "license": "SEE LICENSE IN LICENSE",
     "repository": {
         "type": "git",
         "url": "https://github.com/Jeesson/complex-ui.git"

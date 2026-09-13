@@ -14,21 +14,93 @@ import Tag from "../../components/Tag/Tag.vue";
 const cascaderValue = ref<string[]>([]);
 const cascaderOptions = [
     {
-        label: "Украина",
-        value: "ua",
+        label: "Франция",
+        value: "fr",
         children: [
             {
-                label: "Днепропетровская обл.",
-                value: "dnipro",
-                children: [
-                    { label: "Каменское", value: "kamianske" },
-                    { label: "Днепр", value: "dnipro-city" },
-                ],
+                label: "Иль-де-Франс",
+                value: "ile-de-france",
+                children: [{ label: "Париж", value: "paris" }],
             },
             {
-                label: "Киевская обл.",
-                value: "kyiv-region",
-                children: [{ label: "Киев", value: "kyiv" }],
+                label: "Овернь — Рона — Альпы",
+                value: "auvergne-rhone-alpes",
+                children: [{ label: "Лион", value: "lyon" }],
+            },
+        ],
+    },
+    {
+        label: "Германия",
+        value: "de",
+        children: [
+            {
+                label: "Берлин",
+                value: "berlin-region",
+                children: [{ label: "Берлин", value: "berlin" }],
+            },
+            {
+                label: "Бавария",
+                value: "bavaria",
+                children: [{ label: "Мюнхен", value: "munich" }],
+            },
+        ],
+    },
+    {
+        label: "Италия",
+        value: "it",
+        children: [
+            {
+                label: "Лацио",
+                value: "lazio",
+                children: [{ label: "Рим", value: "rome" }],
+            },
+            {
+                label: "Ломбардия",
+                value: "lombardy",
+                children: [{ label: "Милан", value: "milan" }],
+            },
+        ],
+    },
+    {
+        label: "Испания",
+        value: "es",
+        children: [
+            {
+                label: "Мадрид",
+                value: "madrid-region",
+                children: [{ label: "Мадрид", value: "madrid" }],
+            },
+            {
+                label: "Каталония",
+                value: "catalonia",
+                children: [{ label: "Барселона", value: "barcelona" }],
+            },
+        ],
+    },
+    {
+        label: "Польша",
+        value: "pl",
+        children: [
+            {
+                label: "Мазовецкое воеводство",
+                value: "masovia",
+                children: [{ label: "Варшава", value: "warsaw" }],
+            },
+            {
+                label: "Малопольское воеводство",
+                value: "lesser-poland",
+                children: [{ label: "Краков", value: "krakow" }],
+            },
+        ],
+    },
+    {
+        label: "Чехия",
+        value: "cz",
+        children: [
+            {
+                label: "Прага",
+                value: "prague-region",
+                children: [{ label: "Прага", value: "prague" }],
             },
         ],
     },

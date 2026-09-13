@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, type Component } from "vue";
 import { ChevronDownIcon } from "@heroicons/vue/24/outline";
 
 export interface MenuItem {
@@ -7,11 +7,19 @@ export interface MenuItem {
     label: string;
     children?: MenuItem[];
     disabled?: boolean;
+    icon?: Component;
 }
 
 defineOptions({ name: "MyUiMenu" });
 
-const props = defineProps<{ items: MenuItem[]; modelValue: string }>();
+const props = withDefaults(
+    defineProps<{
+        items: MenuItem[];
+        modelValue: string;
+        expandAll?: boolean;
+    }>(),
+    { expandAll: false },
+);
 const emit = defineEmits<{ "update:modelValue": [string] }>();
 
 const openKeys = ref<Set<string>>(new Set());
@@ -24,6 +32,7 @@ function toggleOpen(key: string) {
 function select(item: MenuItem) {
     if (item.disabled) return;
     if (item.children?.length) {
+        if (props.expandAll) return;
         toggleOpen(item.key);
         return;
     }
@@ -47,22 +56,37 @@ function select(item: MenuItem) {
                 ]"
                 @click="select(item)"
             >
-                {{ item.label }}
+                <span class="flex min-w-0 items-center gap-2">
+                    <component
+                        :is="item.icon"
+                        v-if="item.icon"
+                        class="h-4 w-4 shrink-0 text-gray-400"
+                        aria-hidden="true"
+                    />
+                    <span class="truncate">{{ item.label }}</span>
+                </span>
                 <span
                     v-if="item.children?.length"
                     class="text-gray-400 transition-transform"
-                    :class="openKeys.has(item.key) && 'rotate-180'"
+                    :class="
+                        (props.expandAll || openKeys.has(item.key)) &&
+                        'rotate-180'
+                    "
                 >
                     <ChevronDownIcon class="h-3 w-3" />
                 </span>
             </button>
             <div
-                v-if="item.children?.length && openKeys.has(item.key)"
+                v-if="
+                    item.children?.length &&
+                    (props.expandAll || openKeys.has(item.key))
+                "
                 class="mt-0.5 ml-3 border-l border-gray-100 pl-2"
             >
                 <MyUiMenu
                     :items="item.children"
                     :model-value="modelValue"
+                    :expand-all="props.expandAll"
                     @update:model-value="emit('update:modelValue', $event)"
                 />
             </div>

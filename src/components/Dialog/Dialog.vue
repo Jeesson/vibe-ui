@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { watch, onBeforeUnmount } from "vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
 import {
     lockBodyScroll,
     unlockBodyScroll,
@@ -73,7 +74,7 @@ onBeforeUnmount(() => {
                             aria-label="Закрыть"
                             @click="close"
                         >
-                            ✕
+                            <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                         </button>
                     </div>
                     <div class="overflow-auto px-5 py-4 text-sm text-gray-700">

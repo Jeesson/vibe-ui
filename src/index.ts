@@ -41,6 +41,7 @@ import Image from "./components/Image/Image.vue";
 import Timeline from "./components/Timeline/Timeline.vue";
 import Table from "./components/Table/Table.vue";
 import Anchor from "./components/Anchor/Anchor.vue";
+import AnchorLink from "./components/Anchor/AnchorLink.vue";
 import Scrollbar from "./components/Scrollbar/Scrollbar.vue";
 import Cascader from "./components/Cascader/Cascader.vue";
 import ColorPicker from "./components/ColorPicker/ColorPicker.vue";
@@ -101,6 +102,7 @@ const components = {
     Timeline,
     Table,
     Anchor,
+    AnchorLink,
     Scrollbar,
     Cascader,
     ColorPicker,
@@ -167,6 +169,7 @@ export {
     Timeline,
     Table,
     Anchor,
+    AnchorLink,
     Scrollbar,
     Cascader,
     ColorPicker,

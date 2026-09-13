@@ -8,6 +8,11 @@ import {
     nextTick,
 } from "vue";
 import {
+    ChevronDownIcon,
+    ChevronRightIcon,
+} from "@heroicons/vue/24/outline";
+import Scrollbar from "../Scrollbar/Scrollbar.vue";
+import {
     computeFloatingRect,
     type FloatingRect,
 } from "../../composables/floating";
@@ -110,16 +115,16 @@ onBeforeUnmount(() => {
             class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left"
             @click="toggle"
         >
-            <span :class="!displayLabel && 'text-gray-400'">{{
-                displayLabel || placeholder || "Выберите"
-            }}</span>
-            <span class="text-gray-400">▾</span>
+            <span :class="!displayLabel && 'text-gray-400'">
+                {{ displayLabel || placeholder || "Выберите" }}
+            </span>
+            <ChevronDownIcon class="h-4 w-4 text-gray-400" aria-hidden="true" />
         </button>
 
         <Teleport to="body">
             <div
                 v-if="open && rect"
-                class="complex-ui-cascader-panel fixed z-[70] flex rounded-md border border-gray-200 bg-white shadow-lg"
+                class="complex-ui-cascader-panel fixed z-70 flex rounded-md border border-gray-200 bg-white shadow-lg"
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',
@@ -129,30 +134,33 @@ onBeforeUnmount(() => {
                             : undefined,
                 }"
             >
-                <ul
+                <Scrollbar
                     v-for="(col, depth) in columns"
                     :key="depth"
-                    class="max-h-60 overflow-auto border-r border-gray-100 py-1 last:border-r-0"
+                    max-height="15rem"
+                    class="border-r border-gray-100 last:border-r-0"
                     :style="{ width: COLUMN_WIDTH + 'px' }"
                 >
-                    <li
-                        v-for="option in col"
-                        :key="option.value"
-                        :class="[
-                            'flex cursor-pointer items-center justify-between px-3 py-2 hover:bg-gray-50',
-                            activePath[depth]?.value === option.value &&
-                                'bg-primary-50 text-primary-700',
-                        ]"
-                        @click="hover(depth, option)"
-                    >
-                        {{ option.label }}
-                        <span
-                            v-if="option.children?.length"
-                            class="text-gray-300"
-                            >›</span
+                    <ul class="py-1">
+                        <li
+                            v-for="option in col"
+                            :key="option.value"
+                            :class="[
+                                'flex cursor-pointer items-center justify-between px-3 py-2 hover:bg-gray-50',
+                                activePath[depth]?.value === option.value &&
+                                    'bg-primary-50 text-primary-700',
+                            ]"
+                            @click="hover(depth, option)"
                         >
-                    </li>
-                </ul>
+                            {{ option.label }}
+                            <ChevronRightIcon
+                                v-if="option.children?.length"
+                                class="h-4 w-4 text-gray-300"
+                                aria-hidden="true"
+                            />
+                        </li>
+                    </ul>
+                </Scrollbar>
             </div>
         </Teleport>
     </div>

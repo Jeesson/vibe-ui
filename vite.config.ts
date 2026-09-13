@@ -1,18 +1,14 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import tailwindcss from "@tailwindcss/vite";
-import dts from "vite-plugin-dts";
 import { resolve } from "path";
 
 // В dev-режиме (vite) — обычное приложение с превью компонентов.
 // В build-режиме (vite build) — собирается как библиотека.
-export default defineConfig(({ command }) => ({
-    plugins: [
-        vue(),
-        tailwindcss(),
-        command === "build" &&
-            dts({ include: ["src"], exclude: ["src/playground"] }),
-    ].filter(Boolean),
+// Декларации (.d.ts) генерирует vue-tsc (см. tsconfig.build.json и скрипт build),
+// поэтому vite build пишет только JS/CSS и НЕ очищает dist (emptyOutDir: false).
+export default defineConfig(() => ({
+    plugins: [vue(), tailwindcss()],
     build: {
         lib: {
             entry: resolve(import.meta.dirname, "src/index.ts"),
@@ -25,5 +21,6 @@ export default defineConfig(({ command }) => ({
             output: { globals: { vue: "Vue" } },
         },
         cssCodeSplit: false,
+        emptyOutDir: false,
     },
 }));

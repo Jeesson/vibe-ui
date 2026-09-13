@@ -38,14 +38,9 @@ onMounted(() => {
         >
             <div class="flex items-center gap-3">
                 <div class="flex items-center gap-2">
-                    <div
-                        class="from-primary-500 to-primary-700 flex h-7 w-7 items-center justify-center rounded-md bg-linear-to-br text-sm font-bold text-white shadow-sm"
-                    >
-                        U
-                    </div>
-                    <span class="text-sm font-semibold text-gray-900"
-                        >complex-ui</span
-                    >
+                    <span class="text-sm font-semibold text-gray-900">
+                        Сomplex UI
+                    </span>
                 </div>
 
                 <span class="text-gray-300">/</span>

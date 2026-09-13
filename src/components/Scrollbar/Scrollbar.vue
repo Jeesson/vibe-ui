@@ -1,9 +1,16 @@
 <script setup lang="ts">
-withDefaults(defineProps<{ maxHeight?: string }>(), { maxHeight: "240px" });
+withDefaults(
+    defineProps<{ maxHeight?: string; hide?: boolean }>(),
+    { maxHeight: "240px", hide: false },
+);
 </script>
 
 <template>
-    <div class="complex-ui-scrollbar overflow-auto" :style="{ maxHeight }">
+    <div
+        class="complex-ui-scrollbar overflow-auto"
+        :class="hide && 'complex-ui-scrollbar--hidden'"
+        :style="{ maxHeight }"
+    >
         <slot />
     </div>
 </template>
@@ -47,5 +54,14 @@ withDefaults(defineProps<{ maxHeight?: string }>(), { maxHeight: "240px" });
 }
 .complex-ui-scrollbar::-webkit-scrollbar-corner {
     background: transparent;
+}
+.complex-ui-scrollbar--hidden::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+@supports not selector(::-webkit-scrollbar) {
+    .complex-ui-scrollbar--hidden {
+        scrollbar-width: none;
+    }
 }
 </style>

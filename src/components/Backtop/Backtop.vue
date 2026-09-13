@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ArrowUpIcon } from "@heroicons/vue/24/outline";
 
 const props = withDefaults(
     defineProps<{ visibilityHeight?: number; target?: string }>(),
@@ -46,7 +47,7 @@ onBeforeUnmount(() => getScrollEl().removeEventListener("scroll", onScroll));
             class="hover:text-primary-600 fixed right-6 bottom-6 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg"
             @click="scrollToTop"
         >
-            ↑
+            <ArrowUpIcon class="h-4 w-4" aria-hidden="true" />
         </button>
     </Transition>
 </template>

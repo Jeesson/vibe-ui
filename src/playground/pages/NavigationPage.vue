@@ -6,6 +6,7 @@ import Popover from "../../components/Popover/Popover.vue";
 import Dropdown from "../../components/Dropdown/Dropdown.vue";
 import { toast } from "vue-sonner";
 import type { PanelPlacement } from "../../composables/floating";
+import { ChevronDownIcon } from "@heroicons/vue/24/outline";
 
 // Все 6 позиционок Dropdown для демонстрации
 const placements: PanelPlacement[] = [
@@ -78,7 +79,9 @@ defineExpose({
                     ]"
                     @select="(v) => toast.info('Выбрано: ' + v)"
                 >
-                    <Button variant="ghost">Действия ▾</Button>
+                    <Button variant="ghost" :icon-right="ChevronDownIcon"
+                        >Действия</Button
+                    >
                 </Dropdown>
             </div>
 

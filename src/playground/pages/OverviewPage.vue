@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-const emit = defineEmits<{ navigate: [page: string, anchor: string] }>();
+import {
+    ArrowUpIcon,
+    CalendarDaysIcon,
+    MagnifyingGlassIcon,
+    XMarkIcon,
+} from "@heroicons/vue/24/outline";
+const emit = defineEmits<{ navigate: [page: string, anchor?: string] }>();
 interface Item {
     name: string;
     page: string;
@@ -192,7 +198,7 @@ const groups: Group[] = [
                 name: "Backtop",
                 page: "overview",
                 anchor: "ov-group-navigation",
-                mock: "empty",
+                mock: "backtop",
             },
         ],
     },
@@ -294,7 +300,7 @@ const groups: Group[] = [
                 name: "DatePicker",
                 page: "datetime",
                 anchor: "datetime-datepicker",
-                mock: "calendar",
+                mock: "datepicker",
             },
             {
                 name: "TimeSelect",
@@ -348,19 +354,15 @@ const filtered = computed(() => {
         .filter((g) => g.items.length > 0);
 });
 function go(item: Item) {
-    emit("navigate", item.page, item.anchor);
+    const key = item.name.charAt(0).toLowerCase() + item.name.slice(1);
+    emit("navigate", "c-" + key);
 }
 </script>
 <template>
     <div class="ov">
         <div class="ov-search">
             <div class="ov-search-box">
-                <svg viewBox="0 0 1024 1024" class="ov-search-icon">
-                    <path
-                        fill="currentColor"
-                        d="m795.904 750.72 124.992 124.928a32 32 0 0 1-45.248 45.248L750.656 795.904a416 416 0 1 1 45.248-45.248zM480 832a352 352 0 1 0 0-704 352 352 0 0 0 0 704"
-                    />
-                </svg>
+                <MagnifyingGlassIcon class="ov-search-icon" aria-hidden="true" />
                 <input
                     v-model="search"
                     class="ov-search-input"
@@ -374,7 +376,7 @@ function go(item: Item) {
                     @click="search = ''"
                     aria-label="Clear"
                 >
-                    x
+                    <XMarkIcon class="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
             </div>
             <span class="ov-total">{{ total }} components</span>
@@ -502,6 +504,12 @@ function go(item: Item) {
                             ><i></i><i></i
                         ></span>
                         <span
+                            v-else-if="item.mock === 'backtop'"
+                            class="mk mk-backtop"
+                        >
+                            <ArrowUpIcon aria-hidden="true" />
+                        </span>
+                        <span
                             v-else-if="item.mock === 'alert'"
                             class="mk mk-alert"
                             ><i></i
@@ -540,9 +548,17 @@ function go(item: Item) {
                             ><i></i><i></i><i></i
                         ></span>
                         <span
+                            v-else-if="item.mock === 'datepicker'"
+                            class="mk mk-datepicker"
+                        >
+                            <span>12.09.2026</span>
+                            <CalendarDaysIcon aria-hidden="true" />
+                        </span>
+                        <span
                             v-else-if="item.mock === 'calendar'"
                             class="mk mk-cal"
-                            ><i></i><i></i><i></i><i></i
+                            ><b>Сентябрь 2026</b><i></i><i></i><i></i><i></i
+                            ><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
                         ></span>
                         <span
                             v-else-if="item.mock === 'upload'"
@@ -605,7 +621,6 @@ function go(item: Item) {
 }
 .ov-search-input:focus {
     border-color: #6366f1;
-    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
 }
 .ov-search-clear {
     position: absolute;
@@ -635,7 +650,7 @@ function go(item: Item) {
     margin: 0 0 10px;
     font-size: 15px;
     font-weight: 650;
-    color: #111827;
+    color: #172033;
 }
 .ov-count {
     min-width: 22px;
@@ -659,28 +674,29 @@ function go(item: Item) {
     display: flex;
     flex-direction: column;
     text-align: left;
-    background: #fff;
-    border: 1px solid #eef0f3;
+    background: #ffffff;
+    border: 1px solid #e7eaf0;
     border-radius: 12px;
     overflow: hidden;
     cursor: pointer;
     padding: 0;
     transition:
-        border-color 0.15s,
-        box-shadow 0.15s,
-        transform 0.15s;
+        border-color 0.15s;
 }
 .ov-card:hover {
-    border-color: #c7d2fe;
-    box-shadow: 0 8px 20px -12px rgba(99, 102, 241, 0.45);
-    transform: translateY(-1px);
+    border-color: #a5b4fc;
+}
+.ov-card:focus-visible {
+    outline: 3px solid rgba(99, 102, 241, 0.2);
+    outline-offset: 2px;
 }
 .ov-card-name {
     padding: 10px 12px;
     font-size: 13px;
     font-weight: 600;
-    color: #1f2937;
-    border-bottom: 1px solid #f3f4f6;
+    color: #263247;
+    background: #ffffff;
+    border-bottom: 1px solid #edf0f5;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -690,7 +706,7 @@ function go(item: Item) {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #f8fafc;
+    background: #f6f8fc;
     padding: 12px;
 }
 .mk {
@@ -712,7 +728,6 @@ function go(item: Item) {
     font-weight: 600;
     padding: 6px 22px;
     border-radius: 5px;
-    box-shadow: 0 6px 12px -6px rgba(99, 102, 241, 0.7);
 }
 .mk-input {
     width: 120px;
@@ -969,6 +984,18 @@ function go(item: Item) {
     background: #6366f1;
     width: 44px;
 }
+.mk-backtop {
+    width: 32px;
+    height: 32px;
+    color: #fff;
+    background: #6366f1;
+    border-radius: 999px;
+}
+.mk-backtop svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 2.5;
+}
 .mk-alert i {
     width: 120px;
     height: 26px;
@@ -1047,18 +1074,45 @@ function go(item: Item) {
 .mk-color i:nth-child(3) {
     background: #22c55e;
 }
+.mk-datepicker {
+    width: 112px;
+    height: 26px;
+    justify-content: space-between;
+    padding: 0 7px;
+    color: #64748b;
+    background: #fff;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 10px;
+}
+.mk-datepicker svg {
+    width: 13px;
+    height: 13px;
+    color: #6366f1;
+}
 .mk-cal {
     display: grid;
-    grid-template-columns: repeat(4, 18px);
-    gap: 4px;
+    grid-template-columns: repeat(7, 14px);
+    gap: 3px;
+    width: 116px;
+}
+.mk-cal b {
+    grid-column: 1 / -1;
+    height: 12px;
+    color: #64748b;
+    background: transparent;
+    font-size: 8px;
+    font-weight: 600;
+    line-height: 12px;
+    text-align: center;
 }
 .mk-cal i {
-    width: 18px;
-    height: 14px;
+    width: 14px;
+    height: 13px;
     background: #fff;
     border: 1px solid #e2e8f0;
 }
-.mk-cal i:nth-child(6) {
+.mk-cal i:nth-of-type(6) {
     background: #6366f1;
     border-color: #6366f1;
 }
@@ -1088,5 +1142,158 @@ function go(item: Item) {
     background: #fff;
     border: 1px dashed #e5e7eb;
     border-radius: 12px;
+}
+
+.dark .ov-search-input {
+    color: #f8fafc;
+    background: #1e293b;
+    border-color: #475569;
+}
+.dark .ov-search-input::placeholder {
+    color: #94a3b8;
+}
+.dark .ov-search-clear {
+    background: #334155;
+    color: #e2e8f0;
+}
+.dark .ov-total,
+.dark .ov-empty {
+    color: #cbd5e1;
+}
+.dark .ov-title,
+.dark .ov-card-name {
+    color: #f8fafc;
+}
+.dark .ov-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+.dark .ov-card:hover {
+    border-color: #818cf8;
+}
+.dark .ov-card-name {
+    background: #1e293b;
+    border-bottom-color: #334155;
+}
+.dark .ov-preview {
+    background: #0f172a;
+}
+.dark .ov-empty {
+    background: #1e293b;
+    border-color: #475569;
+}
+.dark .mk i,
+.dark .mk b {
+    background: #334155;
+}
+.dark .mk-input,
+.dark .mk-check i,
+.dark .mk-form i,
+.dark .mk-card,
+.dark .mk-col i,
+.dark .mk-tabs i:last-child,
+.dark .mk-table i,
+.dark .mk-pg i:nth-child(1),
+.dark .mk-pg i:nth-child(3),
+.dark .mk-menu i,
+.dark .mk-pop i,
+.dark .mk-pop b,
+.dark .mk-tip i,
+.dark .mk-tl i:last-child,
+.dark .mk-dialog,
+.dark .mk-scroll,
+.dark .mk-cal i,
+.dark .mk-upload i {
+    background: #1e293b;
+    border-color: #475569;
+}
+.dark .mk-check i.on,
+.dark .mk-menu i:first-child {
+    background: #6366f1;
+    border-color: #818cf8;
+}
+
+/* Preserve the visual identity of each overview mock in dark mode. */
+.dark .mk-input i,
+.dark .mk-switch i,
+.dark .mk-form b,
+.dark .mk-tabs i:first-child,
+.dark .mk-pg i:nth-child(2),
+.dark .mk-dialog b,
+.dark .mk-scroll i,
+.dark .mk-anchor i:first-child,
+.dark .mk-tl i {
+    background: #818cf8;
+}
+
+.dark .mk-slider i,
+.dark .mk-prog i {
+    background: linear-gradient(90deg, #818cf8 55%, #475569 55%);
+}
+
+.dark .mk-avatar i:first-child,
+.dark .mk-card i:first-child,
+.dark .mk-menu i:first-child {
+    background: #3730a3;
+    border-color: #6366f1;
+}
+
+.dark .mk-avatar i:last-child {
+    background: #f87171;
+}
+
+.dark .mk-tip b {
+    background: #020617;
+    color: #f8fafc;
+}
+
+.dark .mk-car i {
+    background: #312e81;
+    border-color: #6366f1;
+}
+
+.dark .mk-tags i:nth-child(1) {
+    background: #1e3a8a;
+}
+.dark .mk-tags i:nth-child(2) {
+    background: #14532d;
+}
+.dark .mk-tags i:nth-child(3) {
+    background: #713f12;
+}
+
+.dark .mk-alert i {
+    background: #713f12;
+    border-color: #f59e0b;
+}
+
+.dark .mk-datepicker {
+    color: #cbd5e1;
+    background: #1e293b;
+    border-color: #475569;
+}
+
+.dark .mk-datepicker svg {
+    color: #a5b4fc;
+}
+
+.dark .mk-cal b {
+    color: #cbd5e1;
+    background: transparent;
+}
+
+.dark .mk-cal i:nth-of-type(6) {
+    background: #6366f1;
+    border-color: #818cf8;
+}
+
+.dark .mk-color i:nth-child(1) {
+    background: #3730a3;
+}
+.dark .mk-color i:nth-child(2) {
+    background: #818cf8;
+}
+.dark .mk-color i:nth-child(3) {
+    background: #22c55e;
 }
 </style>

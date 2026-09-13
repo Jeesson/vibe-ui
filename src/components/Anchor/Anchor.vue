@@ -72,7 +72,7 @@ let observer: IntersectionObserver | null = null;
 let resizeObserver: ResizeObserver | null = null;
 let scrollContainer: HTMLElement | Window = window;
 
-function setLinkElement(href: string, element: Element | null) {
+function setLinkElement(href: string, element: unknown) {
     if (element instanceof HTMLElement) linkElements.set(href, element);
     else linkElements.delete(href);
 }
@@ -98,12 +98,18 @@ function updateIndicator() {
 }
 
 function resolveContainer(): HTMLElement | Window {
-    if (!props.container) return window;
-    if (isRef(props.container)) return props.container.value ?? window;
-    if (typeof props.container === "string") {
-        return document.querySelector<HTMLElement>(props.container) ?? window;
+    const container = props.container;
+    if (!container) return window;
+    if (typeof container === "string") {
+        return document.querySelector<HTMLElement>(container) ?? window;
     }
-    return props.container;
+    if (isRef(container)) {
+        return (container.value as HTMLElement | null) ?? window;
+    }
+    if (container instanceof HTMLElement || container instanceof Window) {
+        return container;
+    }
+    return window;
 }
 
 function getScrollTop(): number {

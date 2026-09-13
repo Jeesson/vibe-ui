@@ -2,6 +2,15 @@
     "name": "complex-ui",
     "version": "0.1.0",
     "type": "module",
+    "description": "A Vue 3 component library with an interactive documentation playground",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Jeesson/complex-ui.git"
+    },
+    "homepage": "https://complex-ui.pages.dev/",
+    "bugs": {
+        "url": "https://github.com/Jeesson/complex-ui/issues"
+    },
     "main": "./dist/complex-ui.cjs.js",
     "module": "./dist/complex-ui.es.js",
     "types": "./dist/index.d.ts",
@@ -20,9 +29,11 @@
         "vue": "^3.4.0"
     },
     "scripts": {
-        "dev": "vite",
-        "build": "vue-tsc --noEmit && vite build",
-        "preview": "vite preview"
+        "dev": "vite --config vite.playground.config.ts",
+        "build": "bun run build:library",
+        "build:library": "vue-tsc --noEmit && vue-tsc -p tsconfig.build.json && vite build --config vite.library.config.ts",
+        "build:playground": "vite build --config vite.playground.config.ts",
+        "preview": "vite preview --config vite.playground.config.ts"
     },
     "dependencies": {
         "@heroicons/vue": "^2.2.0",

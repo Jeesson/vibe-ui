@@ -3,6 +3,7 @@ node_modules
 
 # Сборка
 dist
+playground-dist
 dist-ssr
 *.local
 

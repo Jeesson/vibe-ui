@@ -8,8 +8,7 @@ import Divider from "../../components/Divider/Divider.vue";
 import Progress from "../../components/Progress/Progress.vue";
 // Иконки: heroicons (@heroicons/vue/24/outline и др. каталоги)
 import { PlusIcon, ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
-// Иконки: lucide (lucide-vue-next)
-import { Trash2, ChevronRight } from "lucide-vue-next";
+import { Trash2, ChevronRight } from "@lucide/vue";
 
 defineExpose({
     anchors: [
@@ -38,7 +37,7 @@ defineExpose({
 
             <p class="mt-4 mb-2 text-xs text-gray-400">
                 С иконками — подходит любой svg-компонент из
-                <code>@heroicons/vue</code> или <code>lucide-vue-next</code>
+                <code>@heroicons/vue</code> или <code>@lucide/vue</code>
             </p>
             <div class="flex flex-wrap items-center gap-3">
                 <Button :icon="PlusIcon">Добавить</Button>

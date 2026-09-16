@@ -4,7 +4,7 @@ import DocExample from "../../docs/DocExample.vue";
 import { components as docs } from "../../docs/component-docs";
 import Button from "../../../components/Button/Button.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
-import { ChevronRight } from "lucide-vue-next";
+import { ChevronRight } from "@lucide/vue";
 const doc = docs.button;
 const primarySource = '<Button variant="primary">Primary</Button>';
 const secondarySource = '<Button variant="secondary">Secondary</Button>';

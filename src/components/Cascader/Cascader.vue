@@ -7,10 +7,7 @@ import {
     onBeforeUnmount,
     nextTick,
 } from "vue";
-import {
-    ChevronDownIcon,
-    ChevronRightIcon,
-} from "@heroicons/vue/24/outline";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
 import Scrollbar from "../Scrollbar/Scrollbar.vue";
 import {
     computeFloatingRect,

@@ -19,7 +19,7 @@ const props = defineProps<{
 const { locale, t } = useLocale();
 const localizedDescription = computed(() =>
     locale.value === "en"
-        ? componentDescriptionsEn[props.doc.key] ?? props.doc.description
+        ? (componentDescriptionsEn[props.doc.key] ?? props.doc.description)
         : props.doc.description,
 );
 function buildScript(usage: string): string {
@@ -27,20 +27,24 @@ function buildScript(usage: string): string {
         ...usage.matchAll(/v-model(?:\:[\w-]+)?="([\w$]+)(?:\.([\w$]+))?"/g),
     ];
     const arrays = [
-        ...usage.matchAll(/:(?:items|options|suggestions|users|links|tree|columns|data)="([\w$]+)"/g),
+        ...usage.matchAll(
+            /:(?:items|options|suggestions|users|links|tree|columns|data)="([\w$]+)"/g,
+        ),
     ].map((match) => match[1]);
     const bindings = [
-        ...usage.matchAll(/:(?:model|rules|links|items|options|columns|data)="([\w$]+)"/g),
+        ...usage.matchAll(
+            /:(?:model|rules|links|items|options|columns|data)="([\w$]+)"/g,
+        ),
     ].map((match) => match[1]);
-    const simpleBindings = [
-        ...usage.matchAll(/:[\w-]+="([a-z][\w$]*)"/g),
-    ].map((match) => match[1]);
+    const simpleBindings = [...usage.matchAll(/:[\w-]+="([a-z][\w$]*)"/g)].map(
+        (match) => match[1],
+    );
     const templateRefs = [...usage.matchAll(/\sref="([\w$]+)"/g)].map(
         (match) => match[1],
     );
-    const handlers = [
-        ...usage.matchAll(/@[\w-]+="([A-Za-z_$][\w$]*)"/g),
-    ].map((match) => match[1]);
+    const handlers = [...usage.matchAll(/@[\w-]+="([A-Za-z_$][\w$]*)"/g)].map(
+        (match) => match[1],
+    );
     const callbackHandlers = [
         ...usage.matchAll(/=>\s*([A-Za-z_$][\w$]*)\s*\(/g),
     ].map((match) => match[1]);
@@ -52,10 +56,7 @@ function buildScript(usage: string): string {
         const root = match[1];
         const field = match[2];
         if (root && field) {
-            nestedModels.set(root, [
-                ...(nestedModels.get(root) ?? []),
-                field,
-            ]);
+            nestedModels.set(root, [...(nestedModels.get(root) ?? []), field]);
         }
     }
 
@@ -70,7 +71,8 @@ function buildScript(usage: string): string {
         const name = match[1];
         if (!name || declared.has(name)) continue;
         declared.add(name);
-        const isArray = /(?:arr|tags|files|selected|path|links|items|options)/i.test(name);
+        const isArray =
+            /(?:arr|tags|files|selected|path|links|items|options)/i.test(name);
         const isBoolean = /^(?:is|has|open|loading|busy|on|agree)/i.test(name);
         const initialValue = isArray ? "[]" : isBoolean ? "false" : '""';
         declarations.push(`const ${name} = ref(${initialValue})`);
@@ -82,10 +84,10 @@ function buildScript(usage: string): string {
         if (name === "rules") {
             const fields = nestedModels.get("model") ?? [];
             const rules = fields.length
-            ? `{ ${fields.map((field) => `${field}: [{ required: true, message: "Обязательное поле" }]`).join(", ")} }`
-            : "{}";
+                ? `{ ${fields.map((field) => `${field}: [{ required: true, message: "Обязательное поле" }]`).join(", ")} }`
+                : "{}";
             declarations.push(
-            `const rules: Record<string, FormRule[]> = ${rules}`,
+                `const rules: Record<string, FormRule[]> = ${rules}`,
             );
         } else {
             const isOptions = /options$/i.test(name);
@@ -127,7 +129,9 @@ function buildScript(usage: string): string {
         return "// No local state is required for this example.";
     }
 
-    const imports = [`import { ${nestedModels.size ? "reactive, " : ""}ref } from "vue";`];
+    const imports = [
+        `import { ${nestedModels.size ? "reactive, " : ""}ref } from "vue";`,
+    ];
     if (declarations.some((line) => line.includes("FormRule"))) {
         imports.push('import type { FormRule } from "@jeesson/vibe-ui";');
     }
@@ -175,16 +179,19 @@ function exampleTitle(example: string, index: number): string {
         return "Вариант с иконкой";
     }
     if (normalized.includes("clearable")) return "Очищаемое значение";
-    if (normalized.includes("status=\"success\"")) {
+    if (normalized.includes('status="success"')) {
         return "Успешное состояние";
     }
-    if (normalized.includes("status=\"warning\"")) {
+    if (normalized.includes('status="warning"')) {
         return "Предупреждение";
     }
-    if (normalized.includes("status=\"exception\"")) {
+    if (normalized.includes('status="exception"')) {
         return "Состояние ошибки";
     }
-    if (normalized.includes("type=\"circle\"") || normalized.includes("type=\"dashboard\"")) {
+    if (
+        normalized.includes('type="circle"') ||
+        normalized.includes('type="dashboard"')
+    ) {
         return "Круговой вариант";
     }
     if (normalized.includes("@")) return "Интерактивный вариант";
@@ -201,7 +208,9 @@ const sourceExamples = computed(() => {
         : splitUsage(usage);
 
     return usages.map((example, index) => {
-        if (/^(?:import\s|message\.|messageBox\.|toast\.)/.test(example.trim())) {
+        if (
+            /^(?:import\s|message\.|messageBox\.|toast\.)/.test(example.trim())
+        ) {
             const importLine = example.trim().startsWith("message.")
                 ? 'import { message } from "@jeesson/vibe-ui";\n\n'
                 : example.trim().startsWith("messageBox.")
@@ -290,7 +299,10 @@ function functionTip(type?: string): string {
     return type?.trim() ?? "function";
 }
 
-function apiDescription(name: string, description?: string): string | undefined {
+function apiDescription(
+    name: string,
+    description?: string,
+): string | undefined {
     if (locale.value !== "en") return description;
     return apiDescriptionsEn[props.doc.key]?.[name] ?? description;
 }
@@ -325,24 +337,36 @@ function apiDescription(name: string, description?: string): string | undefined 
                 >
                     {{ t("docs.livePreview") }}
                 </h3>
-                <span class="text-[11px] text-gray-400">{{ t("docs.component") }}</span>
+                <span class="text-[11px] text-gray-400">{{
+                    t("docs.component")
+                }}</span>
             </div>
             <div v-if="structuredExamples" class="mt-3">
                 <slot name="examples" />
             </div>
             <div v-else-if="sourceExamples.length" class="mt-3">
-                <h4 class="mb-2 text-xs font-semibold tracking-wide text-gray-700 uppercase dark:text-gray-800">
+                <h4
+                    class="mb-2 text-xs font-semibold tracking-wide text-gray-700 uppercase dark:text-gray-800"
+                >
                     {{ t("docs.mainExample") }}
                 </h4>
-                <section class="overflow-hidden rounded-md border border-gray-200 dark:border-gray-300">
+                <section
+                    class="overflow-hidden rounded-md border border-gray-200 dark:border-gray-300"
+                >
                     <div class="bg-white px-4 py-4 dark:bg-gray-50">
                         <slot name="examples" />
                     </div>
-                    <details class="border-t border-gray-200 bg-gray-50 dark:border-gray-300 dark:bg-gray-100">
-                        <summary class="cursor-pointer px-4 py-2 text-[11px] font-semibold tracking-wide text-gray-500 uppercase transition-colors hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-200">
+                    <details
+                        class="border-t border-gray-200 bg-gray-50 dark:border-gray-300 dark:bg-gray-100"
+                    >
+                        <summary
+                            class="cursor-pointer px-4 py-2 text-[11px] font-semibold tracking-wide text-gray-500 uppercase transition-colors hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-200"
+                        >
                             {{ t("docs.showCode") }}
                         </summary>
-                        <pre class="overflow-x-auto border-t border-gray-200 px-4 py-4 text-xs leading-6 text-gray-700 dark:border-gray-300 dark:text-gray-800"><code>{{ sourceExamples.map((example) => example.source).join("\n\n") }}</code></pre>
+                        <pre
+                            class="overflow-x-auto border-t border-gray-200 px-4 py-4 text-xs leading-6 text-gray-700 dark:border-gray-300 dark:text-gray-800"
+                        ><code>{{ sourceExamples.map((example) => example.source).join("\n\n") }}</code></pre>
                     </details>
                 </section>
             </div>
@@ -350,7 +374,10 @@ function apiDescription(name: string, description?: string): string | undefined 
 
         <!-- API -->
         <div v-if="doc.props || doc.events || doc.methods || doc.slots">
-            <section id="component-api" class="api-docs overflow-hidden rounded-lg border border-gray-100 bg-white">
+            <section
+                id="component-api"
+                class="api-docs overflow-hidden rounded-lg border border-gray-100 bg-white"
+            >
                 <div class="border-b border-gray-100 px-5 py-4">
                     <div class="flex items-center justify-between gap-3">
                         <div>
@@ -361,282 +388,343 @@ function apiDescription(name: string, description?: string): string | undefined 
                                 {{ t("docs.apiDescription") }}
                             </p>
                         </div>
-                        <span class="rounded-full border border-primary-100 bg-primary-50 px-2 py-1 text-[10px] font-semibold tracking-wide text-primary-700 uppercase">
+                        <span
+                            class="border-primary-100 bg-primary-50 text-primary-700 rounded-full border px-2 py-1 text-[10px] font-semibold tracking-wide uppercase"
+                        >
                             API
                         </span>
                     </div>
                 </div>
                 <div class="space-y-6 p-5">
-
-                <!-- Props -->
-                <template v-if="propRows(doc.props).length">
-                    <h4 class="mb-2 text-sm font-medium text-gray-700">
-                                {{ t("docs.props") }}
-                    </h4>
-                    <table class="w-full table-fixed text-sm">
-                        <colgroup>
-                            <col style="width: 20%" />
-                            <col style="width: 30%" />
-                            <col style="width: 15%" />
-                            <col style="width: 35%" />
-                        </colgroup>
-                        <thead>
-                            <tr
-                                class="border-b border-gray-100 text-left text-gray-500"
-                            >
-                                <th class="w-[18%] px-3 py-1.5 font-medium">
-                                    {{ t("docs.name") }}
-                                </th>
-                                <th class="w-[30%] px-3 py-1.5 font-medium">
-                                    {{ t("docs.type") }}
-                                </th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.default") }}
-                                </th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.description") }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr
-                                v-for="row in propRows(doc.props)"
-                                :key="row.name"
-                                class="align-top"
-                            >
-                                <td class="px-3 py-2 font-mono text-xs">
-                                    {{ row.name
-                                    }}<span
-                                        v-if="row.required"
-                                        class="text-red-500"
-                                        >*</span
-                                    >
-                                </td>
-                                <td
-                                    class="px-3 py-2 font-mono text-xs text-gray-500"
+                    <!-- Props -->
+                    <template v-if="propRows(doc.props).length">
+                        <h4 class="mb-2 text-sm font-medium text-gray-700">
+                            {{ t("docs.props") }}
+                        </h4>
+                        <table class="w-full table-fixed text-sm">
+                            <colgroup>
+                                <col style="width: 20%" />
+                                <col style="width: 30%" />
+                                <col style="width: 15%" />
+                                <col style="width: 35%" />
+                            </colgroup>
+                            <thead>
+                                <tr
+                                    class="border-b border-gray-100 text-left text-gray-500"
                                 >
-                                    <Tooltip
-                                        v-if="enumValues(row.type).length"
-                                        :content="enumTip(row.type)"
-                                    >
-                                        <code
-                                            class="cursor-help rounded border border-indigo-200 bg-indigo-50 px-1.5 py-0.5 text-[11px] font-semibold text-indigo-700 dark:border-indigo-400 dark:bg-indigo-900 dark:text-white"
-                                            >enum</code
+                                    <th class="w-[18%] px-3 py-1.5 font-medium">
+                                        {{ t("docs.name") }}
+                                    </th>
+                                    <th class="w-[30%] px-3 py-1.5 font-medium">
+                                        {{ t("docs.type") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.default") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.description") }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr
+                                    v-for="row in propRows(doc.props)"
+                                    :key="row.name"
+                                    class="align-top"
+                                >
+                                    <td class="px-3 py-2 font-mono text-xs">
+                                        {{ row.name
+                                        }}<span
+                                            v-if="row.required"
+                                            class="text-red-500"
+                                            >*</span
                                         >
-                                    </Tooltip>
-                                    <template v-else>{{ row.type }}</template>
-                                </td>
-                                <td
-                                    class="px-3 py-2 font-mono text-xs text-gray-400"
-                                >
-                                    {{ row.default }}
-                                </td>
-                                <td class="px-3 py-2 text-gray-600">
-                                    {{ apiDescription(row.name, row.description) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </template>
-                <!-- Events -->
-                <template v-if="eventRows(doc.events).length">
-                        <h4 class="mt-5 mb-2 text-sm font-medium text-gray-700">
-                        {{ t("docs.events") }}
-                    </h4>
-                    <table class="w-full table-fixed text-sm">
-                        <colgroup>
-                            <col style="width: 20%" />
-                            <col style="width: 45%" />
-                            <col style="width: 35%" />
-                        </colgroup>
-                        <thead>
-                            <tr
-                                class="border-b border-gray-100 text-left text-gray-500"
-                            >
-                                <th class="px-3 py-1.5 font-medium">{{ t("docs.event") }}</th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.params") }}
-                                </th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.description") }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr
-                                v-for="row in eventRows(doc.events)"
-                                :key="row.name"
-                                class="align-top"
-                            >
-                                <td class="px-3 py-2 font-mono text-xs">
-                                    @{{ row.name }}
-                                </td>
-                                <td
-                                    class="px-3 py-2 font-mono text-xs text-gray-500"
-                                >
-                                    <Tooltip
-                                        v-if="isFunctionType(row.params)"
-                                        :content="functionTip(row.params)"
+                                    </td>
+                                    <td
+                                        class="px-3 py-2 font-mono text-xs text-gray-500"
                                     >
-                                        <code class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100">
-                                            function
-                                        </code>
-                                    </Tooltip>
-                                    <template v-else-if="enumValues(row.params).length">
-                                        <Tooltip :content="enumTip(row.params)">
-                                            <span
-                                                class="cursor-help border-b border-dashed border-gray-400"
-                                                >enum [{{
-                                                    enumValues(row.params).join(
-                                                        ", ",
-                                                    )
-                                                }}]</span
+                                        <Tooltip
+                                            v-if="enumValues(row.type).length"
+                                            :content="enumTip(row.type)"
+                                        >
+                                            <code
+                                                class="cursor-help rounded border border-indigo-200 bg-indigo-50 px-1.5 py-0.5 text-[11px] font-semibold text-indigo-700 dark:border-indigo-400 dark:bg-indigo-900 dark:text-white"
+                                                >enum</code
                                             >
                                         </Tooltip>
-                                    </template>
-                                    <template v-else>{{ row.params }}</template>
-                                </td>
-                                <td class="px-3 py-2 text-gray-600">
-                                    {{ apiDescription(row.name, row.description) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </template>
+                                        <template v-else>{{
+                                            row.type
+                                        }}</template>
+                                    </td>
+                                    <td
+                                        class="px-3 py-2 font-mono text-xs text-gray-400"
+                                    >
+                                        {{ row.default }}
+                                    </td>
+                                    <td class="px-3 py-2 text-gray-600">
+                                        {{
+                                            apiDescription(
+                                                row.name,
+                                                row.description,
+                                            )
+                                        }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
+                    <!-- Events -->
+                    <template v-if="eventRows(doc.events).length">
+                        <h4 class="mt-5 mb-2 text-sm font-medium text-gray-700">
+                            {{ t("docs.events") }}
+                        </h4>
+                        <table class="w-full table-fixed text-sm">
+                            <colgroup>
+                                <col style="width: 20%" />
+                                <col style="width: 45%" />
+                                <col style="width: 35%" />
+                            </colgroup>
+                            <thead>
+                                <tr
+                                    class="border-b border-gray-100 text-left text-gray-500"
+                                >
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.event") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.params") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.description") }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr
+                                    v-for="row in eventRows(doc.events)"
+                                    :key="row.name"
+                                    class="align-top"
+                                >
+                                    <td class="px-3 py-2 font-mono text-xs">
+                                        @{{ row.name }}
+                                    </td>
+                                    <td
+                                        class="px-3 py-2 font-mono text-xs text-gray-500"
+                                    >
+                                        <Tooltip
+                                            v-if="isFunctionType(row.params)"
+                                            :content="functionTip(row.params)"
+                                        >
+                                            <code
+                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100"
+                                            >
+                                                function
+                                            </code>
+                                        </Tooltip>
+                                        <template
+                                            v-else-if="
+                                                enumValues(row.params).length
+                                            "
+                                        >
+                                            <Tooltip
+                                                :content="enumTip(row.params)"
+                                            >
+                                                <span
+                                                    class="cursor-help border-b border-dashed border-gray-400"
+                                                    >enum [{{
+                                                        enumValues(
+                                                            row.params,
+                                                        ).join(", ")
+                                                    }}]</span
+                                                >
+                                            </Tooltip>
+                                        </template>
+                                        <template v-else>{{
+                                            row.params
+                                        }}</template>
+                                    </td>
+                                    <td class="px-3 py-2 text-gray-600">
+                                        {{
+                                            apiDescription(
+                                                row.name,
+                                                row.description,
+                                            )
+                                        }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
 
-                <!-- Methods -->
-                <template v-if="methodRows(doc.methods).length">
+                    <!-- Methods -->
+                    <template v-if="methodRows(doc.methods).length">
                         <h4 class="mt-5 mb-2 text-sm font-medium text-gray-700">
-                        {{ t("docs.methods") }}
-                    </h4>
-                    <table class="w-full table-fixed text-sm">
-                        <colgroup>
-                            <col style="width: 20%" />
-                            <col style="width: 45%" />
-                            <col style="width: 35%" />
-                        </colgroup>
-                        <thead>
-                            <tr
-                                class="border-b border-gray-100 text-left text-gray-500"
-                            >
-                                <th class="px-3 py-1.5 font-medium">{{ t("docs.method") }}</th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.signature") }}
-                                </th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.description") }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr
-                                v-for="row in methodRows(doc.methods)"
-                                :key="row.name"
-                                class="align-top"
-                            >
-                                <td class="px-3 py-2 font-mono text-xs">
-                                    {{ row.name }}
-                                </td>
-                                <td
-                                    class="px-3 py-2 font-mono text-xs text-gray-500"
+                            {{ t("docs.methods") }}
+                        </h4>
+                        <table class="w-full table-fixed text-sm">
+                            <colgroup>
+                                <col style="width: 20%" />
+                                <col style="width: 45%" />
+                                <col style="width: 35%" />
+                            </colgroup>
+                            <thead>
+                                <tr
+                                    class="border-b border-gray-100 text-left text-gray-500"
                                 >
-                                    <Tooltip
-                                        v-if="isFunctionType(row.params)"
-                                        :content="functionTip(row.params)"
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.method") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.signature") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.description") }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr
+                                    v-for="row in methodRows(doc.methods)"
+                                    :key="row.name"
+                                    class="align-top"
+                                >
+                                    <td class="px-3 py-2 font-mono text-xs">
+                                        {{ row.name }}
+                                    </td>
+                                    <td
+                                        class="px-3 py-2 font-mono text-xs text-gray-500"
                                     >
-                                        <code class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100">
-                                            function
-                                        </code>
-                                    </Tooltip>
-                                    <template v-else-if="enumValues(row.params).length">
-                                        <Tooltip :content="enumTip(row.params)">
-                                            <span
-                                                class="cursor-help border-b border-dashed border-gray-400"
-                                                >enum [{{
-                                                    enumValues(row.params).join(
-                                                        ", ",
-                                                    )
-                                                }}]</span
+                                        <Tooltip
+                                            v-if="isFunctionType(row.params)"
+                                            :content="functionTip(row.params)"
+                                        >
+                                            <code
+                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100"
                                             >
+                                                function
+                                            </code>
                                         </Tooltip>
-                                    </template>
-                                    <template v-else>{{ row.params }}</template>
-                                </td>
-                                <td class="px-3 py-2 text-gray-600">
-                                    {{ apiDescription(row.name, row.description) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </template>
+                                        <template
+                                            v-else-if="
+                                                enumValues(row.params).length
+                                            "
+                                        >
+                                            <Tooltip
+                                                :content="enumTip(row.params)"
+                                            >
+                                                <span
+                                                    class="cursor-help border-b border-dashed border-gray-400"
+                                                    >enum [{{
+                                                        enumValues(
+                                                            row.params,
+                                                        ).join(", ")
+                                                    }}]</span
+                                                >
+                                            </Tooltip>
+                                        </template>
+                                        <template v-else>{{
+                                            row.params
+                                        }}</template>
+                                    </td>
+                                    <td class="px-3 py-2 text-gray-600">
+                                        {{
+                                            apiDescription(
+                                                row.name,
+                                                row.description,
+                                            )
+                                        }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
 
-                <!-- Slots -->
-                <template v-if="slotRows(doc.slots).length">
+                    <!-- Slots -->
+                    <template v-if="slotRows(doc.slots).length">
                         <h4 class="mt-5 mb-2 text-sm font-medium text-gray-700">
-                        {{ t("docs.slots") }}
-                    </h4>
-                    <table class="w-full table-fixed text-sm">
-                        <colgroup>
-                            <col style="width: 20%" />
-                            <col style="width: 45%" />
-                            <col style="width: 35%" />
-                        </colgroup>
-                        <thead>
-                            <tr
-                                class="border-b border-gray-100 text-left text-gray-500"
-                            >
-                                <th class="px-3 py-1.5 font-medium">{{ t("docs.slot") }}</th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.params") }}
-                                </th>
-                                <th class="px-3 py-1.5 font-medium">
-                                    {{ t("docs.description") }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-100">
-                            <tr
-                                v-for="row in slotRows(doc.slots)"
-                                :key="row.name"
-                                class="align-top"
-                            >
-                                <td class="px-3 py-2 font-mono text-xs">
-                                    <template v-if="row.name === 'default'"
-                                        >(default)</template
-                                    ><template v-else>#{{ row.name }}</template>
-                                </td>
-                                <td
-                                    class="px-3 py-2 font-mono text-xs text-gray-500"
+                            {{ t("docs.slots") }}
+                        </h4>
+                        <table class="w-full table-fixed text-sm">
+                            <colgroup>
+                                <col style="width: 20%" />
+                                <col style="width: 45%" />
+                                <col style="width: 35%" />
+                            </colgroup>
+                            <thead>
+                                <tr
+                                    class="border-b border-gray-100 text-left text-gray-500"
                                 >
-                                    <Tooltip
-                                        v-if="isFunctionType(row.params)"
-                                        :content="functionTip(row.params)"
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.slot") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.params") }}
+                                    </th>
+                                    <th class="px-3 py-1.5 font-medium">
+                                        {{ t("docs.description") }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                                <tr
+                                    v-for="row in slotRows(doc.slots)"
+                                    :key="row.name"
+                                    class="align-top"
+                                >
+                                    <td class="px-3 py-2 font-mono text-xs">
+                                        <template v-if="row.name === 'default'"
+                                            >(default)</template
+                                        ><template v-else
+                                            >#{{ row.name }}</template
+                                        >
+                                    </td>
+                                    <td
+                                        class="px-3 py-2 font-mono text-xs text-gray-500"
                                     >
-                                        <code class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100">
-                                            function
-                                        </code>
-                                    </Tooltip>
-                                    <template v-else-if="enumValues(row.params).length">
-                                        <Tooltip :content="enumTip(row.params)">
-                                            <span
-                                                class="cursor-help border-b border-dashed border-gray-400"
-                                                >enum [{{
-                                                    enumValues(row.params).join(
-                                                        ", ",
-                                                    )
-                                                }}]</span
+                                        <Tooltip
+                                            v-if="isFunctionType(row.params)"
+                                            :content="functionTip(row.params)"
+                                        >
+                                            <code
+                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100"
                                             >
+                                                function
+                                            </code>
                                         </Tooltip>
-                                    </template>
-                                    <template v-else>{{ row.params }}</template>
-                                </td>
-                                <td class="px-3 py-2 text-gray-600">
-                                    {{ apiDescription(row.name, row.description) }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </template>
+                                        <template
+                                            v-else-if="
+                                                enumValues(row.params).length
+                                            "
+                                        >
+                                            <Tooltip
+                                                :content="enumTip(row.params)"
+                                            >
+                                                <span
+                                                    class="cursor-help border-b border-dashed border-gray-400"
+                                                    >enum [{{
+                                                        enumValues(
+                                                            row.params,
+                                                        ).join(", ")
+                                                    }}]</span
+                                                >
+                                            </Tooltip>
+                                        </template>
+                                        <template v-else>{{
+                                            row.params
+                                        }}</template>
+                                    </td>
+                                    <td class="px-3 py-2 text-gray-600">
+                                        {{
+                                            apiDescription(
+                                                row.name,
+                                                row.description,
+                                            )
+                                        }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </template>
                 </div>
             </section>
 

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-withDefaults(
-    defineProps<{ maxHeight?: string; hide?: boolean }>(),
-    { maxHeight: "240px", hide: false },
-);
+withDefaults(defineProps<{ maxHeight?: string; hide?: boolean }>(), {
+    maxHeight: "240px",
+    hide: false,
+});
 </script>
 
 <template>

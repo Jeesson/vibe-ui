@@ -39,9 +39,7 @@ const placements: PanelPlacement[] = [
                         { label: 'Отключено', value: 'x', disabled: true },
                     ]"
                 >
-                    <Button
-                        variant="secondary"
-                        :icon-right="ChevronDownIcon"
+                    <Button variant="secondary" :icon-right="ChevronDownIcon"
                         >С disabled-пунктом</Button
                     >
                 </Dropdown>

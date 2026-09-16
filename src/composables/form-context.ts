@@ -23,8 +23,7 @@ export interface FormContext {
     unregisterItem: (prop: string) => void;
 }
 
-export const FormContextKey: InjectionKey<FormContext> =
-    Symbol("vibe-ui-form");
+export const FormContextKey: InjectionKey<FormContext> = Symbol("vibe-ui-form");
 
 export function runRules(
     value: unknown,

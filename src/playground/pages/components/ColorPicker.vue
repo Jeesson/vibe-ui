@@ -12,7 +12,9 @@ const source = '<ColorPicker v-model="color" />';
 <template>
     <ComponentDoc :doc="doc" structured-examples>
         <template #examples>
-            <DocExample title="Выбор цвета" :source="source"><ColorPicker v-model="color" /></DocExample>
+            <DocExample title="Выбор цвета" :source="source">
+                <ColorPicker v-model="color" />
+            </DocExample>
         </template>
     </ComponentDoc>
 </template>

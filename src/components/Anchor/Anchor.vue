@@ -50,20 +50,28 @@ const emit = defineEmits<{
 const slots = useSlots();
 const slotLinks = computed<AnchorLink[]>(() => {
     const result: AnchorLink[] = [];
-    const visit = (nodes: ReturnType<NonNullable<typeof slots.default>>): void => {
+    const visit = (
+        nodes: ReturnType<NonNullable<typeof slots.default>>,
+    ): void => {
         for (const node of nodes) {
             const props = node.props;
             if (props?.href && props?.title) {
-                result.push({ href: String(props.href), title: String(props.title) });
+                result.push({
+                    href: String(props.href),
+                    title: String(props.title),
+                });
             }
-            if (Array.isArray(node.children)) visit(node.children as typeof nodes);
+            if (Array.isArray(node.children))
+                visit(node.children as typeof nodes);
         }
     };
     const nodes = slots.default?.() ?? [];
     visit(nodes);
     return result;
 });
-const anchorLinks = computed(() => props.links?.length ? props.links : slotLinks.value);
+const anchorLinks = computed(() =>
+    props.links?.length ? props.links : slotLinks.value,
+);
 const activeLinks = ref<string[]>([]);
 const linkElements = new Map<string, HTMLElement>();
 const indicator = ref({ top: 0, height: 0 });
@@ -113,7 +121,9 @@ function resolveContainer(): HTMLElement | Window {
 }
 
 function getScrollTop(): number {
-    return scrollContainer instanceof Window ? window.scrollY : scrollContainer.scrollTop;
+    return scrollContainer instanceof Window
+        ? window.scrollY
+        : scrollContainer.scrollTop;
 }
 
 function getTargetTop(target: Element): number {
@@ -181,7 +191,8 @@ onMounted(() => {
             if (visible.length) activeLinks.value = visible;
         },
         {
-            root: scrollContainer instanceof HTMLElement ? scrollContainer : null,
+            root:
+                scrollContainer instanceof HTMLElement ? scrollContainer : null,
             rootMargin: `-${props.bound}px 0px -${Math.max(0, 100 - props.bound)}% 0px`,
             threshold: [0, 0.01],
         },
@@ -210,15 +221,25 @@ onBeforeUnmount(() => {
             v-if="marker"
             aria-hidden="true"
             :class="[
-                'pointer-events-none absolute rounded-full bg-primary-600 transition-[height,width,transform] duration-300 ease-out',
+                'bg-primary-600 pointer-events-none absolute rounded-full transition-[height,width,transform] duration-300 ease-out',
                 direction === 'horizontal'
                     ? '-bottom-px left-0 h-0.5'
                     : 'top-0 -left-px w-0.5',
                 type === 'dot' && 'h-2 w-2',
             ]"
             :style="{
-                height: type === 'dot' ? '8px' : direction === 'horizontal' ? undefined : `${indicator.height}px`,
-                width: type === 'dot' ? '8px' : direction === 'horizontal' ? `${indicator.height}px` : undefined,
+                height:
+                    type === 'dot'
+                        ? '8px'
+                        : direction === 'horizontal'
+                          ? undefined
+                          : `${indicator.height}px`,
+                width:
+                    type === 'dot'
+                        ? '8px'
+                        : direction === 'horizontal'
+                          ? `${indicator.height}px`
+                          : undefined,
                 transform:
                     direction === 'horizontal'
                         ? `translateX(${indicator.top}px)`

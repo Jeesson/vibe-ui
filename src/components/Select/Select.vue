@@ -63,8 +63,7 @@ function clear(e: Event) {
 function onClickOutside(e: MouseEvent) {
     const target = e.target as Node;
     if (rootRef.value?.contains(target)) return;
-    if ((e.target as HTMLElement)?.closest?.(".vibe-ui-select-panel"))
-        return;
+    if ((e.target as HTMLElement)?.closest?.(".vibe-ui-select-panel")) return;
     open.value = false;
 }
 

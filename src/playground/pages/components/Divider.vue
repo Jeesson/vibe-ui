@@ -4,8 +4,8 @@ import DocExample from "../../docs/DocExample.vue";
 import { components as docs } from "../../docs/component-docs";
 import Divider from "../../../components/Divider/Divider.vue";
 const doc = docs.divider;
-const labeledSource = '<Divider>секция</Divider>';
-const horizontalSource = '<Divider />';
+const labeledSource = "<Divider>секция</Divider>";
+const horizontalSource = "<Divider />";
 const verticalSource = '<Divider direction="vertical" />';
 </script>
 
@@ -15,9 +15,13 @@ const verticalSource = '<Divider direction="vertical" />';
             <div class="flex max-w-sm flex-col gap-4">
                 <DocExample title="С подписью" :source="labeledSource">
                     <div>
-                        <p class="text-sm text-gray-600">Текст до разделителя</p>
+                        <p class="text-sm text-gray-600">
+                            Текст до разделителя
+                        </p>
                         <Divider>секция</Divider>
-                        <p class="text-sm text-gray-600">Текст после разделителя</p>
+                        <p class="text-sm text-gray-600">
+                            Текст после разделителя
+                        </p>
                     </div>
                 </DocExample>
                 <DocExample title="Горизонтальный" :source="horizontalSource">

@@ -88,11 +88,12 @@ onBeforeUnmount(() => {
                 fixed
                     ? {
                           position: 'fixed',
-                              top: position === 'top' ? offset + 'px' : undefined,
-                              bottom: position === 'bottom' ? offset + 'px' : undefined,
+                          top: position === 'top' ? offset + 'px' : undefined,
+                          bottom:
+                              position === 'bottom' ? offset + 'px' : undefined,
                           width: width + 'px',
-                              left: left + 'px',
-                              zIndex,
+                          left: left + 'px',
+                          zIndex,
                       }
                     : undefined
             "

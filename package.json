@@ -57,12 +57,12 @@
     "dependencies": {
         "@heroicons/vue": "^2.2.0",
         "@types/node": "^26.5.1",
-        "lucide-vue-next": "^1.0.0",
+        "@lucide/vue": "^1.46.0",
         "vue-sonner": "^2.0.9"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.3.3",
-        "@vitejs/plugin-vue": "^6.0.8",
+        "@vitejs/plugin-vue": "^6.0.9",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "tailwindcss": "^4.3.3",
         "typescript": "^6.0.3",

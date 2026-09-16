@@ -1,42 +1,29 @@
 # Vibe UI
 
-**Vibe UI** — библиотека компонентов для **Vue 3** для вайб-кодинга: 50+ компонентов с интерактивной документацией-плейграундом. Тёмная/светлая темы, Tailwind CSS 4, TypeScript, Vite.
+**Vibe UI** is a component library for **Vue 3** built for vibe coding: 50+ components with an interactive playground documentation. Dark/light themes, Tailwind CSS 4, TypeScript, Vite.
 
-🔗 Демо: https://vibe-ui.pages.dev/ <!-- TODO: актуальный адрес сайта будет указан позже -->
+🔗 Demo: https://vibe-ui.pages.dev/
 📦 npm: `@jeesson/vibe-ui`
 
-## Первоисточник
+## Original Source
 
-Данный проект основан на первоисточнике:
+This project is based on the original source:
 
 > **Jeesson/vibe-ui** — https://github.com/Jeesson/vibe-ui
 
-При использовании, копировании и распространении кода обязательно сохраняйте указание первоисточника. Условия атрибуции и разделения дохода описаны в файле [LICENSE](./LICENSE).
+When using, copying, and distributing the code, you must keep the attribution to the original source. The terms of attribution and revenue sharing are described in the [LICENSE](./LICENSE) file.
 
-## Разделение дохода (Revenue Sharing)
-
-Действует соглашение о разделе дохода **50% / 50%**:
-
-- **50%** — правообладателю первоисточника (https://github.com/Jeesson/vibe-ui);
-- **50%** — авторам производных изменений / данного репозитория.
-
-Под доходом понимаются любые прямые поступления, связанные с проектом: спонсорство (GitHub Sponsors и т.п.), донаты, платные подписки, коммерческая поддержка и интеграция. Полные условия — в файле [LICENSE](./LICENSE) и в разделе [FUNDING / Revenue Sharing](https://github.com/Jeesson/vibe-ui#разделение-дохода-revenue-sharing).
-
-> ⚠️ **При нарушении условий** (атрибуция удалена/искажена, доход занижен или скрыт, выплата просрочена и т.п.) разделение **автоматически меняется на 80/20 в пользу первоисточника** — ретроактивно, со всех сумм с начала нарушения, включая обязанность компенсировать недоплату. Подробнее — разделы 3.1–3.2 [LICENSE](./LICENSE).
->
-> 🚫 **Форки форков запрещены полностью**: создавать, распространять и извлекать из них доход нельзя ни при каких условиях — любой такой доход (100%) принадлежит правообладателю первоисточника, а сам саб-форк считается нарушением с момента создания. Получатели от первого форка получают **только право использования** (без модификаций на публикацию, форков и перепродажи). Раздел 3.14 [LICENSE](./LICENSE).
-
-## Установка
+## Installation
 
 ```bash
 bun add @jeesson/vibe-ui
-# или
+# or
 npm install @jeesson/vibe-ui
 ```
 
-Необходим peer-зависимый `vue ^3.4.0`.
+The peer dependency `vue ^3.4.0` is required.
 
-### Подключение
+### Setup
 
 ```ts
 import { createApp } from "vue";
@@ -47,30 +34,30 @@ import App from "./App.vue";
 createApp(App).use(VibeUI).mount("#app");
 ```
 
-## Разработка
+## Development
 
-| Команда                | Назначение                                        |
-| ---------------------- | ------------------------------------------------- |
-| `bun run dev`          | Запуск документации-плейграунда (Vite dev server) |
-| `bun run build`        | Сборка библиотеки (ESM + CJS + типы)              |
-| `bun run build:playground` | Сборка статического сайта документации        |
-| `bun run preview`      | Предпросмотр собранной документации               |
+| Command                    | Purpose                                              |
+| -------------------------- | ---------------------------------------------------- |
+| `bun run dev`              | Start the playground documentation (Vite dev server) |
+| `bun run build`            | Build the library (ESM + CJS + types)                |
+| `bun run build:playground` | Build the static documentation site                  |
+| `bun run preview`          | Preview the built documentation                      |
 
-Требуется [Bun](https://bun.sh).
+[Bun](https://bun.sh) is required.
 
-## Структура
+## Structure
 
 ```
 src/
-├── components/   # компоненты библиотеки
-├── playground/   # сайт документации
-└── index.ts      # публичное API
+├── components/   # library components
+├── playground/   # documentation site
+└── index.ts      # public API
 ```
 
-## Безопасность
+## Security
 
-Об уязвимостях сообщайте по инструкции в [SECURITY.md](./SECURITY.md) (вкладка **Security → Advisories → Report a vulnerability** на GitHub). Пожалуйста, не публикуйте уязвимости в issues.
+Please report vulnerabilities following the instructions in [SECURITY.md](./SECURITY.md) (the **Security → Advisories → Report a vulnerability** tab on GitHub). Please do not disclose vulnerabilities in public issues.
 
-## Лицензия
+## License
 
-Проект распространяется по лицензии, описанной в [LICENSE](./LICENSE), с обязательной атрибуцией первоисточника и разделением дохода 50/50.
+This project is distributed under the license described in [LICENSE](./LICENSE), with mandatory attribution to the original source and 50/50 revenue sharing.

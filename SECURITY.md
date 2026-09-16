@@ -1,25 +1,25 @@
-# Security Policy / Политика безопасности
+# Security Policy
 
-## Как сообщить об уязвимости
+## How to Report a Vulnerability
 
-Используйте встроенный механизм GitHub — вкладка **Security**:
+Please use GitHub's built-in mechanism — the **Security** tab:
 
-1. Откройте https://github.com/Jeesson/vibe-ui
-2. Перейдите на вкладку **Security** → **Advisories** → **Report a vulnerability**
-3. Опишите уязвимость: затронутые версии/компоненты, шаги воспроизведения, потенциальное влияние, возможный PoC.
+1. Open https://github.com/Jeesson/vibe-ui
+2. Go to the **Security** tab → **Advisories** → **Report a vulnerability**
+3. Describe the vulnerability: affected versions/components, steps to reproduce, potential impact, and a proof of concept if available.
 
-⚠️ Пожалуйста, **не** публикуйте детали уязвимостей в публичных issues, discussions и PR до исправления.
+⚠️ Please do **not** publish vulnerability details in public issues, discussions, or pull requests until a fix is released.
 
-Ответственное раскрытие: мы просим воздержаться от публичного раскрытия до выхода исправления (координированное раскрытие, максимум 90 дней).
+Responsible disclosure: we ask that you refrain from public disclosure until a fix is released (coordinated disclosure, up to 90 days).
 
-## Поддерживаемые версии
+## Supported Versions
 
-| Версия | Поддержка |
-| ------ | --------- |
-| 0.1.x  | ✅        |
+| Version | Support |
+| ------- | ------- |
+| 0.1.x   | ✅      |
 
-## Сроки реакции
+## Response Timeline
 
-- Подтверждение получения отчёта — в течение **48 часов**
-- Первичная оценка и план исправления — в течение **7 дней**
-- Релиз исправления — в приоритетном порядке; для критических уязвимостей возможен внеплановый релиз
+- Acknowledgment of the report — within **48 hours**
+- Initial assessment and remediation plan — within **7 days**
+- Fix release — as a priority; for critical vulnerabilities an out-of-band release is possible

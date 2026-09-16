@@ -9,7 +9,7 @@ const doc = docs.button;
 const primarySource = '<Button variant="primary">Primary</Button>';
 const secondarySource = '<Button variant="secondary">Secondary</Button>';
 const ghostSource = '<Button variant="ghost">Ghost</Button>';
-const disabledSource = '<Button disabled>Disabled</Button>';
+const disabledSource = "<Button disabled>Disabled</Button>";
 const iconSource = '<Button :icon="PlusIcon">Добавить</Button>';
 const iconRightSource =
     '<Button variant="secondary" :icon-right="ChevronRight">Далее</Button>';
@@ -37,7 +37,9 @@ const iconRightSource =
                     <Button :icon="PlusIcon">Добавить</Button>
                 </DocExample>
                 <DocExample title="Иконка справа" :source="iconRightSource">
-                    <Button variant="secondary" :icon-right="ChevronRight">Далее</Button>
+                    <Button variant="secondary" :icon-right="ChevronRight"
+                        >Далее</Button
+                    >
                 </DocExample>
             </div>
         </template>

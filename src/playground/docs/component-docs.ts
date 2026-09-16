@@ -97,7 +97,7 @@ export const components: Record<string, ComponentDoc> = {
             '<Button variant="primary">Primary</Button>\n' +
             '<Button variant="secondary">Secondary</Button>\n' +
             '<Button variant="ghost">Ghost</Button>\n' +
-            '<Button disabled>Disabled</Button>\n' +
+            "<Button disabled>Disabled</Button>\n" +
             '<Button :icon="PlusIcon">Добавить</Button>\n' +
             '<Button variant="secondary" :icon-right="ChevronRight">Далее</Button>\n' +
             '<Button size="sm" :icon="PlusIcon">sm</Button>\n' +
@@ -285,8 +285,8 @@ export const components: Record<string, ComponentDoc> = {
             "Разделитель. По умолчанию — горизонтальная линия на всю ширину. " +
             "Если передать контент — линия с подписью по центру; есть вертикальный режим.",
         usage:
-            '<Divider>секция</Divider>\n' +
-            '<Divider />\n' +
+            "<Divider>секция</Divider>\n" +
+            "<Divider />\n" +
             '<Divider direction="vertical" />',
         props: [
             {
@@ -308,8 +308,9 @@ export const components: Record<string, ComponentDoc> = {
         name: "Progress",
         group: "basic",
         description:
-            "Индикатор прогресса: линейный, круговой и «dashboard» (круг с зазором). " +
-            "Поддерживает статусы, индетерминантный режим и кастомный цвет.",
+            "Индикатор прогресса: линейный, круговой и «dashboard» (дуга-спидометр 270° " +
+            "со скруглёнными концами и градиентной заливкой). Поддерживает статусы, " +
+            "индетерминантный режим и кастомный цвет.",
         usage: '<Progress :percentage="72" />\n<Progress :percentage="75" type="circle" :size="64" status="success" />',
         props: [
             {
@@ -333,6 +334,13 @@ export const components: Record<string, ComponentDoc> = {
                 type: "boolean",
                 default: "false",
                 description: "Индетерминантная анимация.",
+            },
+            {
+                name: "animation",
+                type: '"slide" | "stripes" | "pulse"',
+                default: '"slide"',
+                description:
+                    "Вариант indeterminate-анимации (только для line): «slide» — движущийся сегмент, «stripes» — бегущие диагональные полоски, «pulse» — пульсирующая шкала.",
             },
             {
                 name: "strokeColor",
@@ -650,10 +658,10 @@ export const components: Record<string, ComponentDoc> = {
             '<Form ref="formRef" :model="model" :rules="rules" class="max-w-sm">\n' +
             '  <FormItem prop="email" label="Email">\n' +
             '    <Input v-model="model.email" placeholder="you@example.com" />\n' +
-            '  </FormItem>\n' +
+            "  </FormItem>\n" +
             '  <FormItem prop="role" label="Роль">\n' +
             '    <Select v-model="model.role" :options="roleOptions" placeholder="Выберите роль" />\n' +
-            '  </FormItem>\n' +
+            "  </FormItem>\n" +
             '  <Button @click="submit">Проверить</Button>\n' +
             "</Form>",
         props: [
@@ -1026,15 +1034,16 @@ export const components: Record<string, ComponentDoc> = {
             "Оглавление страницы. Следит за прокруткой (IntersectionObserver) и подсвечивает " +
             "активный якорь.",
         usage:
-            "<Anchor :container=\"containerRef\" direction=\"vertical\" type=\"default\" :offset=\"30\">\n" +
-            "  <AnchorLink href=\"#part1\" title=\"Part 1\" />\n" +
-            "  <AnchorLink href=\"#part2\" title=\"Part 2\" />\n" +
+            '<Anchor :container="containerRef" direction="vertical" type="default" :offset="30">\n' +
+            '  <AnchorLink href="#part1" title="Part 1" />\n' +
+            '  <AnchorLink href="#part2" title="Part 2" />\n' +
             "</Anchor>",
         props: [
             {
                 name: "links",
                 type: "AnchorLink[]",
-                description: "Legacy array of anchor links. Use AnchorLink children for the Element Plus-style API.",
+                description:
+                    "Legacy array of anchor links. Use AnchorLink children for the Element Plus-style API.",
             },
             {
                 name: "container",
@@ -1082,7 +1091,8 @@ export const components: Record<string, ComponentDoc> = {
                 name: "selectScrollTop",
                 type: "boolean",
                 default: "false",
-                description: "Прокручивать выбранный якорь к началу контейнера.",
+                description:
+                    "Прокручивать выбранный якорь к началу контейнера.",
             },
         ],
         events: [
@@ -1731,7 +1741,8 @@ export const components: Record<string, ComponentDoc> = {
             {
                 name: "scroll",
                 params: "(value: { scrollTop: number; fixed: boolean }) => void",
-                description: "Срабатывает при прокрутке окна или target-контейнера.",
+                description:
+                    "Срабатывает при прокрутке окна или target-контейнера.",
             },
         ],
         slots: [
@@ -1793,7 +1804,8 @@ export const componentDescriptionsEn: Record<string, string> = {
     dropdown: "A positioned action menu with placement and disabled items.",
     anchor: "A list of links for navigating to sections on the page.",
     tabs: "A tabbed interface with active and disabled tabs.",
-    backtop: "A floating control that appears after scrolling and returns to top.",
+    backtop:
+        "A floating control that appears after scrolling and returns to top.",
     alert: "A contextual message with status, title, and close action.",
     dialog: "A modal dialog with title, content, and footer slots.",
     drawer: "A slide-out panel with configurable placement and size.",
@@ -1861,6 +1873,8 @@ export const apiDescriptionsEn: Record<string, Record<string, string>> = {
         type: "Progress presentation type.",
         status: "Status color.",
         indeterminate: "Show an indeterminate animation.",
+        animation:
+            "Indeterminate animation variant (line only): slide — moving segment, stripes — moving diagonal stripes, pulse — pulsing bar.",
         color: "Custom color that overrides status.",
         strokeWidth: "Line or arc thickness.",
         showText: "Show the percentage label.",
@@ -2016,7 +2030,8 @@ export const apiDescriptionsEn: Record<string, Record<string, string>> = {
         marker: "Show the active anchor marker.",
         type: "Marker style.",
         direction: "Anchor list direction.",
-        selectScrollTop: "Scroll the selected anchor to the top of the container.",
+        selectScrollTop:
+            "Scroll the selected anchor to the top of the container.",
     },
     tabs: {
         modelValue: "Active tab name.",

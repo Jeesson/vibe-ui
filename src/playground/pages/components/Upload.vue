@@ -12,7 +12,9 @@ const source = '<Upload v-model="files" class="max-w-sm" />';
 <template>
     <ComponentDoc :doc="doc" structured-examples>
         <template #examples>
-            <DocExample title="Загрузка файлов" :source="source"><Upload v-model="files" class="max-w-sm" /></DocExample>
+            <DocExample title="Загрузка файлов" :source="source">
+                <Upload v-model="files" class="max-w-sm" />
+            </DocExample>
         </template>
     </ComponentDoc>
 </template>

@@ -12,10 +12,7 @@ import {
 } from "@heroicons/vue/24/outline";
 import Menu from "../../components/Menu/Menu.vue";
 import { useLocale } from "../composables/ui-locale";
-import {
-    components as docs,
-    groupOrder,
-} from "../docs/component-docs";
+import { components as docs, groupOrder } from "../docs/component-docs";
 import Scrollbar from "../../components/Scrollbar/Scrollbar.vue";
 
 defineProps<{ modelValue: string }>();
@@ -74,11 +71,7 @@ function onSelect(key: string) {
     <aside
         class="sticky top-14 h-[calc(100vh-3.5rem)] w-52 shrink-0 border-r border-gray-100 bg-white p-3"
     >
-        <Scrollbar
-            max-height="calc(100vh - 3.5rem)"
-            class="h-full"
-            hide
-        >
+        <Scrollbar max-height="calc(100vh - 3.5rem)" class="h-full" hide>
             <Menu
                 :items="items"
                 :model-value="modelValue"

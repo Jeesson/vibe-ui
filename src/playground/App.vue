@@ -323,7 +323,9 @@ function navigate(page: string, anchor?: string) {
 
 function syncRoute() {
     currentPage.value = pageFromPath(window.location.pathname);
-    scrollToAnchor(decodeURIComponent(window.location.hash.slice(1)) || undefined);
+    scrollToAnchor(
+        decodeURIComponent(window.location.hash.slice(1)) || undefined,
+    );
 }
 
 onMounted(() => {

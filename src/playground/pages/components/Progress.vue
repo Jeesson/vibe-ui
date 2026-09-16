@@ -8,7 +8,9 @@ const basicSource = '<Progress :percentage="72" />';
 const successSource = '<Progress :percentage="100" status="success" />';
 const warningSource = '<Progress :percentage="55" status="warning" />';
 const exceptionSource = '<Progress :percentage="35" status="exception" />';
-const indeterminateSource = '<Progress indeterminate />';
+const indeterminateSource = "<Progress indeterminate />";
+const stripesSource = '<Progress indeterminate animation="stripes" />';
+const pulseSource = '<Progress indeterminate animation="pulse" />';
 const circleSource = '<Progress :percentage="45" type="circle" :size="64" />';
 const dashboardSource =
     '<Progress :percentage="75" type="dashboard" :size="64" status="success" />';
@@ -30,11 +32,29 @@ const dashboardSource =
                 <DocExample title="Ошибка" :source="exceptionSource">
                     <Progress :percentage="35" status="exception" />
                 </DocExample>
-                <DocExample title="Неопределенный прогресс" :source="indeterminateSource">
+                <DocExample
+                    title="Неопределенный прогресс"
+                    :source="indeterminateSource"
+                >
                     <Progress indeterminate />
                 </DocExample>
+                <DocExample
+                    title="Неопределенный прогресс — полоски"
+                    :source="stripesSource"
+                >
+                    <Progress indeterminate animation="stripes" />
+                </DocExample>
+                <DocExample
+                    title="Неопределенный прогресс — пульс"
+                    :source="pulseSource"
+                >
+                    <Progress indeterminate animation="pulse" />
+                </DocExample>
                 <div class="flex flex-col gap-3">
-                    <DocExample title="Круговой прогресс" :source="circleSource">
+                    <DocExample
+                        title="Круговой прогресс"
+                        :source="circleSource"
+                    >
                         <Progress :percentage="45" type="circle" :size="64" />
                     </DocExample>
                     <DocExample title="Dashboard" :source="dashboardSource">

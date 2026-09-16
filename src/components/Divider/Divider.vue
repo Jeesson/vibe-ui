@@ -14,7 +14,9 @@ withDefaults(defineProps<{ direction?: "horizontal" | "vertical" }>(), {
         class="flex w-full items-center gap-3 text-sm leading-5 text-gray-400"
     >
         <span class="h-px min-w-0 flex-1 bg-gray-200" />
-        <span class="relative -top-px flex shrink-0 items-center px-1 whitespace-nowrap">
+        <span
+            class="relative -top-px flex shrink-0 items-center px-1 whitespace-nowrap"
+        >
             <slot />
         </span>
         <span class="h-px min-w-0 flex-1 bg-gray-200" />

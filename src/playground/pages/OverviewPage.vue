@@ -362,7 +362,10 @@ function go(item: Item) {
     <div class="ov">
         <div class="ov-search">
             <div class="ov-search-box">
-                <MagnifyingGlassIcon class="ov-search-icon" aria-hidden="true" />
+                <MagnifyingGlassIcon
+                    class="ov-search-icon"
+                    aria-hidden="true"
+                />
                 <input
                     v-model="search"
                     class="ov-search-input"
@@ -558,7 +561,8 @@ function go(item: Item) {
                             v-else-if="item.mock === 'calendar'"
                             class="mk mk-cal"
                             ><b>Сентябрь 2026</b><i></i><i></i><i></i><i></i
-                            ><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                            ><i></i><i></i><i></i><i></i><i></i><i></i><i></i
+                            ><i></i
                         ></span>
                         <span
                             v-else-if="item.mock === 'upload'"
@@ -680,8 +684,7 @@ function go(item: Item) {
     overflow: hidden;
     cursor: pointer;
     padding: 0;
-    transition:
-        border-color 0.15s;
+    transition: border-color 0.15s;
 }
 .ov-card:hover {
     border-color: #a5b4fc;

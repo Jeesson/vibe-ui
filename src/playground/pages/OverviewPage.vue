@@ -6,11 +6,15 @@ import {
     MagnifyingGlassIcon,
     XMarkIcon,
 } from "@heroicons/vue/24/outline";
-const emit = defineEmits<{ navigate: [page: string, anchor?: string] }>();
+import { components } from "../docs/component-docs";
+import { useRouter } from "vue-router";
+import { pageKeyToPath } from "../component-pages";
+
+const router = useRouter();
 interface Item {
     name: string;
+    key: string;
     page: string;
-    anchor: string;
     mock: string;
 }
 interface Group {
@@ -18,329 +22,118 @@ interface Group {
     title: string;
     items: Item[];
 }
-const groups: Group[] = [
-    {
-        id: "ov-group-basic",
-        title: "Basic",
-        items: [
-            {
-                name: "Button",
-                page: "basic",
-                anchor: "basic-button",
-                mock: "button",
-            },
-            {
-                name: "Avatar",
-                page: "basic",
-                anchor: "basic-avatar",
-                mock: "avatar",
-            },
-            {
-                name: "Badge",
-                page: "basic",
-                anchor: "basic-avatar",
-                mock: "avatar",
-            },
-            { name: "Tag", page: "basic", anchor: "basic-tag", mock: "tags" },
-            {
-                name: "Tooltip",
-                page: "basic",
-                anchor: "basic-tag",
-                mock: "tooltip",
-            },
-            {
-                name: "Divider",
-                page: "basic",
-                anchor: "basic-divider",
-                mock: "divider",
-            },
-            {
-                name: "Progress",
-                page: "basic",
-                anchor: "basic-progress",
-                mock: "progress",
-            },
-        ],
-    },
-    {
-        id: "ov-group-form",
-        title: "Form",
-        items: [
-            {
-                name: "Input",
-                page: "form",
-                anchor: "form-input",
-                mock: "input",
-            },
-            {
-                name: "Select",
-                page: "form",
-                anchor: "form-input",
-                mock: "input",
-            },
-            {
-                name: "Checkbox",
-                page: "form",
-                anchor: "form-checkbox",
-                mock: "check",
-            },
-            {
-                name: "Radio",
-                page: "form",
-                anchor: "form-checkbox",
-                mock: "check",
-            },
-            {
-                name: "Switch",
-                page: "form",
-                anchor: "form-checkbox",
-                mock: "switch",
-            },
-            {
-                name: "Slider",
-                page: "form",
-                anchor: "form-slider",
-                mock: "slider",
-            },
-            {
-                name: "InputNumber",
-                page: "form",
-                anchor: "form-slider",
-                mock: "input",
-            },
-            { name: "Rate", page: "form", anchor: "form-slider", mock: "rate" },
-            {
-                name: "Form",
-                page: "form",
-                anchor: "form-validation",
-                mock: "form",
-            },
-        ],
-    },
-    {
-        id: "ov-group-data",
-        title: "Data",
-        items: [
-            { name: "Card", page: "data", anchor: "data-card", mock: "card" },
-            {
-                name: "Skeleton",
-                page: "data",
-                anchor: "data-skeleton",
-                mock: "skeleton",
-            },
-            {
-                name: "Collapse",
-                page: "data",
-                anchor: "data-collapse",
-                mock: "collapse",
-            },
-            {
-                name: "Tabs",
-                page: "data",
-                anchor: "data-collapse",
-                mock: "tabs",
-            },
-            {
-                name: "Table",
-                page: "data",
-                anchor: "data-table",
-                mock: "table",
-            },
-            {
-                name: "Timeline",
-                page: "data",
-                anchor: "data-timeline",
-                mock: "timeline",
-            },
-            {
-                name: "Pagination",
-                page: "data",
-                anchor: "data-pagination",
-                mock: "pagination",
-            },
-            {
-                name: "Empty",
-                page: "data",
-                anchor: "data-empty",
-                mock: "empty",
-            },
-        ],
-    },
-    {
-        id: "ov-group-navigation",
-        title: "Navigation",
-        items: [
-            {
-                name: "Menu",
-                page: "navigation",
-                anchor: "nav-menu",
-                mock: "menu",
-            },
-            {
-                name: "Popover",
-                page: "navigation",
-                anchor: "nav-popover",
-                mock: "popover",
-            },
-            {
-                name: "Dropdown",
-                page: "navigation",
-                anchor: "nav-popover",
-                mock: "menu",
-            },
-            {
-                name: "Anchor",
-                page: "overview",
-                anchor: "ov-group-navigation",
-                mock: "anchor",
-            },
-            {
-                name: "Backtop",
-                page: "overview",
-                anchor: "ov-group-navigation",
-                mock: "backtop",
-            },
-        ],
-    },
-    {
-        id: "ov-group-feedback",
-        title: "Feedback",
-        items: [
-            {
-                name: "Alert",
-                page: "feedback",
-                anchor: "feedback-alert",
-                mock: "alert",
-            },
-            {
-                name: "Toast",
-                page: "feedback",
-                anchor: "feedback-toast",
-                mock: "toast",
-            },
-            {
-                name: "Dialog",
-                page: "feedback",
-                anchor: "feedback-dialog",
-                mock: "dialog",
-            },
-            {
-                name: "Drawer",
-                page: "feedback",
-                anchor: "feedback-dialog",
-                mock: "dialog",
-            },
-            {
-                name: "Loading",
-                page: "feedback",
-                anchor: "feedback-loading",
-                mock: "loading",
-            },
-            {
-                name: "MessageBox",
-                page: "feedback",
-                anchor: "feedback-messagebox",
-                mock: "dialog",
-            },
-        ],
-    },
-    {
-        id: "ov-group-misc",
-        title: "Misc",
-        items: [
-            {
-                name: "Autocomplete",
-                page: "misc",
-                anchor: "misc-autocomplete",
-                mock: "input",
-            },
-            {
-                name: "InputTag",
-                page: "misc",
-                anchor: "misc-inputtag",
-                mock: "tags",
-            },
-            {
-                name: "InputOtp",
-                page: "misc",
-                anchor: "misc-inputotp",
-                mock: "otp",
-            },
-            {
-                name: "Image",
-                page: "misc",
-                anchor: "misc-image",
-                mock: "image",
-            },
-            {
-                name: "Scrollbar",
-                page: "misc",
-                anchor: "misc-scrollbar",
-                mock: "scrollbar",
-            },
-        ],
-    },
-    {
-        id: "ov-group-datetime",
-        title: "Date and Time",
-        items: [
-            {
-                name: "Cascader",
-                page: "datetime",
-                anchor: "datetime-cascader",
-                mock: "input",
-            },
-            {
-                name: "ColorPicker",
-                page: "datetime",
-                anchor: "datetime-colorpicker",
-                mock: "color",
-            },
-            {
-                name: "DatePicker",
-                page: "datetime",
-                anchor: "datetime-datepicker",
-                mock: "datepicker",
-            },
-            {
-                name: "TimeSelect",
-                page: "datetime",
-                anchor: "datetime-datepicker",
-                mock: "input",
-            },
-            {
-                name: "Calendar",
-                page: "datetime",
-                anchor: "datetime-calendar",
-                mock: "calendar",
-            },
-            {
-                name: "Upload",
-                page: "datetime",
-                anchor: "datetime-upload",
-                mock: "upload",
-            },
-            {
-                name: "Carousel",
-                page: "datetime",
-                anchor: "datetime-carousel",
-                mock: "carousel",
-            },
-            {
-                name: "Mention",
-                page: "datetime",
-                anchor: "datetime-mention",
-                mock: "input",
-            },
-            {
-                name: "Affix",
-                page: "datetime",
-                anchor: "datetime-affix",
-                mock: "anchor",
-            },
-        ],
-    },
+
+/* ---------------------------------------------------------------------------
+ * Обзор строится АВТОМАТИЧЕСКИ из док-движка (component-docs.ts):
+ * новый компонент, добавленный туда, появится здесь сам.
+ * Ниже — только уточнения: группа и превью-mock отдельных компонентов.
+ * ------------------------------------------------------------------------- */
+
+type PageId =
+    "basic" | "form" | "data" | "navigation" | "feedback" | "misc" | "datetime";
+
+/** Компоненты, которые в доках лежат в misc, но показываются на странице datetime. */
+const DATETIME_KEYS = new Set([
+    "cascader",
+    "colorPicker",
+    "datePicker",
+    "timeSelect",
+    "calendar",
+    "upload",
+    "carousel",
+    "mention",
+    "affix",
+]);
+
+/** Ручные уточнения по конкретным компонентам. */
+interface Override {
+    name?: string;
+    page?: PageId;
+    mock?: string;
+}
+const OVERRIDES: Record<string, Override> = {
+    checkboxGroup: { mock: "check" },
+    radioGroup: { mock: "check" },
+    form: { mock: "form" },
+    formItem: { mock: "form" },
+    dropdown: { mock: "menu" },
+    /* Демо Anchor/Backtop показываем в группе Navigation. */
+    anchor: { page: "navigation", mock: "anchor" },
+    backtop: { page: "navigation", mock: "backtop" },
+    messageBox: { name: "MessageBox", mock: "dialog" },
+    message: { name: "Message", mock: "toast" },
+};
+
+/** Превью-mock'и, отличные от дефолтного "input". */
+const MOCKS: Record<string, string> = {
+    button: "button",
+    avatar: "avatar",
+    badge: "avatar",
+    tag: "tags",
+    tooltip: "tooltip",
+    divider: "divider",
+    progress: "progress",
+    checkbox: "check",
+    switch: "switch",
+    slider: "slider",
+    rate: "rate",
+    card: "card",
+    skeleton: "skeleton",
+    collapse: "collapse",
+    tabs: "tabs",
+    table: "table",
+    timeline: "timeline",
+    pagination: "pagination",
+    empty: "empty",
+    menu: "menu",
+    popover: "popover",
+    anchor: "anchor",
+    backtop: "backtop",
+    alert: "alert",
+    toast: "toast",
+    dialog: "dialog",
+    loading: "loading",
+    inputTag: "tags",
+    inputOtp: "otp",
+    image: "image",
+    scrollbar: "scrollbar",
+    colorPicker: "color",
+    datePicker: "datepicker",
+    calendar: "calendar",
+    upload: "upload",
+    carousel: "carousel",
+};
+
+const GROUP_META: { page: PageId; title: string }[] = [
+    { page: "basic", title: "Basic" },
+    { page: "form", title: "Form" },
+    { page: "data", title: "Data" },
+    { page: "navigation", title: "Navigation" },
+    { page: "feedback", title: "Feedback" },
+    { page: "misc", title: "Misc" },
+    { page: "datetime", title: "Date and Time" },
 ];
+
+function toItem(doc: (typeof components)[string]): Item {
+    const page: PageId =
+        OVERRIDES[doc.key]?.page ??
+        (DATETIME_KEYS.has(doc.key) ? "datetime" : doc.group);
+    return {
+        name: OVERRIDES[doc.key]?.name ?? doc.name,
+        key: doc.key,
+        page,
+        mock: OVERRIDES[doc.key]?.mock ?? MOCKS[doc.key] ?? "input",
+    };
+}
+
+const groups: Group[] = GROUP_META.map((meta) => ({
+    id: `ov-group-${meta.page}`,
+    title: meta.title,
+    items: Object.values(components)
+        .filter((doc) => toItem(doc).page === meta.page)
+        .map(toItem),
+}));
+
 const total = computed(() => groups.reduce((n, g) => n + g.items.length, 0));
 const search = ref("");
 const filtered = computed(() => {
@@ -354,8 +147,7 @@ const filtered = computed(() => {
         .filter((g) => g.items.length > 0);
 });
 function go(item: Item) {
-    const key = item.name.charAt(0).toLowerCase() + item.name.slice(1);
-    emit("navigate", "c-" + key);
+    router.push(pageKeyToPath("c-" + item.key));
 }
 </script>
 <template>
@@ -398,29 +190,33 @@ function go(item: Item) {
                 >
                     <span class="ov-card-name">{{ item.name }}</span>
                     <span class="ov-preview">
-                        <span v-if="item.mock === 'button'" class="mk mk-btn"
-                            >Button</span
-                        >
+                        <span v-if="item.mock === 'button'" class="mk mk-btn">
+                            Button
+                        </span>
                         <span
                             v-else-if="item.mock === 'input'"
                             class="mk mk-input"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'check'"
                             class="mk mk-check"
-                            ><i></i><i class="on"></i
-                        ></span>
+                        >
+                            <i></i><i class="on"></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'switch'"
                             class="mk mk-switch"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'slider'"
                             class="mk mk-slider"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'rate'"
                             class="mk mk-rate"
@@ -429,83 +225,99 @@ function go(item: Item) {
                         <span
                             v-else-if="item.mock === 'avatar'"
                             class="mk mk-avatar"
-                            ><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'tags'"
                             class="mk mk-tags"
-                            ><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'tooltip'"
                             class="mk mk-tip"
-                            ><i></i><b>tip</b></span
+                        >
+                            <i></i><b>tip</b></span
                         >
                         <span
                             v-else-if="item.mock === 'divider'"
                             class="mk mk-div"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'progress'"
                             class="mk mk-prog"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'form'"
                             class="mk mk-form"
-                            ><i></i><i></i><b></b
-                        ></span>
+                        >
+                            <i></i><i></i><b></b>
+                        </span>
                         <span
                             v-else-if="item.mock === 'card'"
                             class="mk mk-card"
-                            ><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'skeleton'"
                             class="mk mk-skel"
-                            ><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'collapse'"
                             class="mk mk-col"
-                            ><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'tabs'"
                             class="mk mk-tabs"
-                            ><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'table'"
                             class="mk mk-table"
-                            ><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'timeline'"
                             class="mk mk-tl"
-                            ><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'pagination'"
                             class="mk mk-pg"
-                            ><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'menu'"
                             class="mk mk-menu"
-                            ><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'popover'"
                             class="mk mk-pop"
-                            ><i></i><b></b
-                        ></span>
+                        >
+                            <i></i><b></b>
+                        </span>
                         <span
                             v-else-if="item.mock === 'anchor'"
                             class="mk mk-anchor"
-                            ><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'backtop'"
                             class="mk mk-backtop"
@@ -515,8 +327,9 @@ function go(item: Item) {
                         <span
                             v-else-if="item.mock === 'alert'"
                             class="mk mk-alert"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'toast'"
                             class="mk mk-toast"
@@ -525,31 +338,36 @@ function go(item: Item) {
                         <span
                             v-else-if="item.mock === 'dialog'"
                             class="mk mk-dialog"
-                            ><i></i><b></b
-                        ></span>
+                        >
+                            <i></i><b></b>
+                        </span>
                         <span
                             v-else-if="item.mock === 'loading'"
                             class="mk mk-load"
-                            ><i></i
-                        ></span>
-                        <span v-else-if="item.mock === 'otp'" class="mk mk-otp"
-                            ><i></i><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
+                        <span v-else-if="item.mock === 'otp'" class="mk mk-otp">
+                            <i></i><i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'image'"
                             class="mk mk-img"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'scrollbar'"
                             class="mk mk-scroll"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'color'"
                             class="mk mk-color"
-                            ><i></i><i></i><i></i
-                        ></span>
+                        >
+                            <i></i><i></i><i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'datepicker'"
                             class="mk mk-datepicker"
@@ -560,25 +378,28 @@ function go(item: Item) {
                         <span
                             v-else-if="item.mock === 'calendar'"
                             class="mk mk-cal"
-                            ><b>Сентябрь 2026</b><i></i><i></i><i></i><i></i
-                            ><i></i><i></i><i></i><i></i><i></i><i></i><i></i
-                            ><i></i
-                        ></span>
+                            ><b>Сентябрь 2026</b><i></i><i></i><i></i><i></i>
+                            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'upload'"
                             class="mk mk-upload"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'carousel'"
                             class="mk mk-car"
-                            ><i></i
-                        ></span>
+                        >
+                            <i></i>
+                        </span>
                         <span
                             v-else-if="item.mock === 'empty'"
                             class="mk mk-empty"
-                            >empty</span
                         >
+                            empty
+                        </span>
                         <span v-else class="mk mk-empty">...</span>
                     </span>
                 </button>

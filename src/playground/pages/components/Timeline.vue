@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CheckIcon } from "@heroicons/vue/24/outline";
 import ComponentDoc from "../../docs/ComponentDoc.vue";
 import { components as docs } from "../../docs/component-docs";
 import Timeline from "../../../components/Timeline/Timeline.vue";
@@ -39,8 +40,9 @@ const items = [
                     <template #dot>
                         <span
                             class="mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500 text-[9px] text-white"
-                            >✓</span
                         >
+                            <CheckIcon class="size-2 stroke-5" />
+                        </span>
                     </template>
                 </Timeline>
             </div>

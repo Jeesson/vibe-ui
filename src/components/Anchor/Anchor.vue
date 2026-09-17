@@ -1,34 +1,69 @@
-<script setup lang="ts">
+<template>
+    <div ref="anchorRef" :class="cls">
+        <div
+            v-if="marker"
+            ref="markerRef"
+            class="anchor-marker bg-primary-700 dark:bg-primary-400"
+            :style="markerStyle"
+        />
+        <div
+            :class="[
+                'anchor-list',
+                direction === 'horizontal'
+                    ? 'flex items-center gap-1'
+                    : 'flex flex-col gap-0.5',
+            ]"
+        >
+            <template v-if="props.links?.length">
+                <AnchorLink
+                    v-for="link in props.links"
+                    :key="link.href"
+                    :href="link.href"
+                    :title="link.title"
+                />
+            </template>
+            <slot v-else />
+        </div>
+    </div>
+</template>
+
+<script lang="ts" setup>
 import {
-    ref,
     computed,
     nextTick,
-    onMounted,
     onBeforeUnmount,
-    isRef,
-    useSlots,
+    onMounted,
+    provide,
+    ref,
+    shallowReactive,
     watch,
 } from "vue";
+import {
+    animateScrollTo,
+    getElement,
+    getOffsetTopDistance,
+    getScrollTop,
+    getMaxScrollTop,
+    resolveActiveHref,
+    isWindow,
+    throttleByRaf,
+} from "./utils";
+import AnchorLink from "./AnchorLink.vue";
+import { anchorKey } from "./constants";
+import type { AnchorLinkState } from "./constants";
+import type { CSSProperties } from "vue";
 
-export interface AnchorLink {
-    href: string;
-    title: string;
-}
+defineOptions({ name: "Anchor" });
 
 const props = withDefaults(
     defineProps<{
-        links?: AnchorLink[];
-        container?:
-            | string
-            | HTMLElement
-            | Window
-            | { value: HTMLElement | null }
-            | null;
+        links?: { href: string; title: string }[];
+        container?: string | HTMLElement | Window | null;
         offset?: number;
         bound?: number;
         duration?: number;
         marker?: boolean;
-        type?: "default" | "dot";
+        type?: "default" | "underline";
         direction?: "vertical" | "horizontal";
         selectScrollTop?: boolean;
     }>(),
@@ -44,221 +79,331 @@ const props = withDefaults(
 );
 
 const emit = defineEmits<{
-    click: [event: MouseEvent, href: string];
+    change: [href: string];
+    click: [e: MouseEvent, href?: string];
 }>();
 
-const slots = useSlots();
-const slotLinks = computed<AnchorLink[]>(() => {
-    const result: AnchorLink[] = [];
-    const visit = (
-        nodes: ReturnType<NonNullable<typeof slots.default>>,
-    ): void => {
-        for (const node of nodes) {
-            const props = node.props;
-            if (props?.href && props?.title) {
-                result.push({
-                    href: String(props.href),
-                    title: String(props.title),
-                });
-            }
-            if (Array.isArray(node.children))
-                visit(node.children as typeof nodes);
-        }
-    };
-    const nodes = slots.default?.() ?? [];
-    visit(nodes);
-    return result;
-});
-const anchorLinks = computed(() =>
-    props.links?.length ? props.links : slotLinks.value,
-);
-const activeLinks = ref<string[]>([]);
-const linkElements = new Map<string, HTMLElement>();
-const indicator = ref({ top: 0, height: 0 });
-const visibility = new Map<string, boolean>();
-let observer: IntersectionObserver | null = null;
-let resizeObserver: ResizeObserver | null = null;
-let scrollContainer: HTMLElement | Window = window;
+const currentAnchor = ref("");
+const markerStyle = ref<CSSProperties>({});
+const anchorRef = ref<HTMLElement | null>(null);
+const markerRef = ref<HTMLElement | null>(null);
+const containerEl = ref<HTMLElement | Window>();
 
-function setLinkElement(href: string, element: unknown) {
-    if (element instanceof HTMLElement) linkElements.set(href, element);
-    else linkElements.delete(href);
-}
+const links = shallowReactive<Record<string, HTMLElement>>({});
+let isScrolling = false;
+let mounted = false;
+let settledScrollTop: number | null = null;
 
-function updateIndicator() {
-    const visible = activeLinks.value
-        .map((href) => linkElements.get(href))
-        .filter((element): element is HTMLElement => Boolean(element));
-    const first = visible[0];
-    const last = visible[visible.length - 1];
-    if (!first || !last) return;
-    if (props.direction === "horizontal") {
-        indicator.value = {
-            top: first.offsetLeft,
-            height: last.offsetLeft + last.offsetWidth - first.offsetLeft,
-        };
-        return;
+const cls = computed(() => [
+    "relative text-sm",
+    props.type === "underline"
+        ? "border-b border-gray-200 dark:border-gray-800"
+        : "",
+    props.direction === "horizontal"
+        ? "flex items-center gap-1"
+        : "flex flex-col gap-0.5 border-l border-gray-500/70 ",
+]);
+
+const addLink = (state: AnchorLinkState) => {
+    links[state.href] = state.el;
+};
+const removeLink = (href: string) => {
+    delete links[href];
+};
+
+const setCurrentAnchor = (href: string) => {
+    const activeHref = currentAnchor.value;
+    if (activeHref !== href) {
+        currentAnchor.value = href;
+        emit("change", href);
     }
-    indicator.value = {
-        top: first.offsetTop,
-        height: last.offsetTop + last.offsetHeight - first.offsetTop,
-    };
+};
+
+let clearAnimate: (() => void) | null = null;
+let currentTargetHref = "";
+
+function cancelScroll() {
+    clearAnimate?.();
+    clearAnimate = null;
+    isScrolling = false;
+    currentTargetHref = "";
 }
 
-function resolveContainer(): HTMLElement | Window {
-    const container = props.container;
-    if (!container) return window;
-    if (typeof container === "string") {
-        return document.querySelector<HTMLElement>(container) ?? window;
-    }
-    if (isRef(container)) {
-        return (container.value as HTMLElement | null) ?? window;
-    }
-    if (container instanceof HTMLElement || container instanceof Window) {
-        return container;
-    }
-    return window;
+function getTarget(href: string) {
+    if (!href.startsWith("#")) return null;
+    const target = getElement(href);
+    const container = containerEl.value;
+    if (!container || !target || isWindow(target)) return null;
+    if (!isWindow(container) && !container.contains(target)) return null;
+    return target;
 }
 
-function getScrollTop(): number {
-    return scrollContainer instanceof Window
-        ? window.scrollY
-        : scrollContainer.scrollTop;
-}
-
-function getTargetTop(target: Element): number {
-    const rect = target.getBoundingClientRect();
-    if (scrollContainer instanceof Window) return rect.top + window.scrollY;
-    const containerRect = scrollContainer.getBoundingClientRect();
-    return rect.top - containerRect.top + scrollContainer.scrollTop;
-}
-
-function scrollToTop(top: number) {
-    const start = getScrollTop();
-    const distance = top - start;
-    if (!props.duration || Math.abs(distance) < 1) {
-        if (scrollContainer instanceof Window) window.scrollTo(0, top);
-        else scrollContainer.scrollTop = top;
-        return;
-    }
-
-    const startedAt = performance.now();
-    const animate = (now: number) => {
-        const progress = Math.min((now - startedAt) / props.duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const value = start + distance * eased;
-        if (scrollContainer instanceof Window) window.scrollTo(0, value);
-        else scrollContainer.scrollTop = value;
-        if (progress < 1) requestAnimationFrame(animate);
-    };
-    requestAnimationFrame(animate);
-}
-
-function onClick(e: MouseEvent, href: string) {
-    emit("click", e, href);
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-        scrollToTop(Math.max(0, getTargetTop(target) - props.offset));
-        if (props.selectScrollTop && scrollContainer instanceof HTMLElement) {
-            scrollContainer.scrollTop = 0;
-        }
-    }
-    activeLinks.value = [href];
-}
-
-watch(activeLinks, () => nextTick(updateIndicator));
-
-onMounted(() => {
-    scrollContainer = resolveContainer();
-    const links = anchorLinks.value;
-    activeLinks.value = links[0] ? [links[0].href] : [];
-    const targets = links
-        .map((l) => document.querySelector(l.href))
-        .filter((el): el is Element => !!el);
-
-    observer = new IntersectionObserver(
-        (entries) => {
-            entries.forEach((entry) => {
-                visibility.set(
-                    `#${entry.target.id}`,
-                    entry.isIntersecting && entry.intersectionRatio > 0,
-                );
-            });
-            const visible = links
-                .filter((link) => visibility.get(link.href))
-                .map((link) => link.href);
-            if (visible.length) activeLinks.value = visible;
-        },
-        {
-            root:
-                scrollContainer instanceof HTMLElement ? scrollContainer : null,
-            rootMargin: `-${props.bound}px 0px -${Math.max(0, 100 - props.bound)}% 0px`,
-            threshold: [0, 0.01],
+const scrollTo = (href?: string) => {
+    if (!href || !containerEl.value) return;
+    const target = getTarget(href);
+    if (!target) return;
+    if (isScrolling && currentTargetHref === href) return;
+    cancelScroll();
+    settledScrollTop = null;
+    setCurrentAnchor(href);
+    currentTargetHref = href;
+    isScrolling = true;
+    const container = containerEl.value;
+    const distance = getOffsetTopDistance(target, container);
+    const to = Math.max(
+        0,
+        Math.min(distance - props.offset, getMaxScrollTop(container)),
+    );
+    const duration = window.matchMedia("(prefers-reduced-motion: reduce)")
+        .matches
+        ? 0
+        : props.duration;
+    clearAnimate = animateScrollTo(
+        container,
+        getScrollTop(container),
+        to,
+        duration,
+        () => {
+            clearAnimate = null;
+            isScrolling = false;
+            currentTargetHref = "";
+            // Несколько нижних ссылок могут вести в одну предельную позицию.
+            // Сохраняем выбранную, пока пользователь действительно не прокрутит.
+            settledScrollTop = getScrollTop(container);
         },
     );
-    targets.forEach((el) => observer?.observe(el));
-    resizeObserver = new ResizeObserver(updateIndicator);
-    linkElements.forEach((el) => resizeObserver?.observe(el));
-    nextTick(updateIndicator);
+};
+
+const handleClick = (e: MouseEvent, href?: string) => {
+    emit("click", e, href);
+    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)
+        return;
+    if (!href || !getTarget(href)) return;
+    e.preventDefault();
+    scrollTo(href);
+};
+
+const handleScroll = throttleByRaf(() => {
+    const container = containerEl.value;
+    if (!mounted || !container || isScrolling) return;
+    const top = getScrollTop(container);
+    if (settledScrollTop !== null && Math.abs(top - settledScrollTop) <= 2)
+        return;
+    settledScrollTop = null;
+    setCurrentAnchor(getCurrentHref());
 });
+
+const getCurrentHref = () => {
+    const container = containerEl.value;
+    if (!container) return "";
+    const positions: { top: number; href: string }[] = [];
+    for (const href of Object.keys(links)) {
+        const target = getTarget(href);
+        if (!target || !target.getClientRects().length) continue;
+        positions.push({
+            top:
+                getOffsetTopDistance(target, container) -
+                props.offset -
+                props.bound,
+            href,
+        });
+    }
+    return resolveActiveHref(
+        positions,
+        getScrollTop(container),
+        getMaxScrollTop(container),
+        currentAnchor.value,
+        props.selectScrollTop,
+    );
+};
+
+const getContainer = () => {
+    const el = getElement(props.container);
+    if (!el || isWindow(el)) {
+        containerEl.value = window;
+    } else {
+        containerEl.value = el;
+    }
+};
+
+function interruptScroll() {
+    cancelScroll();
+    settledScrollTop = null;
+    handleScroll();
+}
+
+function handleKeydown(e: KeyboardEvent) {
+    const target = e.target as HTMLElement | null;
+    if (target?.closest('input, textarea, select, [contenteditable="true"]'))
+        return;
+    if (
+        [
+            "ArrowUp",
+            "ArrowDown",
+            "PageUp",
+            "PageDown",
+            "Home",
+            "End",
+            " ",
+        ].includes(e.key)
+    ) {
+        interruptScroll();
+    }
+}
+
+function bindScrollListener() {
+    const container = containerEl.value;
+    if (!container) return;
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    container.addEventListener("wheel", interruptScroll, { passive: true });
+    container.addEventListener("touchstart", interruptScroll, {
+        passive: true,
+    });
+    container.addEventListener("pointerdown", interruptScroll, {
+        passive: true,
+    });
+}
+function unbindScrollListener() {
+    const container = containerEl.value;
+    if (!container) return;
+    container.removeEventListener("scroll", handleScroll);
+    container.removeEventListener("wheel", interruptScroll);
+    container.removeEventListener("touchstart", interruptScroll);
+    container.removeEventListener("pointerdown", interruptScroll);
+}
+
+const updateMarkerStyle = () => {
+    nextTick(() => {
+        if (!anchorRef.value || !markerRef.value || !currentAnchor.value) {
+            markerStyle.value = { opacity: 0 };
+            return;
+        }
+        const currentLinkEl = links[currentAnchor.value];
+        if (!currentLinkEl) {
+            markerStyle.value = { opacity: 0 };
+            return;
+        }
+        const anchorRect = anchorRef.value.getBoundingClientRect();
+        const markerRect = markerRef.value.getBoundingClientRect();
+        const linkRect = currentLinkEl.getBoundingClientRect();
+
+        if (props.direction === "horizontal") {
+            const left = linkRect.left - anchorRect.left;
+            markerStyle.value = {
+                top: "auto",
+                bottom: "-1px",
+                height: "2px",
+                left: `${left}px`,
+                width: `${linkRect.width}px`,
+                opacity: 1,
+                transition: `left ${props.duration}ms cubic-bezier(0.22, 1, 0.36, 1), width ${props.duration}ms cubic-bezier(0.22, 1, 0.36, 1), opacity 150ms`,
+            };
+        } else {
+            const top =
+                linkRect.top -
+                anchorRect.top +
+                (linkRect.height - markerRect.height) / 2;
+            markerStyle.value = {
+                top: `${top}px`,
+                opacity: 1,
+                transition: `top ${props.duration}ms cubic-bezier(0.22, 1, 0.36, 1), opacity 150ms`,
+            };
+        }
+    });
+};
+
+watch(currentAnchor, updateMarkerStyle);
+watch(
+    () => Object.keys(links),
+    () => {
+        if (!mounted) return;
+        settledScrollTop = null;
+        handleScroll();
+        updateMarkerStyle();
+    },
+    { flush: "post" },
+);
+watch(
+    () => [props.offset, props.bound, props.selectScrollTop],
+    () => {
+        settledScrollTop = null;
+        handleScroll();
+    },
+);
+watch(
+    () => [props.direction, props.marker, props.duration],
+    updateMarkerStyle,
+    { flush: "post" },
+);
+
+function handleResize() {
+    settledScrollTop = null;
+    handleScroll();
+    updateMarkerStyle();
+}
+
+let resizeObserver: ResizeObserver | undefined;
+
+onMounted(() => {
+    mounted = true;
+    getContainer();
+    bindScrollListener();
+    window.addEventListener("resize", handleResize, { passive: true });
+    window.addEventListener("keydown", handleKeydown);
+    if (typeof ResizeObserver !== "undefined" && anchorRef.value) {
+        resizeObserver = new ResizeObserver(updateMarkerStyle);
+        resizeObserver.observe(anchorRef.value);
+    }
+    // Начальную позицию URL восстанавливает браузер/роутер: не запускаем
+    // конкурирующую анимацию, особенно у вложенного Anchor.
+    handleScroll();
+    updateMarkerStyle();
+});
+
 onBeforeUnmount(() => {
-    observer?.disconnect();
+    mounted = false;
+    cancelScroll();
+    unbindScrollListener();
+    handleScroll.cancel();
     resizeObserver?.disconnect();
+    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("keydown", handleKeydown);
 });
+
+watch(
+    () => props.container,
+    () => {
+        if (!mounted) return;
+        cancelScroll();
+        settledScrollTop = null;
+        unbindScrollListener();
+        handleScroll.cancel();
+        getContainer();
+        bindScrollListener();
+        handleScroll();
+    },
+    { flush: "post" },
+);
+
+provide(anchorKey, {
+    direction: computed(() => props.direction),
+    currentAnchor,
+    addLink,
+    removeLink,
+    handleClick,
+});
+
+defineExpose({ scrollTo });
 </script>
 
-<template>
-    <ul
-        :class="[
-            'relative text-sm',
-            direction === 'horizontal'
-                ? 'flex items-center gap-4 border-b border-gray-200'
-                : 'flex flex-col gap-1 border-l border-gray-200',
-        ]"
-    >
-        <span
-            v-if="marker"
-            aria-hidden="true"
-            :class="[
-                'bg-primary-600 pointer-events-none absolute rounded-full transition-[height,width,transform] duration-300 ease-out',
-                direction === 'horizontal'
-                    ? '-bottom-px left-0 h-0.5'
-                    : 'top-0 -left-px w-0.5',
-                type === 'dot' && 'h-2 w-2',
-            ]"
-            :style="{
-                height:
-                    type === 'dot'
-                        ? '8px'
-                        : direction === 'horizontal'
-                          ? undefined
-                          : `${indicator.height}px`,
-                width:
-                    type === 'dot'
-                        ? '8px'
-                        : direction === 'horizontal'
-                          ? `${indicator.height}px`
-                          : undefined,
-                transform:
-                    direction === 'horizontal'
-                        ? `translateX(${indicator.top}px)`
-                        : `translateY(${indicator.top}px)`,
-            }"
-        />
-        <li v-for="link in anchorLinks" :key="link.href">
-            <a
-                :href="link.href"
-                :ref="(element) => setLinkElement(link.href, element)"
-                :class="[
-                    'block px-3 py-1 transition-colors',
-                    activeLinks.includes(link.href)
-                        ? 'text-primary-700 font-medium'
-                        : 'text-gray-500 hover:text-gray-700',
-                ]"
-                @click="onClick($event, link.href)"
-                >{{ link.title }}</a
-            >
-        </li>
-    </ul>
-</template>
+<style scoped>
+.anchor-marker {
+    position: absolute;
+    left: -2px;
+    width: 4px;
+    height: 24px;
+    border-radius: 9999px;
+    opacity: 0;
+    pointer-events: none;
+}
+</style>

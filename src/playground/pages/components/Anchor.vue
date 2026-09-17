@@ -22,7 +22,7 @@ function handleClick(event: MouseEvent) {
                     class="relative rounded-lg border border-gray-200 bg-gray-50 p-3 dark:border-gray-700 dark:bg-gray-950"
                 >
                     <div
-                        class="pointer-events-none absolute top-3 left-3 z-10 flex h-8 w-[70%] items-center rounded-md bg-gray-900 px-3 text-[11px] font-semibold tracking-wide text-white uppercase dark:bg-gray-700"
+                        class="pointer-events-none absolute top-3 left-3 z-10 flex h-8 w-[70%] items-center rounded-md bg-gray-900 px-3 text-[11px] font-semibold tracking-wide text-white uppercase dark:bg-gray-100"
                     >
                         Fixed top block
                     </div>

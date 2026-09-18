@@ -14,9 +14,7 @@ const doc = docs.badge;
                 <Badge :value="5"><Avatar initials="ДК" /></Badge>
                 <Badge :value="120"><Avatar initials="ОК" /></Badge>
                 <Badge dot><Avatar initials="МН" /></Badge>
-                <Badge :value="3" type="success"
-                    ><Button size="sm">Сообщения</Button></Badge
-                >
+                <Badge :value="3" type="success"><Button size="sm">Сообщения</Button></Badge>
             </div>
         </template>
     </ComponentDoc>

@@ -56,19 +56,15 @@ function onScroll() {
     const boundaryBottom = Math.min(boundary.bottom, viewportHeight);
     const shouldFix =
         props.position === "bottom"
-            ? rect.bottom >= viewportHeight - props.offset &&
-              boundaryTop < viewportHeight - props.offset - rect.height
-            : rect.top <= props.offset &&
-              boundaryBottom > props.offset + rect.height;
+            ? rect.bottom >= viewportHeight - props.offset && boundaryTop < viewportHeight - props.offset - rect.height
+            : rect.top <= props.offset && boundaryBottom > props.offset + rect.height;
 
     setFixed(shouldFix, rect);
     emit("scroll", { scrollTop: getScrollTop(), fixed: fixed.value });
 }
 
 onMounted(() => {
-    targetElement = props.target
-        ? document.querySelector<HTMLElement>(props.target)
-        : null;
+    targetElement = props.target ? document.querySelector<HTMLElement>(props.target) : null;
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     targetElement?.addEventListener("scroll", onScroll, { passive: true });
@@ -89,15 +85,13 @@ onBeforeUnmount(() => {
                     ? {
                           position: 'fixed',
                           top: position === 'top' ? offset + 'px' : undefined,
-                          bottom:
-                              position === 'bottom' ? offset + 'px' : undefined,
+                          bottom: position === 'bottom' ? offset + 'px' : undefined,
                           width: width + 'px',
                           left: left + 'px',
                           zIndex,
                       }
                     : undefined
-            "
-        >
+            ">
             <slot />
         </div>
     </div>

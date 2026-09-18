@@ -54,41 +54,26 @@ function select(item: MenuItem) {
                           ? 'bg-primary-50 text-primary-700 font-medium'
                           : 'text-gray-600 hover:bg-gray-50',
                 ]"
-                @click="select(item)"
-            >
+                @click="select(item)">
                 <span class="flex min-w-0 items-center gap-2">
-                    <component
-                        :is="item.icon"
-                        v-if="item.icon"
-                        class="h-4 w-4 shrink-0 text-gray-400"
-                        aria-hidden="true"
-                    />
+                    <component :is="item.icon" v-if="item.icon" class="h-4 w-4 shrink-0 text-gray-400" aria-hidden="true" />
                     <span class="truncate">{{ item.label }}</span>
                 </span>
                 <span
                     v-if="item.children?.length"
                     class="text-gray-400 transition-transform"
-                    :class="
-                        (props.expandAll || openKeys.has(item.key)) &&
-                        'rotate-180'
-                    "
-                >
+                    :class="(props.expandAll || openKeys.has(item.key)) && 'rotate-180'">
                     <ChevronDownIcon class="h-3 w-3" />
                 </span>
             </button>
             <div
-                v-if="
-                    item.children?.length &&
-                    (props.expandAll || openKeys.has(item.key))
-                "
-                class="mt-0.5 ml-3 border-l border-gray-100 pl-2"
-            >
+                v-if="item.children?.length && (props.expandAll || openKeys.has(item.key))"
+                class="mt-0.5 ml-3 border-l border-gray-100 pl-2">
                 <MyUiMenu
                     :items="item.children"
                     :model-value="modelValue"
                     :expand-all="props.expandAll"
-                    @update:model-value="emit('update:modelValue', $event)"
-                />
+                    @update:model-value="emit('update:modelValue', $event)" />
             </div>
         </li>
     </ul>

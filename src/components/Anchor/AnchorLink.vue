@@ -30,33 +30,19 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div
-        :class="
-            anchor?.direction.value === 'horizontal' ? 'inline-block' : 'block'
-        "
-    >
+    <div :class="anchor?.direction.value === 'horizontal' ? 'inline-block' : 'block'">
         <a
             ref="linkRef"
             :href="href"
             :aria-current="isActive ? 'location' : undefined"
             :class="[
                 'relative block px-3 py-1.5 text-sm font-medium transition-colors duration-200',
-                isActive
-                    ? 'text-primary-700'
-                    : 'text-gray-500 hover:text-gray-800 dark:text-gray-400',
+                isActive ? 'text-primary-700' : 'text-gray-500 hover:text-gray-800 dark:text-gray-400',
             ]"
-            @click="onClick"
-        >
+            @click="onClick">
             {{ title }}
         </a>
-        <div
-            v-if="$slots.default"
-            :class="
-                anchor?.direction.value === 'horizontal'
-                    ? 'inline-block'
-                    : 'ml-3'
-            "
-        >
+        <div v-if="$slots.default" :class="anchor?.direction.value === 'horizontal' ? 'inline-block' : 'ml-3'">
             <slot />
         </div>
     </div>

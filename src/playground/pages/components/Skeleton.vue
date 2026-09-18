@@ -13,9 +13,7 @@ const loading = ref(true);
         <template #examples>
             <Switch v-model="loading" />
             <Skeleton :loading="loading" :rows="3" avatar class="mt-3 max-w-sm">
-                <p class="text-sm text-gray-700">
-                    Контент, когда загрузка завершена.
-                </p>
+                <p class="text-sm text-gray-700">Контент, когда загрузка завершена.</p>
             </Skeleton>
         </template>
     </ComponentDoc>

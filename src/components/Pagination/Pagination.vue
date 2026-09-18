@@ -13,9 +13,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ "update:modelValue": [number] }>();
 
-const pageCount = computed(() =>
-    Math.max(1, Math.ceil(props.total / props.pageSize)),
-);
+const pageCount = computed(() => Math.max(1, Math.ceil(props.total / props.pageSize)));
 
 const pages = computed<(number | "...")[]>(() => {
     const total = pageCount.value;
@@ -47,8 +45,7 @@ function go(page: number) {
             type="button"
             class="h-8 w-8 rounded-md hover:bg-gray-100 disabled:opacity-30"
             :disabled="modelValue === 1"
-            @click="go(modelValue - 1)"
-        >
+            @click="go(modelValue - 1)">
             ‹
         </button>
 
@@ -59,12 +56,9 @@ function go(page: number) {
                 type="button"
                 :class="[
                     'h-8 w-8 rounded-md transition-colors',
-                    page === modelValue
-                        ? 'bg-primary-600 text-white'
-                        : 'text-gray-700 hover:bg-gray-100',
+                    page === modelValue ? 'bg-primary-600 text-white' : 'text-gray-700 hover:bg-gray-100',
                 ]"
-                @click="go(page)"
-            >
+                @click="go(page)">
                 {{ page }}
             </button>
         </template>
@@ -73,8 +67,7 @@ function go(page: number) {
             type="button"
             class="h-8 w-8 rounded-md hover:bg-gray-100 disabled:opacity-30"
             :disabled="modelValue === pageCount"
-            @click="go(modelValue + 1)"
-        >
+            @click="go(modelValue + 1)">
             ›
         </button>
     </div>

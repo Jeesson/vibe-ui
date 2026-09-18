@@ -33,14 +33,12 @@ function onInput(e: Event) {
 <template>
     <div
         class="inline-flex w-fit max-w-full items-center overflow-hidden rounded-md border border-gray-300"
-        :class="disabled && 'opacity-50'"
-    >
+        :class="disabled && 'opacity-50'">
         <button
             type="button"
             :disabled="disabled || modelValue <= min"
             class="flex h-8 w-7 shrink-0 items-center justify-center text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-transparent"
-            @click="change(-step)"
-        >
+            @click="change(-step)">
             <MinusIcon class="h-4 w-4" />
         </button>
         <input
@@ -49,14 +47,12 @@ function onInput(e: Event) {
             :disabled="disabled"
             :style="{ width }"
             class="vibe-ui-number-input shrink-0 border-x border-gray-200 py-1.5 text-center text-sm outline-none"
-            @change="onInput"
-        />
+            @change="onInput" />
         <button
             type="button"
             :disabled="disabled || modelValue >= max"
             class="flex h-8 w-7 shrink-0 items-center justify-center text-gray-500 hover:bg-gray-50 disabled:opacity-40 disabled:hover:bg-transparent"
-            @click="change(step)"
-        >
+            @click="change(step)">
             <PlusIcon class="h-4 w-4" />
         </button>
     </div>

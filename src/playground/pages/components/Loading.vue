@@ -17,15 +17,9 @@ function run() {
         <template #examples>
             <div class="max-w-sm">
                 <Loading :loading="loading" text="Загрузка…">
-                    <div
-                        class="rounded-md border border-gray-100 p-6 text-center text-sm text-gray-500"
-                    >
-                        Область с контентом
-                    </div>
+                    <div class="rounded-md border border-gray-100 p-6 text-center text-sm text-gray-500">Область с контентом</div>
                 </Loading>
-                <Button size="sm" class="mt-2" @click="run"
-                    >Показать загрузку (1.5с)</Button
-                >
+                <Button size="sm" class="mt-2" @click="run">Показать загрузку (1.5с)</Button>
             </div>
         </template>
     </ComponentDoc>

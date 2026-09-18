@@ -12,10 +12,8 @@ const roleOptions = [
     { label: "Fullstack", value: "fullstack", disabled: true },
 ];
 const basicSource = '<Select v-model="value" :options="roleOptions" />';
-const clearableSource =
-    '<Select v-model="value" :options="roleOptions" placeholder="Роль" clearable />';
-const disabledSource =
-    '<Select v-model="value" :options="roleOptions" placeholder="Отключено" disabled />';
+const clearableSource = '<Select v-model="value" :options="roleOptions" placeholder="Роль" clearable />';
+const disabledSource = '<Select v-model="value" :options="roleOptions" placeholder="Отключено" disabled />';
 </script>
 
 <template>
@@ -26,20 +24,10 @@ const disabledSource =
                     <Select v-model="value" :options="roleOptions" />
                 </DocExample>
                 <DocExample title="Очищаемый Select" :source="clearableSource">
-                    <Select
-                        v-model="value"
-                        :options="roleOptions"
-                        placeholder="Роль"
-                        clearable
-                    />
+                    <Select v-model="value" :options="roleOptions" placeholder="Роль" clearable />
                 </DocExample>
                 <DocExample title="Отключенный Select" :source="disabledSource">
-                    <Select
-                        v-model="value"
-                        :options="roleOptions"
-                        placeholder="Отключено"
-                        disabled
-                    />
+                    <Select v-model="value" :options="roleOptions" placeholder="Отключено" disabled />
                 </DocExample>
             </div>
         </template>

@@ -13,12 +13,7 @@ const page = ref(3);
             <p class="mb-2 text-xs text-gray-400">Страница: {{ page }}</p>
             <Pagination v-model="page" :total="120" :page-size="10" />
             <div class="mt-4">
-                <Pagination
-                    v-model="page"
-                    :total="1000"
-                    :page-size="10"
-                    :sibling-count="2"
-                />
+                <Pagination v-model="page" :total="1000" :page-size="10" :sibling-count="2" />
             </div>
         </template>
     </ComponentDoc>

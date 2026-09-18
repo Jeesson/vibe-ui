@@ -7,24 +7,17 @@ export interface FloatingRect {
 
 // Шесть позиционок плавающей панели: сторона (top/bottom) × выравнивание
 // (start = по левому краю триггера, center, end = по правому).
-export type PanelPlacement =
-    "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
+export type PanelPlacement = "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
 
 // Считает позицию плавающей панели относительно триггера в viewport-координатах
 // (используется с position: fixed после Teleport в body). Разворачивает панель
 // вверх, если снизу не хватает места, но сверху его больше, и поджимает левый
 // край, если панель шире триггера и вылезает за правый край экрана.
-export function computeFloatingRect(
-    trigger: HTMLElement,
-    panelHeight = 240,
-    gap = 4,
-    panelWidth?: number,
-): FloatingRect {
+export function computeFloatingRect(trigger: HTMLElement, panelHeight = 240, gap = 4, panelWidth?: number): FloatingRect {
     const rect = trigger.getBoundingClientRect();
     const spaceBelow = window.innerHeight - rect.bottom;
     const spaceAbove = rect.top;
-    const placement: "top" | "bottom" =
-        spaceBelow < panelHeight && spaceAbove > spaceBelow ? "top" : "bottom";
+    const placement: "top" | "bottom" = spaceBelow < panelHeight && spaceAbove > spaceBelow ? "top" : "bottom";
 
     const width = panelWidth ?? rect.width;
     let left = rect.left;
@@ -64,11 +57,7 @@ export function computePlacementRect(
           : "bottom";
 
     const width = panelWidth ?? rect.width;
-    const align = placement.endsWith("-start")
-        ? "start"
-        : placement.endsWith("-end")
-          ? "end"
-          : "center";
+    const align = placement.endsWith("-start") ? "start" : placement.endsWith("-end") ? "end" : "center";
     let left: number;
     if (align === "start") {
         left = rect.left;

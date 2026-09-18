@@ -1,13 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import Tooltip from "../../components/Tooltip/Tooltip.vue";
-import type {
-    PropDoc,
-    EventDoc,
-    MethodDoc,
-    SlotDoc,
-    ComponentDoc,
-} from "./component-docs";
+import type { PropDoc, EventDoc, MethodDoc, SlotDoc, ComponentDoc } from "./component-docs";
 import { componentDescriptionsEn } from "./component-docs";
 import { apiDescriptionsEn } from "./component-docs";
 import { useLocale } from "../composables/ui-locale";
@@ -18,36 +12,16 @@ const props = defineProps<{
 }>();
 const { locale, t } = useLocale();
 const localizedDescription = computed(() =>
-    locale.value === "en"
-        ? (componentDescriptionsEn[props.doc.key] ?? props.doc.description)
-        : props.doc.description,
+    locale.value === "en" ? (componentDescriptionsEn[props.doc.key] ?? props.doc.description) : props.doc.description,
 );
 function buildScript(usage: string): string {
-    const modelMatches = [
-        ...usage.matchAll(/v-model(?:\:[\w-]+)?="([\w$]+)(?:\.([\w$]+))?"/g),
-    ];
-    const arrays = [
-        ...usage.matchAll(
-            /:(?:items|options|suggestions|users|links|tree|columns|data)="([\w$]+)"/g,
-        ),
-    ].map((match) => match[1]);
-    const bindings = [
-        ...usage.matchAll(
-            /:(?:model|rules|links|items|options|columns|data)="([\w$]+)"/g,
-        ),
-    ].map((match) => match[1]);
-    const simpleBindings = [...usage.matchAll(/:[\w-]+="([a-z][\w$]*)"/g)].map(
-        (match) => match[1],
-    );
-    const templateRefs = [...usage.matchAll(/\sref="([\w$]+)"/g)].map(
-        (match) => match[1],
-    );
-    const handlers = [...usage.matchAll(/@[\w-]+="([A-Za-z_$][\w$]*)"/g)].map(
-        (match) => match[1],
-    );
-    const callbackHandlers = [
-        ...usage.matchAll(/=>\s*([A-Za-z_$][\w$]*)\s*\(/g),
-    ].map((match) => match[1]);
+    const modelMatches = [...usage.matchAll(/v-model(?:\:[\w-]+)?="([\w$]+)(?:\.([\w$]+))?"/g)];
+    const arrays = [...usage.matchAll(/:(?:items|options|suggestions|users|links|tree|columns|data)="([\w$]+)"/g)].map((match) => match[1]);
+    const bindings = [...usage.matchAll(/:(?:model|rules|links|items|options|columns|data)="([\w$]+)"/g)].map((match) => match[1]);
+    const simpleBindings = [...usage.matchAll(/:[\w-]+="([a-z][\w$]*)"/g)].map((match) => match[1]);
+    const templateRefs = [...usage.matchAll(/\sref="([\w$]+)"/g)].map((match) => match[1]);
+    const handlers = [...usage.matchAll(/@[\w-]+="([A-Za-z_$][\w$]*)"/g)].map((match) => match[1]);
+    const callbackHandlers = [...usage.matchAll(/=>\s*([A-Za-z_$][\w$]*)\s*\(/g)].map((match) => match[1]);
     const declarations: string[] = [];
     const declared = new Set<string>();
     const nestedModels = new Map<string, string[]>();
@@ -62,17 +36,14 @@ function buildScript(usage: string): string {
 
     for (const [name, fields] of nestedModels) {
         declared.add(name);
-        declarations.push(
-            `const ${name} = reactive({ ${fields.map((field) => `${field}: ""`).join(", ")} })`,
-        );
+        declarations.push(`const ${name} = reactive({ ${fields.map((field) => `${field}: ""`).join(", ")} })`);
     }
 
     for (const match of modelMatches) {
         const name = match[1];
         if (!name || declared.has(name)) continue;
         declared.add(name);
-        const isArray =
-            /(?:arr|tags|files|selected|path|links|items|options)/i.test(name);
+        const isArray = /(?:arr|tags|files|selected|path|links|items|options)/i.test(name);
         const isBoolean = /^(?:is|has|open|loading|busy|on|agree)/i.test(name);
         const initialValue = isArray ? "[]" : isBoolean ? "false" : '""';
         declarations.push(`const ${name} = ref(${initialValue})`);
@@ -86,9 +57,7 @@ function buildScript(usage: string): string {
             const rules = fields.length
                 ? `{ ${fields.map((field) => `${field}: [{ required: true, message: "Обязательное поле" }]`).join(", ")} }`
                 : "{}";
-            declarations.push(
-                `const rules: Record<string, FormRule[]> = ${rules}`,
-            );
+            declarations.push(`const rules: Record<string, FormRule[]> = ${rules}`);
         } else {
             const isOptions = /options$/i.test(name);
             declarations.push(
@@ -102,11 +71,7 @@ function buildScript(usage: string): string {
     for (const name of simpleBindings) {
         if (!name || declared.has(name)) continue;
         declared.add(name);
-        declarations.push(
-            name === "containerRef"
-                ? `const ${name} = ref<HTMLElement | null>(null)`
-                : `const ${name} = ref("")`,
-        );
+        declarations.push(name === "containerRef" ? `const ${name} = ref<HTMLElement | null>(null)` : `const ${name} = ref("")`);
     }
 
     for (const name of templateRefs) {
@@ -129,9 +94,7 @@ function buildScript(usage: string): string {
         return "// No local state is required for this example.";
     }
 
-    const imports = [
-        `import { ${nestedModels.size ? "reactive, " : ""}ref } from "vue";`,
-    ];
+    const imports = [`import { ${nestedModels.size ? "reactive, " : ""}ref } from "vue";`];
     if (declarations.some((line) => line.includes("FormRule"))) {
         imports.push('import type { FormRule } from "@jeesson/vibe-ui";');
     }
@@ -188,10 +151,7 @@ function exampleTitle(example: string, index: number): string {
     if (normalized.includes('status="exception"')) {
         return "Состояние ошибки";
     }
-    if (
-        normalized.includes('type="circle"') ||
-        normalized.includes('type="dashboard"')
-    ) {
+    if (normalized.includes('type="circle"') || normalized.includes('type="dashboard"')) {
         return "Круговой вариант";
     }
     if (normalized.includes("@")) return "Интерактивный вариант";
@@ -201,16 +161,10 @@ function exampleTitle(example: string, index: number): string {
 
 const sourceExamples = computed(() => {
     const usage = props.doc.usage ?? "";
-    const usages = /^(?:import\s|message\.|messageBox\.|toast\.)/.test(
-        usage.trim(),
-    )
-        ? [usage]
-        : splitUsage(usage);
+    const usages = /^(?:import\s|message\.|messageBox\.|toast\.)/.test(usage.trim()) ? [usage] : splitUsage(usage);
 
     return usages.map((example, index) => {
-        if (
-            /^(?:import\s|message\.|messageBox\.|toast\.)/.test(example.trim())
-        ) {
+        if (/^(?:import\s|message\.|messageBox\.|toast\.)/.test(example.trim())) {
             const importLine = example.trim().startsWith("message.")
                 ? 'import { message } from "@jeesson/vibe-ui";\n\n'
                 : example.trim().startsWith("messageBox.")
@@ -299,10 +253,7 @@ function functionTip(type?: string): string {
     return type?.trim() ?? "function";
 }
 
-function apiDescription(
-    name: string,
-    description?: string,
-): string | undefined {
+function apiDescription(name: string, description?: string): string | undefined {
     if (locale.value !== "en") return description;
     return apiDescriptionsEn[props.doc.key]?.[name] ?? description;
 }
@@ -316,10 +267,7 @@ function apiDescription(
                 <h2 class="text-lg font-semibold text-gray-900">
                     {{ doc.name }}
                 </h2>
-                <span
-                    v-if="doc.tag"
-                    class="bg-primary-50 text-primary-700 rounded px-1.5 py-0.5 font-mono text-[11px]"
-                >
+                <span v-if="doc.tag" class="bg-primary-50 text-primary-700 rounded px-1.5 py-0.5 font-mono text-[11px]">
                     &lt;{{ doc.tag }}&gt;
                 </span>
             </div>
@@ -327,46 +275,31 @@ function apiDescription(
         </div>
 
         <!-- Примеры (живой демо-код из страницы компонента) -->
-        <section
-            id="component-examples"
-            class="scroll-mt-20 rounded-lg border border-gray-100 bg-white p-5"
-        >
+        <section id="component-examples" class="scroll-mt-20 rounded-lg border border-gray-100 bg-white p-5">
             <div class="mb-2 flex items-center justify-between gap-3">
-                <h3
-                    class="text-xs font-semibold tracking-wide text-gray-400 uppercase"
-                >
+                <h3 class="text-xs font-semibold tracking-wide text-gray-400 uppercase">
                     {{ t("docs.livePreview") }}
                 </h3>
-                <span class="text-[11px] text-gray-400">{{
-                    t("docs.component")
-                }}</span>
+                <span class="text-[11px] text-gray-400">{{ t("docs.component") }}</span>
             </div>
             <div v-if="structuredExamples" class="mt-3">
                 <slot name="examples" />
             </div>
             <div v-else-if="sourceExamples.length" class="mt-3">
-                <h4
-                    class="mb-2 text-xs font-semibold tracking-wide text-gray-700 uppercase dark:text-gray-800"
-                >
+                <h4 class="mb-2 text-xs font-semibold tracking-wide text-gray-700 uppercase dark:text-gray-800">
                     {{ t("docs.mainExample") }}
                 </h4>
-                <section
-                    class="overflow-hidden rounded-md border border-gray-200 dark:border-gray-300"
-                >
+                <section class="overflow-hidden rounded-md border border-gray-200 dark:border-gray-300">
                     <div class="bg-white px-4 py-4 dark:bg-gray-50">
                         <slot name="examples" />
                     </div>
-                    <details
-                        class="border-t border-gray-200 bg-gray-50 dark:border-gray-300 dark:bg-gray-100"
-                    >
+                    <details class="border-t border-gray-200 bg-gray-50 dark:border-gray-300 dark:bg-gray-100">
                         <summary
-                            class="cursor-pointer px-4 py-2 text-[11px] font-semibold tracking-wide text-gray-500 uppercase transition-colors hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-200"
-                        >
+                            class="cursor-pointer px-4 py-2 text-[11px] font-semibold tracking-wide text-gray-500 uppercase transition-colors hover:bg-gray-100 dark:text-gray-700 dark:hover:bg-gray-200">
                             {{ t("docs.showCode") }}
                         </summary>
                         <pre
-                            class="overflow-x-auto border-t border-gray-200 px-4 py-4 text-xs leading-6 text-gray-700 dark:border-gray-300 dark:text-gray-800"
-                        ><code>{{ sourceExamples.map((example) => example.source).join("\n\n") }}</code></pre>
+                            class="overflow-x-auto border-t border-gray-200 px-4 py-4 text-xs leading-6 text-gray-700 dark:border-gray-300 dark:text-gray-800"><code>{{ sourceExamples.map((example) => example.source).join("\n\n") }}</code></pre>
                     </details>
                 </section>
             </div>
@@ -374,10 +307,7 @@ function apiDescription(
 
         <!-- API -->
         <div v-if="doc.props || doc.events || doc.methods || doc.slots">
-            <section
-                id="component-api"
-                class="api-docs overflow-hidden rounded-lg border border-gray-100 bg-white"
-            >
+            <section id="component-api" class="api-docs overflow-hidden rounded-lg border border-gray-100 bg-white">
                 <div class="border-b border-gray-100 px-5 py-4">
                     <div class="flex items-center justify-between gap-3">
                         <div>
@@ -389,8 +319,7 @@ function apiDescription(
                             </p>
                         </div>
                         <span
-                            class="border-primary-100 bg-primary-50 text-primary-700 rounded-full border px-2 py-1 text-[10px] font-semibold tracking-wide uppercase"
-                        >
+                            class="border-primary-100 bg-primary-50 text-primary-700 rounded-full border px-2 py-1 text-[10px] font-semibold tracking-wide uppercase">
                             API
                         </span>
                     </div>
@@ -409,9 +338,7 @@ function apiDescription(
                                 <col style="width: 35%" />
                             </colgroup>
                             <thead>
-                                <tr
-                                    class="border-b border-gray-100 text-left text-gray-500"
-                                >
+                                <tr class="border-b border-gray-100 text-left text-gray-500">
                                     <th class="w-[18%] px-3 py-1.5 font-medium">
                                         {{ t("docs.name") }}
                                     </th>
@@ -427,47 +354,24 @@ function apiDescription(
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                <tr
-                                    v-for="row in propRows(doc.props)"
-                                    :key="row.name"
-                                    class="align-top"
-                                >
+                                <tr v-for="row in propRows(doc.props)" :key="row.name" class="align-top">
                                     <td class="px-3 py-2 font-mono text-xs">
-                                        {{ row.name
-                                        }}<span
-                                            v-if="row.required"
-                                            class="text-red-500"
-                                            >*</span
-                                        >
+                                        {{ row.name }}<span v-if="row.required" class="text-red-500">*</span>
                                     </td>
-                                    <td
-                                        class="px-3 py-2 font-mono text-xs text-gray-500"
-                                    >
-                                        <Tooltip
-                                            v-if="enumValues(row.type).length"
-                                            :content="enumTip(row.type)"
-                                        >
+                                    <td class="px-3 py-2 font-mono text-xs text-gray-500">
+                                        <Tooltip v-if="enumValues(row.type).length" :content="enumTip(row.type)">
                                             <code
                                                 class="cursor-help rounded border border-indigo-200 bg-indigo-50 px-1.5 py-0.5 text-[11px] font-semibold text-indigo-700 dark:border-indigo-400 dark:bg-indigo-900 dark:text-white"
                                                 >enum</code
                                             >
                                         </Tooltip>
-                                        <template v-else>{{
-                                            row.type
-                                        }}</template>
+                                        <template v-else>{{ row.type }}</template>
                                     </td>
-                                    <td
-                                        class="px-3 py-2 font-mono text-xs text-gray-400"
-                                    >
+                                    <td class="px-3 py-2 font-mono text-xs text-gray-400">
                                         {{ row.default }}
                                     </td>
                                     <td class="px-3 py-2 text-gray-600">
-                                        {{
-                                            apiDescription(
-                                                row.name,
-                                                row.description,
-                                            )
-                                        }}
+                                        {{ apiDescription(row.name, row.description) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -485,9 +389,7 @@ function apiDescription(
                                 <col style="width: 35%" />
                             </colgroup>
                             <thead>
-                                <tr
-                                    class="border-b border-gray-100 text-left text-gray-500"
-                                >
+                                <tr class="border-b border-gray-100 text-left text-gray-500">
                                     <th class="px-3 py-1.5 font-medium">
                                         {{ t("docs.event") }}
                                     </th>
@@ -500,56 +402,26 @@ function apiDescription(
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                <tr
-                                    v-for="row in eventRows(doc.events)"
-                                    :key="row.name"
-                                    class="align-top"
-                                >
-                                    <td class="px-3 py-2 font-mono text-xs">
-                                        @{{ row.name }}
-                                    </td>
-                                    <td
-                                        class="px-3 py-2 font-mono text-xs text-gray-500"
-                                    >
-                                        <Tooltip
-                                            v-if="isFunctionType(row.params)"
-                                            :content="functionTip(row.params)"
-                                        >
+                                <tr v-for="row in eventRows(doc.events)" :key="row.name" class="align-top">
+                                    <td class="px-3 py-2 font-mono text-xs">@{{ row.name }}</td>
+                                    <td class="px-3 py-2 font-mono text-xs text-gray-500">
+                                        <Tooltip v-if="isFunctionType(row.params)" :content="functionTip(row.params)">
                                             <code
-                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100"
-                                            >
+                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100">
                                                 function
                                             </code>
                                         </Tooltip>
-                                        <template
-                                            v-else-if="
-                                                enumValues(row.params).length
-                                            "
-                                        >
-                                            <Tooltip
-                                                :content="enumTip(row.params)"
-                                            >
-                                                <span
-                                                    class="cursor-help border-b border-dashed border-gray-400"
-                                                    >enum [{{
-                                                        enumValues(
-                                                            row.params,
-                                                        ).join(", ")
-                                                    }}]</span
+                                        <template v-else-if="enumValues(row.params).length">
+                                            <Tooltip :content="enumTip(row.params)">
+                                                <span class="cursor-help border-b border-dashed border-gray-400"
+                                                    >enum [{{ enumValues(row.params).join(", ") }}]</span
                                                 >
                                             </Tooltip>
                                         </template>
-                                        <template v-else>{{
-                                            row.params
-                                        }}</template>
+                                        <template v-else>{{ row.params }}</template>
                                     </td>
                                     <td class="px-3 py-2 text-gray-600">
-                                        {{
-                                            apiDescription(
-                                                row.name,
-                                                row.description,
-                                            )
-                                        }}
+                                        {{ apiDescription(row.name, row.description) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -568,9 +440,7 @@ function apiDescription(
                                 <col style="width: 35%" />
                             </colgroup>
                             <thead>
-                                <tr
-                                    class="border-b border-gray-100 text-left text-gray-500"
-                                >
+                                <tr class="border-b border-gray-100 text-left text-gray-500">
                                     <th class="px-3 py-1.5 font-medium">
                                         {{ t("docs.method") }}
                                     </th>
@@ -583,56 +453,28 @@ function apiDescription(
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                <tr
-                                    v-for="row in methodRows(doc.methods)"
-                                    :key="row.name"
-                                    class="align-top"
-                                >
+                                <tr v-for="row in methodRows(doc.methods)" :key="row.name" class="align-top">
                                     <td class="px-3 py-2 font-mono text-xs">
                                         {{ row.name }}
                                     </td>
-                                    <td
-                                        class="px-3 py-2 font-mono text-xs text-gray-500"
-                                    >
-                                        <Tooltip
-                                            v-if="isFunctionType(row.params)"
-                                            :content="functionTip(row.params)"
-                                        >
+                                    <td class="px-3 py-2 font-mono text-xs text-gray-500">
+                                        <Tooltip v-if="isFunctionType(row.params)" :content="functionTip(row.params)">
                                             <code
-                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100"
-                                            >
+                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100">
                                                 function
                                             </code>
                                         </Tooltip>
-                                        <template
-                                            v-else-if="
-                                                enumValues(row.params).length
-                                            "
-                                        >
-                                            <Tooltip
-                                                :content="enumTip(row.params)"
-                                            >
-                                                <span
-                                                    class="cursor-help border-b border-dashed border-gray-400"
-                                                    >enum [{{
-                                                        enumValues(
-                                                            row.params,
-                                                        ).join(", ")
-                                                    }}]</span
+                                        <template v-else-if="enumValues(row.params).length">
+                                            <Tooltip :content="enumTip(row.params)">
+                                                <span class="cursor-help border-b border-dashed border-gray-400"
+                                                    >enum [{{ enumValues(row.params).join(", ") }}]</span
                                                 >
                                             </Tooltip>
                                         </template>
-                                        <template v-else>{{
-                                            row.params
-                                        }}</template>
+                                        <template v-else>{{ row.params }}</template>
                                     </td>
                                     <td class="px-3 py-2 text-gray-600">
-                                        {{
-                                            apiDescription(
-                                                row.name,
-                                                row.description,
-                                            )
-                                        }}
+                                        {{ apiDescription(row.name, row.description) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -651,9 +493,7 @@ function apiDescription(
                                 <col style="width: 35%" />
                             </colgroup>
                             <thead>
-                                <tr
-                                    class="border-b border-gray-100 text-left text-gray-500"
-                                >
+                                <tr class="border-b border-gray-100 text-left text-gray-500">
                                     <th class="px-3 py-1.5 font-medium">
                                         {{ t("docs.slot") }}
                                     </th>
@@ -666,60 +506,29 @@ function apiDescription(
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-100">
-                                <tr
-                                    v-for="row in slotRows(doc.slots)"
-                                    :key="row.name"
-                                    class="align-top"
-                                >
+                                <tr v-for="row in slotRows(doc.slots)" :key="row.name" class="align-top">
                                     <td class="px-3 py-2 font-mono text-xs">
-                                        <template v-if="row.name === 'default'"
-                                            >(default)</template
-                                        ><template v-else
-                                            >#{{ row.name }}</template
-                                        >
+                                        <template v-if="row.name === 'default'">(default)</template
+                                        ><template v-else>#{{ row.name }}</template>
                                     </td>
-                                    <td
-                                        class="px-3 py-2 font-mono text-xs text-gray-500"
-                                    >
-                                        <Tooltip
-                                            v-if="isFunctionType(row.params)"
-                                            :content="functionTip(row.params)"
-                                        >
+                                    <td class="px-3 py-2 font-mono text-xs text-gray-500">
+                                        <Tooltip v-if="isFunctionType(row.params)" :content="functionTip(row.params)">
                                             <code
-                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100"
-                                            >
+                                                class="cursor-help rounded border border-emerald-200 bg-emerald-50 px-1.5 py-0.5 text-[11px] font-semibold text-emerald-700 dark:border-emerald-400 dark:bg-emerald-900 dark:text-emerald-100">
                                                 function
                                             </code>
                                         </Tooltip>
-                                        <template
-                                            v-else-if="
-                                                enumValues(row.params).length
-                                            "
-                                        >
-                                            <Tooltip
-                                                :content="enumTip(row.params)"
-                                            >
-                                                <span
-                                                    class="cursor-help border-b border-dashed border-gray-400"
-                                                    >enum [{{
-                                                        enumValues(
-                                                            row.params,
-                                                        ).join(", ")
-                                                    }}]</span
+                                        <template v-else-if="enumValues(row.params).length">
+                                            <Tooltip :content="enumTip(row.params)">
+                                                <span class="cursor-help border-b border-dashed border-gray-400"
+                                                    >enum [{{ enumValues(row.params).join(", ") }}]</span
                                                 >
                                             </Tooltip>
                                         </template>
-                                        <template v-else>{{
-                                            row.params
-                                        }}</template>
+                                        <template v-else>{{ row.params }}</template>
                                     </td>
                                     <td class="px-3 py-2 text-gray-600">
-                                        {{
-                                            apiDescription(
-                                                row.name,
-                                                row.description,
-                                            )
-                                        }}
+                                        {{ apiDescription(row.name, row.description) }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -729,27 +538,17 @@ function apiDescription(
             </section>
 
             <!-- Contributors -->
-            <section
-                id="component-contributors"
-                class="mt-5 scroll-mt-20 rounded-lg border border-gray-100 bg-white p-5"
-            >
-                <h3
-                    class="mb-4 text-xs font-semibold tracking-wide text-gray-400 uppercase"
-                >
+            <section id="component-contributors" class="mt-5 scroll-mt-20 rounded-lg border border-gray-100 bg-white p-5">
+                <h3 class="mb-4 text-xs font-semibold tracking-wide text-gray-400 uppercase">
                     {{ t("docs.contributors") }}
                 </h3>
                 <ul class="flex flex-col gap-2">
-                    <li
-                        v-for="c in doc.contributors"
-                        :key="c.github ?? c.name"
-                        class="flex items-center gap-3"
-                    >
+                    <li v-for="c in doc.contributors" :key="c.github ?? c.name" class="flex items-center gap-3">
                         <span
                             class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-medium"
                             :style="{
                                 backgroundColor: colorFor(c.github ?? c.name),
-                            }"
-                        >
+                            }">
                             {{ initials(c.name) }}
                         </span>
                         <div>
@@ -758,12 +557,9 @@ function apiDescription(
                                 :href="'https://github.com/' + c.github"
                                 target="_blank"
                                 rel="noopener"
-                                class="hover:text-primary-700 text-sm font-medium text-gray-800"
-                            >
+                                class="hover:text-primary-700 text-sm font-medium text-gray-800">
                                 {{ c.name }}
-                                <span class="text-gray-400"
-                                    >@{{ c.github }}</span
-                                >
+                                <span class="text-gray-400">@{{ c.github }}</span>
                             </a>
                             <p v-else class="text-sm font-medium text-gray-800">
                                 {{ c.name }}

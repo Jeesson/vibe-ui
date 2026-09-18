@@ -3,11 +3,7 @@ import { useFloatingPanel } from "../../composables/use-floating-panel";
 
 withDefaults(defineProps<{ title?: string }>(), {});
 
-const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel(
-    "vibe-ui-popover-panel",
-    160,
-    220,
-);
+const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel("vibe-ui-popover-panel", 160, 220);
 
 defineExpose({ close: closePanel });
 </script>
@@ -24,12 +20,8 @@ defineExpose({ close: closePanel });
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',
-                    transform:
-                        rect.placement === 'top'
-                            ? 'translateY(-100%)'
-                            : undefined,
-                }"
-            >
+                    transform: rect.placement === 'top' ? 'translateY(-100%)' : undefined,
+                }">
                 <p v-if="title" class="mb-1 font-medium text-gray-900">
                     {{ title }}
                 </p>

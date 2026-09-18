@@ -45,9 +45,7 @@ function hashString(str: string): number {
     return Math.abs(hash);
 }
 
-const colorIndex = computed(
-    () => hashString(props.initials || props.src || "default") % palette.length,
-);
+const colorIndex = computed(() => hashString(props.initials || props.src || "default") % palette.length);
 const bg = computed(() => palette[colorIndex.value]);
 const fg = computed(() => textPalette[colorIndex.value]);
 </script>
@@ -59,8 +57,7 @@ const fg = computed(() => textPalette[colorIndex.value]);
             sizeClasses[size],
             shape === 'circle' ? 'rounded-full' : 'rounded-md',
         ]"
-        :style="!src ? { backgroundColor: bg, color: fg } : undefined"
-    >
+        :style="!src ? { backgroundColor: bg, color: fg } : undefined">
         <img v-if="src" :src="src" class="h-full w-full object-cover" alt="" />
         <span v-else>{{ initials }}</span>
     </span>

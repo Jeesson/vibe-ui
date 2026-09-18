@@ -5,6 +5,4 @@ export interface RadioGroupContext {
     select: (value: string | number) => void;
 }
 
-export const RadioGroupKey: InjectionKey<RadioGroupContext> = Symbol(
-    "vibe-ui-radio-group",
-);
+export const RadioGroupKey: InjectionKey<RadioGroupContext> = Symbol("vibe-ui-radio-group");

@@ -12,9 +12,7 @@ const on = ref(true);
         <template #examples>
             <div class="flex items-center gap-3">
                 <Switch v-model="on" />
-                <span class="text-sm text-gray-600">{{
-                    on ? "Включено" : "Выключено"
-                }}</span>
+                <span class="text-sm text-gray-600">{{ on ? "Включено" : "Выключено" }}</span>
             </div>
             <div class="mt-3 flex items-center gap-3">
                 <Switch :model-value="true" disabled />

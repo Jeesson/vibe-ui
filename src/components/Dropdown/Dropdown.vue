@@ -21,12 +21,7 @@ const props = withDefaults(
 );
 const emit = defineEmits<{ select: [string] }>();
 
-const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel(
-    "vibe-ui-dropdown-panel",
-    200,
-    160,
-    () => props.placement,
-);
+const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel("vibe-ui-dropdown-panel", 200, 160, () => props.placement);
 
 function select(item: DropdownItem) {
     if (item.disabled) return;
@@ -46,10 +41,8 @@ function select(item: DropdownItem) {
             :style="{
                 top: rect.top + 'px',
                 left: rect.left + 'px',
-                transform:
-                    rect.placement === 'top' ? 'translateY(-100%)' : undefined,
-            }"
-        >
+                transform: rect.placement === 'top' ? 'translateY(-100%)' : undefined,
+            }">
             <li
                 v-for="item in items"
                 :key="item.value"
@@ -61,8 +54,7 @@ function select(item: DropdownItem) {
                           ? 'text-red-600 hover:bg-red-50'
                           : 'text-gray-700 hover:bg-gray-50',
                 ]"
-                @click="select(item)"
-            >
+                @click="select(item)">
                 {{ item.label }}
             </li>
         </ul>

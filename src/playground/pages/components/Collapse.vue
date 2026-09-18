@@ -12,15 +12,9 @@ const active = ref<string[]>(["a"]);
     <ComponentDoc :doc="doc">
         <template #examples>
             <Collapse v-model="active" class="max-w-sm">
-                <CollapseItem name="a" title="Раздел A"
-                    >Плавная CSS-анимация высоты.</CollapseItem
-                >
-                <CollapseItem name="b" title="Раздел B"
-                    >Содержимое B.</CollapseItem
-                >
-                <CollapseItem name="c" title="Раздел C"
-                    >Содержимое C.</CollapseItem
-                >
+                <CollapseItem name="a" title="Раздел A">Плавная CSS-анимация высоты.</CollapseItem>
+                <CollapseItem name="b" title="Раздел B">Содержимое B.</CollapseItem>
+                <CollapseItem name="c" title="Раздел C">Содержимое C.</CollapseItem>
             </Collapse>
         </template>
     </ComponentDoc>

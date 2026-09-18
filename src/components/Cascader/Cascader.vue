@@ -1,18 +1,8 @@
 <script setup lang="ts">
-import {
-    ref,
-    computed,
-    watch,
-    onMounted,
-    onBeforeUnmount,
-    nextTick,
-} from "vue";
+import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
 import Scrollbar from "../Scrollbar/Scrollbar.vue";
-import {
-    computeFloatingRect,
-    type FloatingRect,
-} from "../../composables/floating";
+import { computeFloatingRect, type FloatingRect } from "../../composables/floating";
 
 export interface CascaderOption {
     label: string;
@@ -57,13 +47,7 @@ const displayLabel = computed(() => {
 });
 
 function updateRect() {
-    if (triggerRef.value)
-        rect.value = computeFloatingRect(
-            triggerRef.value,
-            260,
-            4,
-            columns.value.length * COLUMN_WIDTH,
-        );
+    if (triggerRef.value) rect.value = computeFloatingRect(triggerRef.value, 260, 4, columns.value.length * COLUMN_WIDTH);
 }
 // Число колонок растёт по мере раскрытия дерева — пересчитываем позицию/ширину панели.
 watch(columns, () => open.value && nextTick(updateRect));
@@ -110,8 +94,7 @@ onBeforeUnmount(() => {
             ref="triggerRef"
             type="button"
             class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left"
-            @click="toggle"
-        >
+            @click="toggle">
             <span :class="!displayLabel && 'text-gray-400'">
                 {{ displayLabel || placeholder || "Выберите" }}
             </span>
@@ -125,36 +108,25 @@ onBeforeUnmount(() => {
                 :style="{
                     top: rect.top + 'px',
                     left: rect.left + 'px',
-                    transform:
-                        rect.placement === 'top'
-                            ? 'translateY(-100%)'
-                            : undefined,
-                }"
-            >
+                    transform: rect.placement === 'top' ? 'translateY(-100%)' : undefined,
+                }">
                 <Scrollbar
                     v-for="(col, depth) in columns"
                     :key="depth"
                     max-height="15rem"
                     class="border-r border-gray-100 last:border-r-0"
-                    :style="{ width: COLUMN_WIDTH + 'px' }"
-                >
+                    :style="{ width: COLUMN_WIDTH + 'px' }">
                     <ul class="py-1">
                         <li
                             v-for="option in col"
                             :key="option.value"
                             :class="[
                                 'flex cursor-pointer items-center justify-between px-3 py-2 hover:bg-gray-50',
-                                activePath[depth]?.value === option.value &&
-                                    'bg-primary-50 text-primary-700',
+                                activePath[depth]?.value === option.value && 'bg-primary-50 text-primary-700',
                             ]"
-                            @click="hover(depth, option)"
-                        >
+                            @click="hover(depth, option)">
                             {{ option.label }}
-                            <ChevronRightIcon
-                                v-if="option.children?.length"
-                                class="h-4 w-4 text-gray-300"
-                                aria-hidden="true"
-                            />
+                            <ChevronRightIcon v-if="option.children?.length" class="h-4 w-4 text-gray-300" aria-hidden="true" />
                         </li>
                     </ul>
                 </Scrollbar>

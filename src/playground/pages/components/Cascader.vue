@@ -103,12 +103,7 @@ const options = [
 <template>
     <ComponentDoc :doc="doc">
         <template #examples>
-            <Cascader
-                v-model="value"
-                :options="options"
-                placeholder="Область / город"
-                class="max-w-sm"
-            />
+            <Cascader v-model="value" :options="options" placeholder="Область / город" class="max-w-sm" />
         </template>
     </ComponentDoc>
 </template>

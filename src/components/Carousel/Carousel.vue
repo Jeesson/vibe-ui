@@ -2,10 +2,7 @@
 import { ref, onMounted, onBeforeUnmount, onUpdated } from "vue";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/outline";
 
-const props = withDefaults(
-    defineProps<{ autoplay?: boolean; interval?: number }>(),
-    { autoplay: false, interval: 3000 },
-);
+const props = withDefaults(defineProps<{ autoplay?: boolean; interval?: number }>(), { autoplay: false, interval: 3000 });
 
 // Количество слайдов считаем по реальным DOM-детям трека: если слайды
 // переданы через v-for, слот возвращает один Fragment-vnode, и подсчёт
@@ -44,23 +41,20 @@ onBeforeUnmount(() => timer && clearInterval(timer));
         <div
             ref="trackRef"
             class="flex transition-transform duration-300 ease-in-out *:w-full *:shrink-0"
-            :style="{ transform: `translateX(-${active * 100}%)` }"
-        >
+            :style="{ transform: `translateX(-${active * 100}%)` }">
             <slot />
         </div>
 
         <button
             type="button"
             class="absolute top-1/2 left-2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-gray-600 shadow hover:bg-white"
-            @click="prev"
-        >
+            @click="prev">
             <ChevronLeftIcon class="h-3 w-3" />
         </button>
         <button
             type="button"
             class="absolute top-1/2 right-2 flex h-7 w-7 -translate-y-1/2 items-center justify-center rounded-full bg-white/80 text-gray-600 shadow hover:bg-white"
-            @click="next"
-        >
+            @click="next">
             <ChevronRightIcon class="h-3 w-3" />
         </button>
 
@@ -71,8 +65,7 @@ onBeforeUnmount(() => timer && clearInterval(timer));
                 type="button"
                 class="h-1.5 rounded-full transition-all"
                 :class="active === i - 1 ? 'w-4 bg-white' : 'w-1.5 bg-white/60'"
-                @click="go(i - 1)"
-            />
+                @click="go(i - 1)" />
         </div>
     </div>
 </template>

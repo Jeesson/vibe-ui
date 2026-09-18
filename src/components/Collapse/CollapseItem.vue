@@ -13,13 +13,9 @@ const ctx = inject(CollapseKey, null);
         <button
             type="button"
             class="flex w-full items-center justify-between px-4 py-3 text-left text-sm font-medium text-gray-700 hover:bg-gray-50"
-            @click="ctx?.toggle(props.name)"
-        >
+            @click="ctx?.toggle(props.name)">
             {{ title }}
-            <span
-                class="text-gray-400 transition-transform duration-200"
-                :class="ctx?.isActive(props.name) && 'rotate-180'"
-            >
+            <span class="text-gray-400 transition-transform duration-200" :class="ctx?.isActive(props.name) && 'rotate-180'">
                 <ChevronDownIcon class="h-4 w-4" />
             </span>
         </button>
@@ -33,8 +29,7 @@ const ctx = inject(CollapseKey, null);
             class="grid transition-[grid-template-rows] duration-300 ease-in-out"
             :style="{
                 gridTemplateRows: ctx?.isActive(props.name) ? '1fr' : '0fr',
-            }"
-        >
+            }">
             <div class="overflow-hidden">
                 <div class="px-4 pb-3 text-sm text-gray-600">
                     <slot />

@@ -68,16 +68,9 @@ function onSelect(key: string) {
 </script>
 
 <template>
-    <aside
-        class="sticky top-14 h-[calc(100vh-3.5rem)] w-52 shrink-0 border-r border-gray-100 bg-white p-3"
-    >
+    <aside class="sticky top-14 h-[calc(100vh-3.5rem)] w-52 shrink-0 border-r border-gray-100 bg-white p-3">
         <Scrollbar max-height="calc(100vh - 3.5rem)" class="h-full" hide>
-            <Menu
-                :items="items"
-                :model-value="modelValue"
-                expand-all
-                @update:model-value="onSelect"
-            />
+            <Menu :items="items" :model-value="modelValue" expand-all @update:model-value="onSelect" />
         </Scrollbar>
     </aside>
 </template>

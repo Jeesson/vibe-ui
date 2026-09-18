@@ -25,36 +25,18 @@ export interface FormContext {
 
 export const FormContextKey: InjectionKey<FormContext> = Symbol("vibe-ui-form");
 
-export function runRules(
-    value: unknown,
-    rules: FormRule[] = [],
-): string | true {
+export function runRules(value: unknown, rules: FormRule[] = []): string | true {
     for (const rule of rules) {
-        if (
-            rule.required &&
-            (value === "" || value === null || value === undefined)
-        ) {
+        if (rule.required && (value === "" || value === null || value === undefined)) {
             return rule.message ?? "Обязательное поле";
         }
-        if (
-            rule.pattern &&
-            typeof value === "string" &&
-            !rule.pattern.test(value)
-        ) {
+        if (rule.pattern && typeof value === "string" && !rule.pattern.test(value)) {
             return rule.message ?? "Неверный формат";
         }
-        if (
-            rule.min !== undefined &&
-            typeof value === "string" &&
-            value.length < rule.min
-        ) {
+        if (rule.min !== undefined && typeof value === "string" && value.length < rule.min) {
             return rule.message ?? `Минимум ${rule.min} символов`;
         }
-        if (
-            rule.max !== undefined &&
-            typeof value === "string" &&
-            value.length > rule.max
-        ) {
+        if (rule.max !== undefined && typeof value === "string" && value.length > rule.max) {
             return rule.message ?? `Максимум ${rule.max} символов`;
         }
         if (rule.validator) {

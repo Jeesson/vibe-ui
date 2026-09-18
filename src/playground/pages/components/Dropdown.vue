@@ -12,49 +12,23 @@ const actions = [
     { label: "Дублировать", value: "duplicate" },
     { label: "Удалить", value: "delete", danger: true },
 ];
-const placements: PanelPlacement[] = [
-    "bottom-start",
-    "bottom",
-    "bottom-end",
-    "top-start",
-    "top",
-    "top-end",
-];
+const placements: PanelPlacement[] = ["bottom-start", "bottom", "bottom-end", "top-start", "top", "top-end"];
 </script>
 
 <template>
     <ComponentDoc :doc="doc">
         <template #examples>
             <div class="flex items-center gap-3">
-                <Dropdown
-                    :items="actions"
-                    @select="(v) => toast.info('Выбрано: ' + v)"
-                >
-                    <Button variant="ghost" :icon-right="ChevronDownIcon"
-                        >Действия</Button
-                    >
+                <Dropdown :items="actions" @select="(v) => toast.info('Выбрано: ' + v)">
+                    <Button variant="ghost" :icon-right="ChevronDownIcon">Действия</Button>
                 </Dropdown>
-                <Dropdown
-                    :items="[
-                        { label: 'Отключено', value: 'x', disabled: true },
-                    ]"
-                >
-                    <Button variant="secondary" :icon-right="ChevronDownIcon"
-                        >С disabled-пунктом</Button
-                    >
+                <Dropdown :items="[{ label: 'Отключено', value: 'x', disabled: true }]">
+                    <Button variant="secondary" :icon-right="ChevronDownIcon">С disabled-пунктом</Button>
                 </Dropdown>
             </div>
-            <p class="mt-4 mb-2 text-xs text-gray-400">
-                Все позиционки (<code>placement</code>):
-            </p>
+            <p class="mt-4 mb-2 text-xs text-gray-400">Все позиционки (<code>placement</code>):</p>
             <div class="flex flex-wrap items-center gap-2">
-                <Dropdown
-                    v-for="p in placements"
-                    :key="p"
-                    :placement="p"
-                    :items="actions"
-                    @select="(v) => toast.info(p + ' → ' + v)"
-                >
+                <Dropdown v-for="p in placements" :key="p" :placement="p" :items="actions" @select="(v) => toast.info(p + ' → ' + v)">
                     <Button variant="secondary" size="sm">{{ p }}</Button>
                 </Dropdown>
             </div>

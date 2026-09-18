@@ -12,9 +12,7 @@ const source = '<Calendar v-model="date" class="max-w-sm" />';
 <template>
     <ComponentDoc :doc="doc" structured-examples>
         <template #examples>
-            <DocExample title="Календарь" :source="source"
-                ><Calendar v-model="date" class="max-w-sm"
-            /></DocExample>
+            <DocExample title="Календарь" :source="source"><Calendar v-model="date" class="max-w-sm" /></DocExample>
         </template>
     </ComponentDoc>
 </template>

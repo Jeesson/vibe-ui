@@ -27,23 +27,12 @@ const typeClasses = {
 </script>
 
 <template>
-    <div
-        v-if="visible"
-        :class="[
-            'flex items-start justify-between gap-3 rounded-md border px-4 py-3 text-sm',
-            typeClasses[type],
-        ]"
-    >
+    <div v-if="visible" :class="['flex items-start justify-between gap-3 rounded-md border px-4 py-3 text-sm', typeClasses[type]]">
         <div class="flex flex-col gap-0.5">
             <p v-if="title" class="font-medium">{{ title }}</p>
             <p><slot /></p>
         </div>
-        <button
-            v-if="closable"
-            type="button"
-            class="opacity-60 hover:opacity-100"
-            @click="close"
-        >
+        <button v-if="closable" type="button" class="opacity-60 hover:opacity-100" @click="close">
             <XCircleIcon class="h-5 w-5" />
         </button>
     </div>

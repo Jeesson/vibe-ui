@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { provide, ref, reactive } from "vue";
-import {
-    FormContextKey,
-    runRules,
-    type FormRule,
-    type FormItemContext,
-} from "../../composables/form-context";
+import { FormContextKey, runRules, type FormRule, type FormItemContext } from "../../composables/form-context";
 
 const props = defineProps<{
     model: Record<string, unknown>;

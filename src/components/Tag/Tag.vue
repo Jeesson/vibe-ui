@@ -18,20 +18,8 @@ const typeClasses = {
 </script>
 
 <template>
-    <span
-        :class="[
-            'inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium',
-            typeClasses[type],
-        ]"
-    >
+    <span :class="['inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium', typeClasses[type]]">
         <slot />
-        <button
-            v-if="closable"
-            type="button"
-            class="ml-0.5 opacity-60 hover:opacity-100"
-            @click="$emit('close')"
-        >
-            ✕
-        </button>
+        <button v-if="closable" type="button" class="ml-0.5 opacity-60 hover:opacity-100" @click="$emit('close')">✕</button>
     </span>
 </template>

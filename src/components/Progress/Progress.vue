@@ -24,9 +24,7 @@ const props = withDefaults(
     },
 );
 
-const clamped = computed(() =>
-    Math.min(100, Math.max(0, props.percentage ?? 0)),
-);
+const clamped = computed(() => Math.min(100, Math.max(0, props.percentage ?? 0)));
 
 const statusColors: Record<string, string> = {
     normal: "var(--color-primary-600)",
@@ -44,9 +42,7 @@ const dashOffset = computed(() => circumference * (1 - clamped.value / 100));
 // края по часовой стрелке. Строится настоящим SVG path — у трека и заполнения
 // корректные скруглённые концы, без артефактов linecap в зазоре.
 const dashboardSweep = 270;
-const dashboardArcAngle = computed(
-    () => (dashboardSweep * clamped.value) / 100,
-);
+const dashboardArcAngle = computed(() => (dashboardSweep * clamped.value) / 100);
 
 function polar(cx: number, cy: number, r: number, angleDeg: number) {
     const rad = (angleDeg * Math.PI) / 180;
@@ -59,9 +55,7 @@ function arcPath(startAngle: number, sweep: number) {
     return `M ${start.x} ${start.y} A ${circleRadius} ${circleRadius} 0 ${largeArc} 1 ${end.x} ${end.y}`;
 }
 const dashboardTrackPath = arcPath(135, dashboardSweep);
-const dashboardProgressPath = computed(() =>
-    arcPath(135, Math.max(dashboardArcAngle.value, 0.01)),
-);
+const dashboardProgressPath = computed(() => arcPath(135, Math.max(dashboardArcAngle.value, 0.01)));
 const gradientId = `vibe-ui-progress-grad-${Math.random().toString(36).slice(2, 9)}`;
 </script>
 
@@ -73,54 +67,32 @@ const gradientId = `vibe-ui-progress-grad-${Math.random().toString(36).slice(2, 
                 class="animate-vibe-ui-progress-stripes h-full w-full rounded-full"
                 :style="{
                     backgroundImage: `linear-gradient(45deg, ${color} 25%, transparent 25%, transparent 50%, ${color} 50%, ${color} 75%, transparent 75%, transparent)`,
-                }"
-            />
+                }" />
             <div
                 v-else-if="indeterminate && animation === 'pulse'"
                 class="animate-vibe-ui-progress-pulse h-full w-full origin-left rounded-full"
-                :style="{ backgroundColor: color }"
-            />
+                :style="{ backgroundColor: color }" />
             <div
                 v-else-if="indeterminate"
                 class="animate-vibe-ui-progress-indeterminate h-full w-1/3 rounded-full"
-                :style="{ backgroundColor: color }"
-            />
-            <div
-                v-else
-                class="h-full rounded-full transition-all"
-                :style="{ width: clamped + '%', backgroundColor: color }"
-            />
+                :style="{ backgroundColor: color }" />
+            <div v-else class="h-full rounded-full transition-all" :style="{ width: clamped + '%', backgroundColor: color }" />
         </div>
-        <span
-            v-if="showText && !indeterminate"
-            class="w-9 text-right text-xs text-gray-500"
-            >{{ clamped }}%</span
-        >
+        <span v-if="showText && !indeterminate" class="w-9 text-right text-xs text-gray-500">{{ clamped }}%</span>
     </div>
 
     <div
         v-else-if="type === 'dashboard'"
         class="relative inline-flex items-center justify-center"
-        :style="{ width: size + 'px', height: size + 'px' }"
-    >
-        <svg
-            viewBox="0 0 80 80"
-            :class="indeterminate && 'animate-spin'"
-            class="h-full w-full"
-        >
+        :style="{ width: size + 'px', height: size + 'px' }">
+        <svg viewBox="0 0 80 80" :class="indeterminate && 'animate-spin'" class="h-full w-full">
             <defs>
                 <linearGradient :id="gradientId" x1="0" y1="1" x2="1" y2="0">
                     <stop offset="0%" :stop-color="color" stop-opacity="0.55" />
                     <stop offset="100%" :stop-color="color" stop-opacity="1" />
                 </linearGradient>
             </defs>
-            <path
-                :d="dashboardTrackPath"
-                fill="none"
-                stroke="#F3F4F6"
-                :stroke-width="strokeWidth"
-                stroke-linecap="round"
-            />
+            <path :d="dashboardTrackPath" fill="none" stroke="#F3F4F6" :stroke-width="strokeWidth" stroke-linecap="round" />
             <path
                 v-if="!indeterminate"
                 :d="dashboardProgressPath"
@@ -128,35 +100,14 @@ const gradientId = `vibe-ui-progress-grad-${Math.random().toString(36).slice(2, 
                 :stroke="`url(#${gradientId})`"
                 :stroke-width="strokeWidth"
                 stroke-linecap="round"
-                class="transition-all"
-            />
+                class="transition-all" />
         </svg>
-        <span
-            v-if="showText && !indeterminate"
-            class="absolute text-sm font-semibold text-gray-700 tabular-nums"
-        >
-            {{ clamped }}%
-        </span>
+        <span v-if="showText && !indeterminate" class="absolute text-sm font-semibold text-gray-700 tabular-nums"> {{ clamped }}% </span>
     </div>
 
-    <div
-        v-else
-        class="relative inline-flex items-center justify-center"
-        :style="{ width: size + 'px', height: size + 'px' }"
-    >
-        <svg
-            viewBox="0 0 80 80"
-            class="h-full w-full -rotate-90"
-            :class="indeterminate && 'animate-spin'"
-        >
-            <circle
-                cx="40"
-                cy="40"
-                :r="circleRadius"
-                fill="none"
-                stroke="#F3F4F6"
-                :stroke-width="strokeWidth"
-            />
+    <div v-else class="relative inline-flex items-center justify-center" :style="{ width: size + 'px', height: size + 'px' }">
+        <svg viewBox="0 0 80 80" class="h-full w-full -rotate-90" :class="indeterminate && 'animate-spin'">
+            <circle cx="40" cy="40" :r="circleRadius" fill="none" stroke="#F3F4F6" :stroke-width="strokeWidth" />
             <circle
                 cx="40"
                 cy="40"
@@ -166,17 +117,10 @@ const gradientId = `vibe-ui-progress-grad-${Math.random().toString(36).slice(2, 
                 :stroke-width="strokeWidth"
                 stroke-linecap="round"
                 :stroke-dasharray="indeterminate ? undefined : circumference"
-                :stroke-dashoffset="
-                    indeterminate ? circumference * 0.75 : dashOffset
-                "
-                class="transition-all"
-            />
+                :stroke-dashoffset="indeterminate ? circumference * 0.75 : dashOffset"
+                class="transition-all" />
         </svg>
-        <span
-            v-if="showText && !indeterminate"
-            class="absolute text-sm font-medium text-gray-700"
-            >{{ clamped }}%</span
-        >
+        <span v-if="showText && !indeterminate" class="absolute text-sm font-medium text-gray-700">{{ clamped }}%</span>
     </div>
 </template>
 

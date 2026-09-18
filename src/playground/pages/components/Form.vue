@@ -36,17 +36,10 @@ function submit() {
         <template #examples>
             <Form ref="formRef" :model="model" :rules="rules" class="max-w-sm">
                 <FormItem prop="email" label="Email">
-                    <Input
-                        v-model="model.email"
-                        placeholder="you@example.com"
-                    />
+                    <Input v-model="model.email" placeholder="you@example.com" />
                 </FormItem>
                 <FormItem prop="role" label="Роль">
-                    <Select
-                        v-model="model.role"
-                        :options="roleOptions"
-                        placeholder="Выберите роль"
-                    />
+                    <Select v-model="model.role" :options="roleOptions" placeholder="Выберите роль" />
                 </FormItem>
                 <Button @click="submit">Проверить</Button>
             </Form>

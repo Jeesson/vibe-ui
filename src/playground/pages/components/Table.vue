@@ -22,9 +22,7 @@ const statusTag = (s: string) => (s === "Активен" ? "success" : "warning"
         <template #examples>
             <Table :columns="cols" :data="data">
                 <template #cell-status="{ row }">
-                    <Tag :type="statusTag(String(row.status))">{{
-                        row.status
-                    }}</Tag>
+                    <Tag :type="statusTag(String(row.status))">{{ row.status }}</Tag>
                 </template>
             </Table>
         </template>

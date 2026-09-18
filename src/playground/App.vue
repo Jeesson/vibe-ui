@@ -8,11 +8,7 @@ import Sidebar from "./layout/Sidebar.vue";
 import Backtop from "../components/Backtop/Backtop.vue";
 import Anchor from "../components/Anchor/Anchor.vue";
 import { useLocale } from "./composables/ui-locale";
-import {
-    componentAnchors,
-    componentKeyFromSlug,
-    pageKeyToPath,
-} from "./component-pages";
+import { componentAnchors, componentKeyFromSlug, pageKeyToPath } from "./component-pages";
 import { components as componentDocs } from "./docs/component-docs";
 
 const { t } = useLocale();
@@ -31,28 +27,16 @@ const overviewAnchors = [
 ];
 
 /* Ключ дока текущего компонента (если активен маршрут /components/:slug). */
-const componentKey = computed(() =>
-    route.name === "component"
-        ? componentKeyFromSlug(String(route.params.slug ?? ""))
-        : null,
-);
+const componentKey = computed(() => (route.name === "component" ? componentKeyFromSlug(String(route.params.slug ?? "")) : null));
 
 /* Заголовок в Navbar: имя компонента или перевод «Обзор». */
-const pageTitle = computed(() =>
-    componentKey.value
-        ? componentDocs[componentKey.value].name
-        : t.value("overview.title"),
-);
+const pageTitle = computed(() => (componentKey.value ? componentDocs[componentKey.value].name : t.value("overview.title")));
 
 /* Оглавление справа для текущего маршрута. */
-const anchors = computed(() =>
-    componentKey.value ? componentAnchors : overviewAnchors,
-);
+const anchors = computed(() => (componentKey.value ? componentAnchors : overviewAnchors));
 
 /* Активный пункт сайдбара ("overview" | "c-<key>"). */
-const currentPage = computed(() =>
-    componentKey.value ? `c-${componentKey.value}` : "overview",
-);
+const currentPage = computed(() => (componentKey.value ? `c-${componentKey.value}` : "overview"));
 
 /* Клик по сайдбару/карточке обзора → vue-router. */
 function navigate(page: string, anchor?: string) {
@@ -68,33 +52,19 @@ function navigate(page: string, anchor?: string) {
         <Navbar :page-title="pageTitle" />
 
         <div class="mx-auto flex max-w-350">
-            <Sidebar
-                :model-value="currentPage"
-                @update:model-value="navigate"
-                @navigate="navigate"
-            />
+            <Sidebar :model-value="currentPage" @update:model-value="navigate" @navigate="navigate" />
 
             <main class="min-w-0 flex-1 px-8 py-8">
                 <RouterView />
             </main>
 
             <!-- правая колонка — оглавление текущей страницы -->
-            <aside
-                v-if="anchors.length"
-                class="hidden w-48 shrink-0 py-8 pr-6 lg:block"
-            >
+            <aside v-if="anchors.length" class="hidden w-48 shrink-0 py-8 pr-6 lg:block">
                 <div class="sticky top-20">
-                    <p
-                        class="mb-2 text-xs font-medium tracking-wide text-gray-400 uppercase"
-                    >
+                    <p class="mb-2 text-xs font-medium tracking-wide text-gray-400 uppercase">
                         {{ t("page.onPage") }}
                     </p>
-                    <Anchor
-                        :key="route.path"
-                        :links="anchors"
-                        :offset="80"
-                        :bound="20"
-                    />
+                    <Anchor :key="route.path" :links="anchors" :offset="80" :bound="20" />
                 </div>
             </aside>
         </div>

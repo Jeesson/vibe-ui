@@ -6,17 +6,13 @@ export function isUndefined(val: unknown): val is undefined {
     return val === undefined;
 }
 
-export function getElement(
-    selector?: string | HTMLElement | Window | null,
-): HTMLElement | Window | null {
+export function getElement(selector?: string | HTMLElement | Window | null): HTMLElement | Window | null {
     if (!selector) return null;
     if (typeof selector === "string") {
         if (typeof document === "undefined") return null;
         try {
             if (selector.startsWith("#")) {
-                return document.getElementById(
-                    decodeURIComponent(selector.slice(1)),
-                );
+                return document.getElementById(decodeURIComponent(selector.slice(1)));
             }
             return document.querySelector<HTMLElement>(selector);
         } catch {
@@ -29,10 +25,7 @@ export function getElement(
 // В оригинале решает, откуда читать scrollTop для данного target
 // относительно контейнера. Здесь контейнер уже разрешён заранее (Anchor
 // сам решает container === window или элемент), поэтому просто возвращаем его.
-export function getScrollElement(
-    _target: HTMLElement,
-    container: HTMLElement | Window,
-): HTMLElement | Window {
+export function getScrollElement(_target: HTMLElement, container: HTMLElement | Window): HTMLElement | Window {
     return container;
 }
 
@@ -43,10 +36,7 @@ export function getScrollTop(container: HTMLElement | Window): number {
 export function getMaxScrollTop(container: HTMLElement | Window): number {
     if (isWindow(container)) {
         const root = document.scrollingElement ?? document.documentElement;
-        return Math.max(
-            0,
-            root.scrollHeight - document.documentElement.clientHeight,
-        );
+        return Math.max(0, root.scrollHeight - document.documentElement.clientHeight);
     }
     return Math.max(0, container.scrollHeight - container.clientHeight);
 }
@@ -65,8 +55,7 @@ export function resolveActiveHref(
     if (top <= 0) return selectScrollTop ? sorted[0].href : "";
     const last = sorted[sorted.length - 1];
     const bottomTolerance = currentHref === last.href ? 8 : 2;
-    if (maxScrollTop > 0 && maxScrollTop - top <= bottomTolerance)
-        return last.href;
+    if (maxScrollTop > 0 && maxScrollTop - top <= bottomTolerance) return last.href;
 
     let candidate = -1;
     for (let i = 0; i < sorted.length; i++) {
@@ -76,28 +65,19 @@ export function resolveActiveHref(
     const current = sorted.findIndex((item) => item.href === currentHref);
     // Гистерезис в 2px на обычных границах секций.
     if (current !== -1 && current !== candidate) {
-        const boundary =
-            candidate > current ? sorted[candidate].top : sorted[current].top;
+        const boundary = candidate > current ? sorted[candidate].top : sorted[current].top;
         if (Math.abs(top - boundary) <= 2) return currentHref;
     }
     return candidate === -1 ? "" : sorted[candidate].href;
 }
 
-export function getOffsetTopDistance(
-    target: HTMLElement,
-    scrollContainer: HTMLElement | Window,
-): number {
+export function getOffsetTopDistance(target: HTMLElement, scrollContainer: HTMLElement | Window): number {
     const rect = target.getBoundingClientRect();
     if (isWindow(scrollContainer)) {
         return rect.top + window.scrollY;
     }
     const containerRect = scrollContainer.getBoundingClientRect();
-    return (
-        rect.top -
-        containerRect.top -
-        scrollContainer.clientTop +
-        scrollContainer.scrollTop
-    );
+    return rect.top - containerRect.top - scrollContainer.clientTop + scrollContainer.scrollTop;
 }
 
 // Throttle через один rAF — не даёт handleScroll выполняться чаще кадра,
@@ -139,8 +119,7 @@ export function animateScrollTo(
     const step = (now: number) => {
         rafId = null;
         if (cancelled) return;
-        const progress =
-            duration <= 0 ? 1 : Math.min((now - startedAt) / duration, 1);
+        const progress = duration <= 0 ? 1 : Math.min((now - startedAt) / duration, 1);
         const eased = 1 - Math.pow(1 - progress, 3);
         setScrollTop(from + (to - from) * eased);
         if (progress < 1) {

@@ -17,10 +17,7 @@ const typeClasses = {
 
 <template>
     <div :class="['rounded-lg', typeClasses[type]]">
-        <div
-            v-if="title || $slots.header"
-            class="border-b border-gray-100 px-4 py-3"
-        >
+        <div v-if="title || $slots.header" class="border-b border-gray-100 px-4 py-3">
             <slot name="header">
                 <h3 class="text-sm font-semibold text-gray-900">{{ title }}</h3>
             </slot>

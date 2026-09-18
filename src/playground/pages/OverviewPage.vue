@@ -1,11 +1,6 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import {
-    ArrowUpIcon,
-    CalendarDaysIcon,
-    MagnifyingGlassIcon,
-    XMarkIcon,
-} from "@heroicons/vue/24/outline";
+import { ArrowUpIcon, CalendarDaysIcon, MagnifyingGlassIcon, XMarkIcon } from "@heroicons/vue/24/outline";
 import { components } from "../docs/component-docs";
 import { useRouter } from "vue-router";
 import { pageKeyToPath } from "../component-pages";
@@ -29,8 +24,7 @@ interface Group {
  * Ниже — только уточнения: группа и превью-mock отдельных компонентов.
  * ------------------------------------------------------------------------- */
 
-type PageId =
-    "basic" | "form" | "data" | "navigation" | "feedback" | "misc" | "datetime";
+type PageId = "basic" | "form" | "data" | "navigation" | "feedback" | "misc" | "datetime";
 
 /** Компоненты, которые в доках лежат в misc, но показываются на странице datetime. */
 const DATETIME_KEYS = new Set([
@@ -115,9 +109,7 @@ const GROUP_META: { page: PageId; title: string }[] = [
 ];
 
 function toItem(doc: (typeof components)[string]): Item {
-    const page: PageId =
-        OVERRIDES[doc.key]?.page ??
-        (DATETIME_KEYS.has(doc.key) ? "datetime" : doc.group);
+    const page: PageId = OVERRIDES[doc.key]?.page ?? (DATETIME_KEYS.has(doc.key) ? "datetime" : doc.group);
     return {
         name: OVERRIDES[doc.key]?.name ?? doc.name,
         key: doc.key,
@@ -154,23 +146,9 @@ function go(item: Item) {
     <div class="ov">
         <div class="ov-search">
             <div class="ov-search-box">
-                <MagnifyingGlassIcon
-                    class="ov-search-icon"
-                    aria-hidden="true"
-                />
-                <input
-                    v-model="search"
-                    class="ov-search-input"
-                    type="text"
-                    autocomplete="off"
-                    placeholder="Search Components"
-                />
-                <button
-                    v-if="search"
-                    class="ov-search-clear"
-                    @click="search = ''"
-                    aria-label="Clear"
-                >
+                <MagnifyingGlassIcon class="ov-search-icon" aria-hidden="true" />
+                <input v-model="search" class="ov-search-input" type="text" autocomplete="off" placeholder="Search Components" />
+                <button v-if="search" class="ov-search-clear" @click="search = ''" aria-label="Clear">
                     <XMarkIcon class="h-3.5 w-3.5" aria-hidden="true" />
                 </button>
             </div>
@@ -181,225 +159,50 @@ function go(item: Item) {
                 {{ g.title }} <span class="ov-count">{{ g.items.length }}</span>
             </p>
             <div class="ov-cards">
-                <button
-                    v-for="item in g.items"
-                    :key="item.name"
-                    class="ov-card"
-                    @click="go(item)"
-                    :title="'Open ' + item.name"
-                >
+                <button v-for="item in g.items" :key="item.name" class="ov-card" @click="go(item)" :title="'Open ' + item.name">
                     <span class="ov-card-name">{{ item.name }}</span>
                     <span class="ov-preview">
-                        <span v-if="item.mock === 'button'" class="mk mk-btn">
-                            Button
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'input'"
-                            class="mk mk-input"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'check'"
-                            class="mk mk-check"
-                        >
-                            <i></i><i class="on"></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'switch'"
-                            class="mk mk-switch"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'slider'"
-                            class="mk mk-slider"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'rate'"
-                            class="mk mk-rate"
-                            >* * * *</span
-                        >
-                        <span
-                            v-else-if="item.mock === 'avatar'"
-                            class="mk mk-avatar"
-                        >
-                            <i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'tags'"
-                            class="mk mk-tags"
-                        >
-                            <i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'tooltip'"
-                            class="mk mk-tip"
-                        >
-                            <i></i><b>tip</b></span
-                        >
-                        <span
-                            v-else-if="item.mock === 'divider'"
-                            class="mk mk-div"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'progress'"
-                            class="mk mk-prog"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'form'"
-                            class="mk mk-form"
-                        >
-                            <i></i><i></i><b></b>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'card'"
-                            class="mk mk-card"
-                        >
-                            <i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'skeleton'"
-                            class="mk mk-skel"
-                        >
-                            <i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'collapse'"
-                            class="mk mk-col"
-                        >
-                            <i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'tabs'"
-                            class="mk mk-tabs"
-                        >
-                            <i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'table'"
-                            class="mk mk-table"
-                        >
-                            <i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'timeline'"
-                            class="mk mk-tl"
-                        >
-                            <i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'pagination'"
-                            class="mk mk-pg"
-                        >
-                            <i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'menu'"
-                            class="mk mk-menu"
-                        >
-                            <i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'popover'"
-                            class="mk mk-pop"
-                        >
-                            <i></i><b></b>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'anchor'"
-                            class="mk mk-anchor"
-                        >
-                            <i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'backtop'"
-                            class="mk mk-backtop"
-                        >
-                            <ArrowUpIcon aria-hidden="true" />
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'alert'"
-                            class="mk mk-alert"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'toast'"
-                            class="mk mk-toast"
-                            >Toast</span
-                        >
-                        <span
-                            v-else-if="item.mock === 'dialog'"
-                            class="mk mk-dialog"
-                        >
-                            <i></i><b></b>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'loading'"
-                            class="mk mk-load"
-                        >
-                            <i></i>
-                        </span>
-                        <span v-else-if="item.mock === 'otp'" class="mk mk-otp">
-                            <i></i><i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'image'"
-                            class="mk mk-img"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'scrollbar'"
-                            class="mk mk-scroll"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'color'"
-                            class="mk mk-color"
-                        >
-                            <i></i><i></i><i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'datepicker'"
-                            class="mk mk-datepicker"
-                        >
+                        <span v-if="item.mock === 'button'" class="mk mk-btn">Button</span>
+                        <span v-else-if="item.mock === 'input'" class="mk mk-input"><i></i></span>
+                        <span v-else-if="item.mock === 'check'" class="mk mk-check"><i></i><i class="on"></i></span>
+                        <span v-else-if="item.mock === 'switch'" class="mk mk-switch"><i></i></span>
+                        <span v-else-if="item.mock === 'slider'" class="mk mk-slider"><i></i></span>
+                        <span v-else-if="item.mock === 'rate'" class="mk mk-rate">* * * *</span>
+                        <span v-else-if="item.mock === 'avatar'" class="mk mk-avatar"><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'tags'" class="mk mk-tags"><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'tooltip'" class="mk mk-tip"><i></i><b>tip</b></span>
+                        <span v-else-if="item.mock === 'divider'" class="mk mk-div"><i></i></span>
+                        <span v-else-if="item.mock === 'progress'" class="mk mk-prog"><i></i></span>
+                        <span v-else-if="item.mock === 'form'" class="mk mk-form"><i></i><i></i><b></b></span>
+                        <span v-else-if="item.mock === 'card'" class="mk mk-card"><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'skeleton'" class="mk mk-skel"><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'collapse'" class="mk mk-col"><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'tabs'" class="mk mk-tabs"><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'table'" class="mk mk-table"><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'timeline'" class="mk mk-tl"><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'pagination'" class="mk mk-pg"><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'menu'" class="mk mk-menu"><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'popover'" class="mk mk-pop"><i></i><b></b></span>
+                        <span v-else-if="item.mock === 'anchor'" class="mk mk-anchor"><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'backtop'" class="mk mk-backtop"><ArrowUpIcon aria-hidden="true" /></span>
+                        <span v-else-if="item.mock === 'alert'" class="mk mk-alert"><i></i></span>
+                        <span v-else-if="item.mock === 'toast'" class="mk mk-toast">Toast</span>
+                        <span v-else-if="item.mock === 'dialog'" class="mk mk-dialog"><i></i><b></b></span>
+                        <span v-else-if="item.mock === 'loading'" class="mk mk-load"><i></i></span>
+                        <span v-else-if="item.mock === 'otp'" class="mk mk-otp"><i></i><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'image'" class="mk mk-img"><i></i></span>
+                        <span v-else-if="item.mock === 'scrollbar'" class="mk mk-scroll"><i></i></span>
+                        <span v-else-if="item.mock === 'color'" class="mk mk-color"><i></i><i></i><i></i></span>
+                        <span v-else-if="item.mock === 'datepicker'" class="mk mk-datepicker">
                             <span>12.09.2026</span>
                             <CalendarDaysIcon aria-hidden="true" />
                         </span>
-                        <span
-                            v-else-if="item.mock === 'calendar'"
-                            class="mk mk-cal"
-                            ><b>Сентябрь 2026</b><i></i><i></i><i></i><i></i>
-                            <i></i><i></i><i></i><i></i><i></i><i></i><i></i>
-                            <i></i>
+                        <span v-else-if="item.mock === 'calendar'" class="mk mk-cal">
+                            <b>Сентябрь 2026</b><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
                         </span>
-                        <span
-                            v-else-if="item.mock === 'upload'"
-                            class="mk mk-upload"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'carousel'"
-                            class="mk mk-car"
-                        >
-                            <i></i>
-                        </span>
-                        <span
-                            v-else-if="item.mock === 'empty'"
-                            class="mk mk-empty"
-                        >
-                            empty
-                        </span>
+                        <span v-else-if="item.mock === 'upload'" class="mk mk-upload"><i></i></span>
+                        <span v-else-if="item.mock === 'carousel'" class="mk mk-car"><i></i></span>
+                        <span v-else-if="item.mock === 'empty'" class="mk mk-empty">empty</span>
                         <span v-else class="mk mk-empty">...</span>
                     </span>
                 </button>

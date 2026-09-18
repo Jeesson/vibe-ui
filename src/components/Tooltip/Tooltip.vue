@@ -20,11 +20,7 @@ const placementClasses = {
 </script>
 
 <template>
-    <span
-        class="relative inline-block"
-        @mouseenter="visible = true"
-        @mouseleave="visible = false"
-    >
+    <span class="relative inline-block" @mouseenter="visible = true" @mouseleave="visible = false">
         <slot />
         <Transition name="vibe-ui-tooltip-fade">
             <span
@@ -32,8 +28,7 @@ const placementClasses = {
                 :class="[
                     'vibe-ui-tooltip absolute z-20 rounded-md bg-gray-800 px-3 py-2 text-xs whitespace-nowrap text-white shadow-lg dark:bg-zinc-950 dark:text-white',
                     placementClasses[placement],
-                ]"
-            >
+                ]">
                 {{ content }}
             </span>
         </Transition>

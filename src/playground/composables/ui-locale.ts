@@ -2,9 +2,7 @@ import { ref, computed } from "vue";
 
 export type Locale = "ru" | "en";
 
-const locale = ref<Locale>(
-    (localStorage.getItem("vibe-ui-locale") as Locale) || "en",
-);
+const locale = ref<Locale>((localStorage.getItem("vibe-ui-locale") as Locale) || "en");
 
 const messages: Record<Locale, Record<string, string>> = {
     ru: {
@@ -17,8 +15,7 @@ const messages: Record<Locale, Record<string, string>> = {
         "nav.misc": "Разное",
         "nav.datetime": "Дата и время",
         "overview.title": "Обзор",
-        "overview.description":
-            "Быстрый просмотр всех компонентов библиотеки на одной странице",
+        "overview.description": "Быстрый просмотр всех компонентов библиотеки на одной странице",
         "page.onPage": "На странице",
         "docs.livePreview": "Живое превью",
         "docs.component": "Компонент",
@@ -51,8 +48,7 @@ const messages: Record<Locale, Record<string, string>> = {
         "nav.misc": "Misc",
         "nav.datetime": "Date & Time",
         "overview.title": "Overview",
-        "overview.description":
-            "Quick preview of every library component on a single page",
+        "overview.description": "Quick preview of every library component on a single page",
         "page.onPage": "On this page",
         "docs.livePreview": "Live preview",
         "docs.component": "Component",
@@ -78,9 +74,7 @@ const messages: Record<Locale, Record<string, string>> = {
 };
 
 export function useLocale() {
-    const t = computed(
-        () => (key: string) => messages[locale.value][key] ?? key,
-    );
+    const t = computed(() => (key: string) => messages[locale.value][key] ?? key);
 
     function setLocale(next: Locale) {
         locale.value = next;

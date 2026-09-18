@@ -38,19 +38,10 @@ const ringClasses: Record<string, string> = {
                     <span
                         :class="[
                             'mt-1 h-2.5 w-2.5 shrink-0 rounded-full',
-                            item.hollow
-                                ? [
-                                      'bg-white ring-2',
-                                      ringClasses[item.type ?? 'default'],
-                                  ]
-                                : dotClasses[item.type ?? 'default'],
-                        ]"
-                    />
+                            item.hollow ? ['bg-white ring-2', ringClasses[item.type ?? 'default']] : dotClasses[item.type ?? 'default'],
+                        ]" />
                 </slot>
-                <span
-                    v-if="i < items.length - 1"
-                    class="my-1 w-px flex-1 bg-gray-200"
-                />
+                <span v-if="i < items.length - 1" class="my-1 w-px flex-1 bg-gray-200" />
             </div>
 
             <div class="flex-1 pb-6 last:pb-0">
@@ -58,9 +49,7 @@ const ringClasses: Record<string, string> = {
                     <p class="text-sm font-medium text-gray-800">
                         {{ item.title }}
                     </p>
-                    <span v-if="item.time" class="text-xs text-gray-400">{{
-                        item.time
-                    }}</span>
+                    <span v-if="item.time" class="text-xs text-gray-400">{{ item.time }}</span>
                 </div>
                 <p v-if="item.description" class="mt-0.5 text-sm text-gray-500">
                     {{ item.description }}

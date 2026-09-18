@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { watch, onBeforeUnmount, computed } from "vue";
-import {
-    lockBodyScroll,
-    unlockBodyScroll,
-} from "../../composables/scroll-lock";
+import { lockBodyScroll, unlockBodyScroll } from "../../composables/scroll-lock";
 
 const props = withDefaults(
     defineProps<{
@@ -45,9 +42,7 @@ onBeforeUnmount(() => {
 
 // Реактивно — placement может меняться, пока Drawer остаётся смонтированным
 // (например, демо переключает стороны одной и той же панелью).
-const isVertical = computed(
-    () => props.placement === "top" || props.placement === "bottom",
-);
+const isVertical = computed(() => props.placement === "top" || props.placement === "bottom");
 
 const panelPosition = {
     left: "left-0 top-0 h-full",
@@ -64,41 +59,22 @@ const panelPosition = {
          enter-хуки внутреннего просто не вызываются. Анимация панели
          описана в CSS через потомков (.vibe-ui-drawer-panel). -->
         <Transition name="vibe-ui-drawer">
-            <div
-                v-if="modelValue"
-                class="fixed inset-0 z-50 bg-black/40"
-                @click.self="close"
-            >
+            <div v-if="modelValue" class="fixed inset-0 z-50 bg-black/40" @click.self="close">
                 <div
                     class="vibe-ui-drawer-panel fixed flex flex-col bg-white shadow-xl will-change-transform"
                     :data-placement="placement"
                     :class="panelPosition[placement]"
-                    :style="isVertical ? { height: size } : { width: size }"
-                >
-                    <div
-                        class="flex items-center justify-between border-b border-gray-100 px-5 py-4"
-                    >
+                    :style="isVertical ? { height: size } : { width: size }">
+                    <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
                         <h3 class="text-base font-semibold text-gray-900">
                             {{ title }}
                         </h3>
-                        <button
-                            type="button"
-                            class="text-gray-400 hover:text-gray-600"
-                            aria-label="Закрыть"
-                            @click="close"
-                        >
-                            ✕
-                        </button>
+                        <button type="button" class="text-gray-400 hover:text-gray-600" aria-label="Закрыть" @click="close">✕</button>
                     </div>
-                    <div
-                        class="flex-1 overflow-auto px-5 py-4 text-sm text-gray-700"
-                    >
+                    <div class="flex-1 overflow-auto px-5 py-4 text-sm text-gray-700">
                         <slot />
                     </div>
-                    <div
-                        v-if="$slots.footer"
-                        class="flex justify-end gap-2 border-t border-gray-100 px-5 py-3"
-                    >
+                    <div v-if="$slots.footer" class="flex justify-end gap-2 border-t border-gray-100 px-5 py-3">
                         <slot name="footer" />
                     </div>
                 </div>

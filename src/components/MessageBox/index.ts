@@ -8,10 +8,7 @@ export interface ConfirmOptions {
     type?: "default" | "danger";
 }
 
-export function confirm(
-    message: string,
-    options: ConfirmOptions = {},
-): Promise<void> {
+export function confirm(message: string, options: ConfirmOptions = {}): Promise<void> {
     return new Promise((resolve, reject) => {
         const el = document.createElement("div");
         document.body.appendChild(el);

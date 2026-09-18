@@ -15,13 +15,9 @@ const verticalSource = '<Divider direction="vertical" />';
             <div class="flex max-w-sm flex-col gap-4">
                 <DocExample title="С подписью" :source="labeledSource">
                     <div>
-                        <p class="text-sm text-gray-600">
-                            Текст до разделителя
-                        </p>
+                        <p class="text-sm text-gray-600">Текст до разделителя</p>
                         <Divider>секция</Divider>
-                        <p class="text-sm text-gray-600">
-                            Текст после разделителя
-                        </p>
+                        <p class="text-sm text-gray-600">Текст после разделителя</p>
                     </div>
                 </DocExample>
                 <DocExample title="Горизонтальный" :source="horizontalSource">

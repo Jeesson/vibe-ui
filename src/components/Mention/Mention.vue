@@ -13,11 +13,7 @@ const showList = ref(false);
 const query = ref("");
 const mentionStart = ref(0);
 
-const filtered = computed(() =>
-    props.users
-        .filter((u) => u.toLowerCase().includes(query.value.toLowerCase()))
-        .slice(0, 6),
-);
+const filtered = computed(() => props.users.filter((u) => u.toLowerCase().includes(query.value.toLowerCase())).slice(0, 6));
 
 function onInput(e: Event) {
     const el = e.target as HTMLTextAreaElement;
@@ -55,18 +51,9 @@ function pick(user: string) {
             :placeholder="placeholder"
             rows="3"
             class="focus:ring-primary-500 focus:border-primary-500 w-full resize-none rounded-md border border-gray-300 px-3 py-2 text-sm outline-none focus:ring-2"
-            @input="onInput"
-        />
-        <ul
-            v-if="showList && filtered.length"
-            class="absolute z-10 mt-1 w-48 rounded-md border border-gray-200 bg-white py-1 shadow-lg"
-        >
-            <li
-                v-for="user in filtered"
-                :key="user"
-                class="cursor-pointer px-3 py-1.5 text-sm hover:bg-gray-50"
-                @click="pick(user)"
-            >
+            @input="onInput" />
+        <ul v-if="showList && filtered.length" class="absolute z-10 mt-1 w-48 rounded-md border border-gray-200 bg-white py-1 shadow-lg">
+            <li v-for="user in filtered" :key="user" class="cursor-pointer px-3 py-1.5 text-sm hover:bg-gray-50" @click="pick(user)">
                 @{{ user }}
             </li>
         </ul>

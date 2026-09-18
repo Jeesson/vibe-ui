@@ -6,11 +6,7 @@ withDefaults(defineProps<{ maxHeight?: string; hide?: boolean }>(), {
 </script>
 
 <template>
-    <div
-        class="vibe-ui-scrollbar overflow-auto"
-        :class="hide && 'vibe-ui-scrollbar--hidden'"
-        :style="{ maxHeight }"
-    >
+    <div class="vibe-ui-scrollbar overflow-auto" :class="hide && 'vibe-ui-scrollbar--hidden'" :style="{ maxHeight }">
         <slot />
     </div>
 </template>

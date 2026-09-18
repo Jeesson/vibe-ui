@@ -10,11 +10,7 @@ export const messages = reactive<MessageItem[]>([]);
 
 let uid = 0;
 
-export function pushMessage(
-    type: MessageItem["type"],
-    content: string,
-    duration = 3000,
-) {
+export function pushMessage(type: MessageItem["type"], content: string, duration = 3000) {
     const id = ++uid;
     messages.push({ id, type, content });
     if (duration > 0) {

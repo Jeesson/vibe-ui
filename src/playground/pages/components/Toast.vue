@@ -10,15 +10,9 @@ const doc = docs.toast;
     <ComponentDoc :doc="doc">
         <template #examples>
             <div class="flex gap-2">
-                <Button size="sm" @click="toast.success('Успешно!')"
-                    >Success</Button
-                >
-                <Button size="sm" @click="toast.error('Что-то пошло не так')"
-                    >Error</Button
-                >
-                <Button size="sm" @click="toast.warning('Осторожно')"
-                    >Warning</Button
-                >
+                <Button size="sm" @click="toast.success('Успешно!')">Success</Button>
+                <Button size="sm" @click="toast.error('Что-то пошло не так')">Error</Button>
+                <Button size="sm" @click="toast.warning('Осторожно')">Warning</Button>
             </div>
         </template>
     </ComponentDoc>

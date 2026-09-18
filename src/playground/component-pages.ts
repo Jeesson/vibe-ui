@@ -129,11 +129,7 @@ export function toComponentSlug(key: string): string {
 
 /** Slug URL → ключ дока (или null, если компонента нет). */
 export function componentKeyFromSlug(slug: string): string | null {
-    return (
-        Object.keys(componentPages).find(
-            (key) => toComponentSlug(key) === slug,
-        ) ?? null
-    );
+    return Object.keys(componentPages).find((key) => toComponentSlug(key) === slug) ?? null;
 }
 
 /** Ключ навигации ("overview" | "c-<key>") → путь роутера (+ опц. якорь). */

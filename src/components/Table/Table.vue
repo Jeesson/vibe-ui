@@ -48,26 +48,12 @@ const rows = computed(() => {
                         v-for="col in columns"
                         :key="col.key"
                         :style="{ width: col.width }"
-                        :class="[
-                            'px-3 py-2 font-medium',
-                            col.sortable &&
-                                'cursor-pointer select-none hover:text-gray-700',
-                        ]"
-                        @click="toggleSort(col)"
-                    >
+                        :class="['px-3 py-2 font-medium', col.sortable && 'cursor-pointer select-none hover:text-gray-700']"
+                        @click="toggleSort(col)">
                         <span class="inline-flex items-center gap-1">
                             {{ col.label }}
-                            <span
-                                v-if="col.sortable"
-                                class="text-xs text-gray-300"
-                            >
-                                {{
-                                    sortKey === col.key
-                                        ? sortDir === "asc"
-                                            ? "↑"
-                                            : "↓"
-                                        : "↕"
-                                }}
+                            <span v-if="col.sortable" class="text-xs text-gray-300">
+                                {{ sortKey === col.key ? (sortDir === "asc" ? "↑" : "↓") : "↕" }}
                             </span>
                         </span>
                     </th>
@@ -75,23 +61,12 @@ const rows = computed(() => {
             </thead>
             <tbody class="divide-y divide-gray-100">
                 <tr v-for="(row, i) in rows" :key="i" class="hover:bg-gray-50">
-                    <td
-                        v-for="col in columns"
-                        :key="col.key"
-                        class="px-3 py-2 text-gray-700"
-                    >
-                        <slot :name="'cell-' + col.key" :row="row">{{
-                            row[col.key]
-                        }}</slot>
+                    <td v-for="col in columns" :key="col.key" class="px-3 py-2 text-gray-700">
+                        <slot :name="'cell-' + col.key" :row="row">{{ row[col.key] }}</slot>
                     </td>
                 </tr>
                 <tr v-if="!rows.length">
-                    <td
-                        :colspan="columns.length"
-                        class="px-3 py-6 text-center text-gray-400"
-                    >
-                        Нет данных
-                    </td>
+                    <td :colspan="columns.length" class="px-3 py-6 text-center text-gray-400">Нет данных</td>
                 </tr>
             </tbody>
         </table>

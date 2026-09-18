@@ -11,11 +11,7 @@ const code = ref("");
 <template>
     <ComponentDoc :doc="doc">
         <template #examples>
-            <InputOtp
-                v-model="code"
-                :length="6"
-                @complete="(v) => toast.success('Код: ' + v)"
-            />
+            <InputOtp v-model="code" :length="6" @complete="(v) => toast.success('Код: ' + v)" />
         </template>
     </ComponentDoc>
 </template>

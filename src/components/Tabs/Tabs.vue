@@ -28,8 +28,7 @@ provide(TabsKey, { isActive: (name: string) => name === props.modelValue });
                           ? 'border-primary-600 text-primary-700'
                           : 'border-transparent text-gray-500 hover:text-gray-700',
                 ]"
-                @click="emit('update:modelValue', item.name)"
-            >
+                @click="emit('update:modelValue', item.name)">
                 {{ item.label }}
             </button>
         </div>

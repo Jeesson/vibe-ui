@@ -12,22 +12,14 @@ function ensureMounted() {
     mounted = true;
 }
 
-function show(
-    type: "success" | "warning" | "error" | "info",
-    content: string,
-    duration?: number,
-) {
+function show(type: "success" | "warning" | "error" | "info", content: string, duration?: number) {
     ensureMounted();
     return pushMessage(type, content, duration);
 }
 
 export const message = {
-    success: (content: string, duration?: number) =>
-        show("success", content, duration),
-    warning: (content: string, duration?: number) =>
-        show("warning", content, duration),
-    error: (content: string, duration?: number) =>
-        show("error", content, duration),
-    info: (content: string, duration?: number) =>
-        show("info", content, duration),
+    success: (content: string, duration?: number) => show("success", content, duration),
+    warning: (content: string, duration?: number) => show("warning", content, duration),
+    error: (content: string, duration?: number) => show("error", content, duration),
+    info: (content: string, duration?: number) => show("info", content, duration),
 };

@@ -5,6 +5,4 @@ export interface CheckboxGroupContext {
     toggle: (value: string | number) => void;
 }
 
-export const CheckboxGroupKey: InjectionKey<CheckboxGroupContext> = Symbol(
-    "vibe-ui-checkbox-group",
-);
+export const CheckboxGroupKey: InjectionKey<CheckboxGroupContext> = Symbol("vibe-ui-checkbox-group");

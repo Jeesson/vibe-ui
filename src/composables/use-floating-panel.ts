@@ -1,10 +1,5 @@
 import { ref, onMounted, onBeforeUnmount, nextTick, type Ref } from "vue";
-import {
-    computeFloatingRect,
-    computePlacementRect,
-    type FloatingRect,
-    type PanelPlacement,
-} from "./floating";
+import { computeFloatingRect, computePlacementRect, type FloatingRect, type PanelPlacement } from "./floating";
 
 export interface UseFloatingPanel {
     open: Ref<boolean>;
@@ -37,13 +32,7 @@ export function useFloatingPanel(
         if (!triggerRef.value) return;
         const placement = getPlacement?.();
         rect.value = placement
-            ? computePlacementRect(
-                  triggerRef.value,
-                  panelHeight,
-                  4,
-                  panelWidth,
-                  placement,
-              )
+            ? computePlacementRect(triggerRef.value, panelHeight, 4, panelWidth, placement)
             : computeFloatingRect(triggerRef.value, panelHeight, 4, panelWidth);
     }
 

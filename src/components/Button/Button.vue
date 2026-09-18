@@ -29,10 +29,8 @@ const iconSizeClasses = {
 };
 
 const variantClasses = {
-    primary:
-        "bg-primary-600 text-white hover:bg-primary-700 focus-visible:outline-primary-600",
-    secondary:
-        "bg-primary-50 text-primary-700 hover:bg-primary-100 focus-visible:outline-primary-600",
+    primary: "bg-primary-600 text-white hover:bg-primary-700 focus-visible:outline-primary-600",
+    secondary: "bg-primary-50 text-primary-700 hover:bg-primary-100 focus-visible:outline-primary-600",
     ghost: "bg-transparent text-primary-700 hover:bg-primary-50 focus-visible:outline-primary-600",
 };
 </script>
@@ -47,20 +45,9 @@ const variantClasses = {
             sizeClasses[size],
             variantClasses[variant],
         ]"
-        @click="$emit('click', $event)"
-    >
-        <component
-            :is="icon"
-            v-if="icon"
-            :class="iconSizeClasses[size]"
-            aria-hidden="true"
-        />
+        @click="$emit('click', $event)">
+        <component :is="icon" v-if="icon" :class="iconSizeClasses[size]" aria-hidden="true" />
         <slot />
-        <component
-            :is="iconRight"
-            v-if="iconRight"
-            :class="iconSizeClasses[size]"
-            aria-hidden="true"
-        />
+        <component :is="iconRight" v-if="iconRight" :class="iconSizeClasses[size]" aria-hidden="true" />
     </button>
 </template>

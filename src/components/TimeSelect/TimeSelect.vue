@@ -16,10 +16,7 @@ const props = withDefaults(
 
 const emit = defineEmits<{ "update:modelValue": [string] }>();
 
-const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel(
-    "vibe-ui-timeselect-panel",
-    220,
-);
+const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel("vibe-ui-timeselect-panel", 220);
 
 const slots = computed(() => {
     const [sh, sm] = props.start.split(":").map(Number);
@@ -48,8 +45,7 @@ function select(v: string) {
             ref="triggerRef"
             type="button"
             class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left"
-            @click="togglePanel"
-        >
+            @click="togglePanel">
             <span :class="!modelValue && 'text-gray-400'">
                 {{ modelValue || placeholder || "Выберите время" }}
             </span>
@@ -63,21 +59,13 @@ function select(v: string) {
                     top: rect.top + 'px',
                     left: rect.left + 'px',
                     width: rect.width + 'px',
-                    transform:
-                        rect.placement === 'top'
-                            ? 'translateY(-100%)'
-                            : undefined,
-                }"
-            >
+                    transform: rect.placement === 'top' ? 'translateY(-100%)' : undefined,
+                }">
                 <li
                     v-for="slot in slots"
                     :key="slot"
-                    :class="[
-                        'cursor-pointer px-3 py-1.5 hover:bg-gray-50',
-                        slot === modelValue && 'bg-primary-50 text-primary-700',
-                    ]"
-                    @click="select(slot)"
-                >
+                    :class="['cursor-pointer px-3 py-1.5 hover:bg-gray-50', slot === modelValue && 'bg-primary-50 text-primary-700']"
+                    @click="select(slot)">
                     {{ slot }}
                 </li>
             </ul>

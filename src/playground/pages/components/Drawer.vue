@@ -18,26 +18,14 @@ function openDrawer(p: "left" | "right" | "top" | "bottom") {
         <template #examples>
             <div class="flex flex-wrap gap-2">
                 <Button @click="openDrawer('right')">Drawer справа</Button>
-                <Button variant="secondary" @click="openDrawer('left')"
-                    >слева</Button
-                >
-                <Button variant="secondary" @click="openDrawer('top')"
-                    >сверху</Button
-                >
-                <Button variant="secondary" @click="openDrawer('bottom')"
-                    >снизу</Button
-                >
+                <Button variant="secondary" @click="openDrawer('left')">слева</Button>
+                <Button variant="secondary" @click="openDrawer('top')">сверху</Button>
+                <Button variant="secondary" @click="openDrawer('bottom')">снизу</Button>
             </div>
-            <Drawer
-                v-model="open"
-                title="Боковая панель"
-                :placement="placement"
-            >
+            <Drawer v-model="open" title="Боковая панель" :placement="placement">
                 Контент выезжающей панели ({{ placement }}).
                 <template #footer>
-                    <Button variant="ghost" @click="open = false"
-                        >Закрыть</Button
-                    >
+                    <Button variant="ghost" @click="open = false">Закрыть</Button>
                 </template>
             </Drawer>
         </template>

@@ -13,16 +13,8 @@ const value = ref("");
             <Autocomplete
                 v-model="value"
                 placeholder="Начни вводить город"
-                :suggestions="[
-                    'Киев',
-                    'Каменское',
-                    'Днепр',
-                    'Харьков',
-                    'Одесса',
-                    'Львов',
-                ]"
-                class="max-w-sm"
-            />
+                :suggestions="['Киев', 'Каменское', 'Днепр', 'Харьков', 'Одесса', 'Львов']"
+                class="max-w-sm" />
         </template>
     </ComponentDoc>
 </template>

@@ -11,13 +11,7 @@ const time = ref<string | null>(null);
     <ComponentDoc :doc="doc">
         <template #examples>
             <p class="mb-2 text-xs text-gray-400">Выбрано: {{ time || "—" }}</p>
-            <TimeSelect
-                v-model="time"
-                start="09:00"
-                end="18:00"
-                :step="30"
-                class="max-w-sm"
-            />
+            <TimeSelect v-model="time" start="09:00" end="18:00" :step="30" class="max-w-sm" />
         </template>
     </ComponentDoc>
 </template>

@@ -11,18 +11,13 @@ const doc = docs.affix;
         <template #examples>
             <div class="max-w-sm rounded-md border border-gray-100">
                 <Affix :offset="56">
-                    <div
-                        class="flex items-center gap-2 border-b border-gray-100 bg-white px-3 py-2"
-                    >
+                    <div class="flex items-center gap-2 border-b border-gray-100 bg-white px-3 py-2">
                         <Tag type="primary">Affix</Tag>
-                        <span class="text-xs text-gray-500"
-                            >Прилипающая панель</span
-                        >
+                        <span class="text-xs text-gray-500"> Прилипающая панель </span>
                     </div>
                 </Affix>
                 <div class="h-72 overflow-hidden p-3 text-sm text-gray-500">
-                    Прокрути страницу — панель прилипнет к верху окна, а в конце
-                    этого блока уедет вместе с ним.
+                    Прокрути страницу — панель прилипнет к верху окна, а в конце этого блока уедет вместе с ним.
                 </div>
             </div>
         </template>

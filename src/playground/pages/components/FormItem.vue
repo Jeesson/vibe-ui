@@ -12,8 +12,7 @@ const value = ref("Заполнено");
     <ComponentDoc :doc="doc">
         <template #examples>
             <p class="mb-2 text-xs text-gray-400">
-                FormItem работает внутри <code>&lt;Form&gt;</code> и выводит
-                ошибку валидации (см. страницу «Form»). Ниже — внешний вид
+                FormItem работает внутри <code>&lt;Form&gt;</code> и выводит ошибку валидации (см. страницу «Form»). Ниже — внешний вид
                 пункта.
             </p>
             <div class="max-w-xs rounded-md border border-gray-100 p-3">

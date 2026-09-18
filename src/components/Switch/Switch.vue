@@ -16,13 +16,11 @@ const emit = defineEmits<{ "update:modelValue": [boolean] }>();
             disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
             modelValue ? 'bg-primary-600' : 'bg-gray-300',
         ]"
-        @click="!disabled && emit('update:modelValue', !modelValue)"
-    >
+        @click="!disabled && emit('update:modelValue', !modelValue)">
         <span
             class="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
             :style="{
                 transform: modelValue ? 'translateX(18px)' : 'translateX(2px)',
-            }"
-        />
+            }" />
     </button>
 </template>

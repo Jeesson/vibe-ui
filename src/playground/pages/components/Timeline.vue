@@ -27,20 +27,15 @@ const items = [
             <div class="max-w-xs">
                 <Timeline :items="items" />
             </div>
-            <p class="mt-4 mb-2 text-xs text-gray-400">
-                Кастомная точка через слот <code>#dot</code>:
-            </p>
+            <p class="mt-4 mb-2 text-xs text-gray-400">Кастомная точка через слот <code>#dot</code>:</p>
             <div class="max-w-xs">
                 <Timeline
                     :items="[
                         { title: 'Заявка подтверждена', time: '09:00' },
                         { title: 'Курьер назначен', time: '09:15' },
-                    ]"
-                >
+                    ]">
                     <template #dot>
-                        <span
-                            class="mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500 text-[9px] text-white"
-                        >
+                        <span class="mt-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-green-500 text-[9px] text-white">
                             <CheckIcon class="size-2 stroke-5" />
                         </span>
                     </template>

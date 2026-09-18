@@ -11,11 +11,7 @@ const date = ref<string | null>(null);
     <ComponentDoc :doc="doc">
         <template #examples>
             <p class="mb-2 text-xs text-gray-400">Выбрано: {{ date || "—" }}</p>
-            <DatePicker
-                v-model="date"
-                placeholder="Выберите дату"
-                class="max-w-sm"
-            />
+            <DatePicker v-model="date" placeholder="Выберите дату" class="max-w-sm" />
         </template>
     </ComponentDoc>
 </template>

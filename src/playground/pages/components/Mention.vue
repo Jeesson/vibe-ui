@@ -12,15 +12,9 @@ const users = ["anna_dev", "igor", "marta_design", "dodik"];
     <ComponentDoc :doc="doc">
         <template #examples>
             <p class="mb-2 text-xs text-gray-400">
-                Введи символ <strong>@</strong> — появится список пользователей:
-                {{ users.join(", ") }}.
+                Введи символ <strong>@</strong> — появится список пользователей: {{ users.join(", ") }}.
             </p>
-            <Mention
-                v-model="text"
-                :users="users"
-                placeholder="Напиши что-нибудь и добавь @имя"
-                class="max-w-sm"
-            />
+            <Mention v-model="text" :users="users" placeholder="Напиши что-нибудь и добавь @имя" class="max-w-sm" />
         </template>
     </ComponentDoc>
 </template>

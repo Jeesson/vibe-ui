@@ -10,18 +10,10 @@ const doc = docs.message;
     <ComponentDoc :doc="doc">
         <template #examples>
             <div class="flex flex-wrap gap-2">
-                <Button size="sm" @click="message.success('Сохранено')"
-                    >Success</Button
-                >
-                <Button size="sm" @click="message.info('Информация')"
-                    >Info</Button
-                >
-                <Button size="sm" @click="message.warning('Осторожно')"
-                    >Warning</Button
-                >
-                <Button size="sm" @click="message.error('Ошибка', 5000)"
-                    >Error</Button
-                >
+                <Button size="sm" @click="message.success('Сохранено')">Success</Button>
+                <Button size="sm" @click="message.info('Информация')">Info</Button>
+                <Button size="sm" @click="message.warning('Осторожно')">Warning</Button>
+                <Button size="sm" @click="message.error('Ошибка', 5000)">Error</Button>
             </div>
         </template>
     </ComponentDoc>

@@ -1,26 +1,9 @@
 <template>
     <div ref="anchorRef" :class="cls">
-        <div
-            v-if="marker"
-            ref="markerRef"
-            class="anchor-marker bg-primary-700 dark:bg-primary-400"
-            :style="markerStyle"
-        />
-        <div
-            :class="[
-                'anchor-list',
-                direction === 'horizontal'
-                    ? 'flex items-center gap-1'
-                    : 'flex flex-col gap-0.5',
-            ]"
-        >
+        <div v-if="marker" ref="markerRef" class="anchor-marker bg-primary-700 dark:bg-primary-400" :style="markerStyle" />
+        <div :class="['anchor-list', direction === 'horizontal' ? 'flex items-center gap-1' : 'flex flex-col gap-0.5']">
             <template v-if="props.links?.length">
-                <AnchorLink
-                    v-for="link in props.links"
-                    :key="link.href"
-                    :href="link.href"
-                    :title="link.title"
-                />
+                <AnchorLink v-for="link in props.links" :key="link.href" :href="link.href" :title="link.title" />
             </template>
             <slot v-else />
         </div>
@@ -28,16 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-    computed,
-    nextTick,
-    onBeforeUnmount,
-    onMounted,
-    provide,
-    ref,
-    shallowReactive,
-    watch,
-} from "vue";
+import { computed, nextTick, onBeforeUnmount, onMounted, provide, ref, shallowReactive, watch } from "vue";
 import {
     animateScrollTo,
     getElement,
@@ -96,12 +70,8 @@ let settledScrollTop: number | null = null;
 
 const cls = computed(() => [
     "relative text-sm",
-    props.type === "underline"
-        ? "border-b border-gray-200 dark:border-gray-800"
-        : "",
-    props.direction === "horizontal"
-        ? "flex items-center gap-1"
-        : "flex flex-col gap-0.5 border-l border-gray-500/70 ",
+    props.type === "underline" ? "border-b border-gray-200 dark:border-gray-800" : "",
+    props.direction === "horizontal" ? "flex items-center gap-1" : "flex flex-col gap-0.5 border-l border-gray-500/70 ",
 ]);
 
 const addLink = (state: AnchorLinkState) => {
@@ -150,34 +120,21 @@ const scrollTo = (href?: string) => {
     isScrolling = true;
     const container = containerEl.value;
     const distance = getOffsetTopDistance(target, container);
-    const to = Math.max(
-        0,
-        Math.min(distance - props.offset, getMaxScrollTop(container)),
-    );
-    const duration = window.matchMedia("(prefers-reduced-motion: reduce)")
-        .matches
-        ? 0
-        : props.duration;
-    clearAnimate = animateScrollTo(
-        container,
-        getScrollTop(container),
-        to,
-        duration,
-        () => {
-            clearAnimate = null;
-            isScrolling = false;
-            currentTargetHref = "";
-            // Несколько нижних ссылок могут вести в одну предельную позицию.
-            // Сохраняем выбранную, пока пользователь действительно не прокрутит.
-            settledScrollTop = getScrollTop(container);
-        },
-    );
+    const to = Math.max(0, Math.min(distance - props.offset, getMaxScrollTop(container)));
+    const duration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : props.duration;
+    clearAnimate = animateScrollTo(container, getScrollTop(container), to, duration, () => {
+        clearAnimate = null;
+        isScrolling = false;
+        currentTargetHref = "";
+        // Несколько нижних ссылок могут вести в одну предельную позицию.
+        // Сохраняем выбранную, пока пользователь действительно не прокрутит.
+        settledScrollTop = getScrollTop(container);
+    });
 };
 
 const handleClick = (e: MouseEvent, href?: string) => {
     emit("click", e, href);
-    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)
-        return;
+    if (e.button !== 0 || e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
     if (!href || !getTarget(href)) return;
     e.preventDefault();
     scrollTo(href);
@@ -187,8 +144,7 @@ const handleScroll = throttleByRaf(() => {
     const container = containerEl.value;
     if (!mounted || !container || isScrolling) return;
     const top = getScrollTop(container);
-    if (settledScrollTop !== null && Math.abs(top - settledScrollTop) <= 2)
-        return;
+    if (settledScrollTop !== null && Math.abs(top - settledScrollTop) <= 2) return;
     settledScrollTop = null;
     setCurrentAnchor(getCurrentHref());
 });
@@ -201,20 +157,11 @@ const getCurrentHref = () => {
         const target = getTarget(href);
         if (!target || !target.getClientRects().length) continue;
         positions.push({
-            top:
-                getOffsetTopDistance(target, container) -
-                props.offset -
-                props.bound,
+            top: getOffsetTopDistance(target, container) - props.offset - props.bound,
             href,
         });
     }
-    return resolveActiveHref(
-        positions,
-        getScrollTop(container),
-        getMaxScrollTop(container),
-        currentAnchor.value,
-        props.selectScrollTop,
-    );
+    return resolveActiveHref(positions, getScrollTop(container), getMaxScrollTop(container), currentAnchor.value, props.selectScrollTop);
 };
 
 const getContainer = () => {
@@ -234,19 +181,8 @@ function interruptScroll() {
 
 function handleKeydown(e: KeyboardEvent) {
     const target = e.target as HTMLElement | null;
-    if (target?.closest('input, textarea, select, [contenteditable="true"]'))
-        return;
-    if (
-        [
-            "ArrowUp",
-            "ArrowDown",
-            "PageUp",
-            "PageDown",
-            "Home",
-            "End",
-            " ",
-        ].includes(e.key)
-    ) {
+    if (target?.closest('input, textarea, select, [contenteditable="true"]')) return;
+    if (["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " "].includes(e.key)) {
         interruptScroll();
     }
 }
@@ -299,10 +235,7 @@ const updateMarkerStyle = () => {
                 transition: `left ${props.duration}ms cubic-bezier(0.22, 1, 0.36, 1), width ${props.duration}ms cubic-bezier(0.22, 1, 0.36, 1), opacity 150ms`,
             };
         } else {
-            const top =
-                linkRect.top -
-                anchorRect.top +
-                (linkRect.height - markerRect.height) / 2;
+            const top = linkRect.top - anchorRect.top + (linkRect.height - markerRect.height) / 2;
             markerStyle.value = {
                 top: `${top}px`,
                 opacity: 1,
@@ -330,11 +263,7 @@ watch(
         handleScroll();
     },
 );
-watch(
-    () => [props.direction, props.marker, props.duration],
-    updateMarkerStyle,
-    { flush: "post" },
-);
+watch(() => [props.direction, props.marker, props.duration], updateMarkerStyle, { flush: "post" });
 
 function handleResize() {
     settledScrollTop = null;

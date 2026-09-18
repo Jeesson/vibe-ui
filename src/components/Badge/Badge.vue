@@ -13,8 +13,7 @@ const props = withDefaults(
 );
 
 const display = computed(() => {
-    if (typeof props.value === "number" && props.value > props.max)
-        return `${props.max}+`;
+    if (typeof props.value === "number" && props.value > props.max) return `${props.max}+`;
     return props.value;
 });
 
@@ -34,9 +33,8 @@ const typeClasses = {
             :class="[
                 'absolute -top-1 -right-1 flex items-center justify-center rounded-full leading-none text-white',
                 typeClasses[type],
-                dot ? 'h-2 w-2' : 'h-4 min-w-[1rem] px-1 text-[10px]',
-            ]"
-        >
+                dot ? 'h-2 w-2' : 'h-4 min-w-4 px-1 text-[10px]',
+            ]">
             <template v-if="!dot">{{ display }}</template>
         </span>
     </span>

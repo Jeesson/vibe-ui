@@ -13,8 +13,7 @@
  * на основе этой записи — добавлять новую документацию = добавить запись здесь.
  */
 
-export type DocGroup =
-    "basic" | "form" | "data" | "navigation" | "feedback" | "misc";
+export type DocGroup = "basic" | "form" | "data" | "navigation" | "feedback" | "misc";
 
 export interface PropDoc {
     name: string;
@@ -252,8 +251,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "tooltip",
         name: "Tooltip",
         group: "basic",
-        description:
-            "Всплывающая подсказка по наведению, с выбором стороны (placement).",
+        description: "Всплывающая подсказка по наведению, с выбором стороны (placement).",
         usage: '<Tooltip content="Подсказка сверху" placement="top">\n  <span>наведи сюда</span>\n</Tooltip>',
         props: [
             {
@@ -271,8 +269,7 @@ export const components: Record<string, ComponentDoc> = {
         slots: [
             {
                 name: "default",
-                description:
-                    "Якорь-элемент, при наведении показывается подсказка.",
+                description: "Якорь-элемент, при наведении показывается подсказка.",
             },
         ],
         contributors: contributors(),
@@ -284,10 +281,7 @@ export const components: Record<string, ComponentDoc> = {
         description:
             "Разделитель. По умолчанию — горизонтальная линия на всю ширину. " +
             "Если передать контент — линия с подписью по центру; есть вертикальный режим.",
-        usage:
-            "<Divider>секция</Divider>\n" +
-            "<Divider />\n" +
-            '<Divider direction="vertical" />',
+        usage: "<Divider>секция</Divider>\n" + "<Divider />\n" + '<Divider direction="vertical" />',
         props: [
             {
                 name: "direction",
@@ -374,9 +368,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "input",
         name: "Input",
         group: "form",
-        description:
-            "Текстовое поле с подписью (label), placeholder'ом, состоянием ошибки " +
-            "и управлением через v-model.",
+        description: "Текстовое поле с подписью (label), placeholder'ом, состоянием ошибки " + "и управлением через v-model.",
         usage: '<Input v-model="name" label="Имя" placeholder="Введите имя" />',
         props: [
             {
@@ -429,8 +421,7 @@ export const components: Record<string, ComponentDoc> = {
                 name: "options",
                 type: "SelectOption[]",
                 required: true,
-                description:
-                    "Массив SelectOption: { label, value, disabled? }.",
+                description: "Массив SelectOption: { label, value, disabled? }.",
             },
             { name: "placeholder", type: "string", default: '"Выберите"' },
             { name: "disabled", type: "boolean", default: "false" },
@@ -459,9 +450,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "checkbox",
         name: "Checkbox",
         group: "form",
-        description:
-            "Флажок. Один в standalone-режиме (modelValue) или внутри CheckboxGroup " +
-            "(тогда используется prop value).",
+        description: "Флажок. Один в standalone-режиме (modelValue) или внутри CheckboxGroup " + "(тогда используется prop value).",
         usage: '<Checkbox v-model="agree">Согласен</Checkbox>\n<CheckboxGroup v-model="arr"><Checkbox value="vue">Vue</Checkbox></CheckboxGroup>',
         props: [
             {
@@ -491,8 +480,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "checkboxGroup",
         name: "CheckboxGroup",
         group: "form",
-        description:
-            "Группа флажков, собирает выбранные value в единый массив через v-model.",
+        description: "Группа флажков, собирает выбранные value в единый массив через v-model.",
         usage: '<CheckboxGroup v-model="selected">\n  <Checkbox value="a">A</Checkbox>\n  <Checkbox value="b">B</Checkbox>\n</CheckboxGroup>',
         props: [
             {
@@ -548,8 +536,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "radioGroup",
         name: "RadioGroup",
         group: "form",
-        description:
-            "Группа радио-кнопок — одно значение из набора через v-model.",
+        description: "Группа радио-кнопок — одно значение из набора через v-model.",
         usage: '<RadioGroup v-model="v"><Radio value="a">A</Radio></RadioGroup>',
         props: [
             {
@@ -603,8 +590,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "inputNumber",
         name: "InputNumber",
         group: "form",
-        description:
-            "Числовое поле со stepper'ом (+/−) и скрытыми нативными стрелками браузера.",
+        description: "Числовое поле со stepper'ом (+/−) и скрытыми нативными стрелками браузера.",
         usage: '<InputNumber v-model="n" :min="0" :max="10" :step="1" />',
         props: [
             { name: "modelValue", type: "number", required: true },
@@ -626,8 +612,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "rate",
         name: "Rate",
         group: "form",
-        description:
-            "Рейтинг из звёзд с hover-превью и лёгкой «pop»-анимацией при смене значения.",
+        description: "Рейтинг из звёзд с hover-превью и лёгкой «pop»-анимацией при смене значения.",
         usage: '<Rate v-model="rate" :count="5" />',
         props: [
             {
@@ -651,9 +636,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "form",
         name: "Form",
         group: "form",
-        description:
-            "Контейнер формы с валидацией. Принимает model и rules, предоставляет методы " +
-            "validate()/resetFields() через ref.",
+        description: "Контейнер формы с валидацией. Принимает model и rules, предоставляет методы " + "validate()/resetFields() через ref.",
         usage:
             '<Form ref="formRef" :model="model" :rules="rules" class="max-w-sm">\n' +
             '  <FormItem prop="email" label="Email">\n' +
@@ -686,8 +669,7 @@ export const components: Record<string, ComponentDoc> = {
             {
                 name: "validate",
                 params: "(): boolean",
-                description:
-                    "Проверяет поля, возвращает true, если форма валидна.",
+                description: "Проверяет поля, возвращает true, если форма валидна.",
             },
             {
                 name: "resetFields",
@@ -695,17 +677,14 @@ export const components: Record<string, ComponentDoc> = {
                 description: "Сбрасывает ошибки.",
             },
         ],
-        slots: [
-            { name: "default", description: "Экземпляры <FormItem> и поля." },
-        ],
+        slots: [{ name: "default", description: "Экземпляры <FormItem> и поля." }],
         contributors: contributors(),
     },
     formItem: {
         key: "formItem",
         name: "FormItem",
         group: "form",
-        description:
-            "Пункт формы: подпись + поле + вывод ошибки валидации. Работает внутри Form.",
+        description: "Пункт формы: подпись + поле + вывод ошибки валидации. Работает внутри Form.",
         usage: '<FormItem prop="email" label="Email"><Input v-model="model.email" /></FormItem>',
         props: [
             {
@@ -725,9 +704,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "card",
         name: "Card",
         group: "data",
-        description:
-            "Карточка в четырёх вариантах (рамка/тень/плоская/заливка) со слотами " +
-            "заголовка, контента и подвала.",
+        description: "Карточка в четырёх вариантах (рамка/тень/плоская/заливка) со слотами " + "заголовка, контента и подвала.",
         usage: '<Card title="Заголовок" type="elevated">Контент</Card>',
         props: [
             {
@@ -753,8 +730,7 @@ export const components: Record<string, ComponentDoc> = {
         name: "Skeleton",
         group: "data",
         description:
-            "Скелетон-заглушка во время загрузки: строки + опциональный аватар. " +
-            "Когда loading=false — показывает контент из слота.",
+            "Скелетон-заглушка во время загрузки: строки + опциональный аватар. " + "Когда loading=false — показывает контент из слота.",
         usage: '<Skeleton :loading="loading" :rows="3" avatar>Контент</Skeleton>',
         props: [
             {
@@ -808,8 +784,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "collapseItem",
         name: "CollapseItem",
         group: "data",
-        description:
-            "Секция аккордеона: заголовок-кнопка и раскрывающийся контент.",
+        description: "Секция аккордеона: заголовок-кнопка и раскрывающийся контент.",
         usage: '<CollapseItem name="a" title="Раздел A">Содержимое</CollapseItem>',
         props: [
             {
@@ -833,9 +808,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "table",
         name: "Table",
         group: "data",
-        description:
-            "Таблица с данными. Клик по сортируемой колонке переключает ↑/↓. " +
-            "Ячейки кастомизируются через слот #cell-<key>.",
+        description: "Таблица с данными. Клик по сортируемой колонке переключает ↑/↓. " + "Ячейки кастомизируются через слот #cell-<key>.",
         usage:
             '<Table :columns="cols" :data="rows">\n' +
             '  <template #cell-status="{ row }"><Tag>{{ row.status }}</Tag></template>\n' +
@@ -845,8 +818,7 @@ export const components: Record<string, ComponentDoc> = {
                 name: "columns",
                 type: "TableColumn[]",
                 required: true,
-                description:
-                    "Описание колонок {key, label, sortable?, width?}.",
+                description: "Описание колонок {key, label, sortable?, width?}.",
             },
             {
                 name: "data",
@@ -877,8 +849,7 @@ export const components: Record<string, ComponentDoc> = {
                 name: "items",
                 type: "TimelineItem[]",
                 required: true,
-                description:
-                    "События {title, time?, description?, type?, hollow?}.",
+                description: "События {title, time?, description?, type?, hollow?}.",
             },
         ],
         slots: [
@@ -894,9 +865,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "pagination",
         name: "Pagination",
         group: "data",
-        description:
-            "Пагинация со сжатием диапазона до соседних страниц (через siblingCount) " +
-            "и многоточием.",
+        description: "Пагинация со сжатием диапазона до соседних страниц (через siblingCount) " + "и многоточием.",
         usage: '<Pagination v-model="page" :total="120" :page-size="10" />',
         props: [
             {
@@ -926,8 +895,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "empty",
         name: "Empty",
         group: "data",
-        description:
-            "Пустое состояние с иконкой, подписью и необязательными действиями.",
+        description: "Пустое состояние с иконкой, подписью и необязательными действиями.",
         usage: '<Empty description="Список пуст"><Button>Добавить</Button></Empty>',
         props: [
             {
@@ -976,9 +944,7 @@ export const components: Record<string, ComponentDoc> = {
             "Попап с произвольным контентом, открывается по клику на #trigger. " +
             "Панель телепортируется в body и сама разворачивается вверх при нехватке места.",
         usage: '<Popover title="Заголовок"><template #trigger><Button>Открыть</Button></template>Контент попапа</Popover>',
-        props: [
-            { name: "title", type: "string", description: "Заголовок попапа." },
-        ],
+        props: [{ name: "title", type: "string", description: "Заголовок попапа." }],
         methods: [
             {
                 name: "close",
@@ -1030,9 +996,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "anchor",
         name: "Anchor",
         group: "navigation",
-        description:
-            "Оглавление страницы. Следит за прокруткой (IntersectionObserver) и подсвечивает " +
-            "активный якорь.",
+        description: "Оглавление страницы. Следит за прокруткой (IntersectionObserver) и подсвечивает " + "активный якорь.",
         usage:
             '<Anchor :container="containerRef" direction="vertical" type="default" :offset="30">\n' +
             '  <AnchorLink href="#part1" title="Part 1" />\n' +
@@ -1042,8 +1006,7 @@ export const components: Record<string, ComponentDoc> = {
             {
                 name: "links",
                 type: "AnchorLink[]",
-                description:
-                    "Legacy array of anchor links. Use AnchorLink children for the Element Plus-style API.",
+                description: "Legacy array of anchor links. Use AnchorLink children for the Element Plus-style API.",
             },
             {
                 name: "container",
@@ -1091,8 +1054,7 @@ export const components: Record<string, ComponentDoc> = {
                 name: "selectScrollTop",
                 type: "boolean",
                 default: "false",
-                description:
-                    "Прокручивать выбранный якорь к началу контейнера.",
+                description: "Прокручивать выбранный якорь к началу контейнера.",
             },
         ],
         events: [
@@ -1108,8 +1070,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "tabs",
         name: "Tabs",
         group: "navigation",
-        description:
-            "Вкладки. Навигация по items, контент в <TabPane :name>. Активная — по v-model.",
+        description: "Вкладки. Навигация по items, контент в <TabPane :name>. Активная — по v-model.",
         usage: "<Tabs v-model=\"tab\" :items=\"[{ name: 'a', label: 'A' }, { name: 'b', label: 'B' }]\"><TabPane name=\"a\">Содержимое вкладки</TabPane></Tabs>",
         props: [
             {
@@ -1141,14 +1102,12 @@ export const components: Record<string, ComponentDoc> = {
                 name: "visibilityHeight",
                 type: "number",
                 default: "200",
-                description:
-                    "Порог прокрутки, после которого появляется кнопка.",
+                description: "Порог прокрутки, после которого появляется кнопка.",
             },
             {
                 name: "target",
                 type: "string",
-                description:
-                    "CSS-селектор скроллящегося контейнера (по умолчанию окно).",
+                description: "CSS-селектор скроллящегося контейнера (по умолчанию окно).",
             },
         ],
         contributors: contributors(),
@@ -1159,8 +1118,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "alert",
         name: "Alert",
         group: "feedback",
-        description:
-            "Уведомление-блок в четырёх статусах, с заголовком и опциональным закрытием.",
+        description: "Уведомление-блок в четырёх статусах, с заголовком и опциональным закрытием.",
         usage: '<Alert type="success" title="Готово">Данные сохранены.</Alert>',
         props: [
             {
@@ -1224,8 +1182,7 @@ export const components: Record<string, ComponentDoc> = {
         name: "Drawer",
         group: "feedback",
         description:
-            "Выезжающая панель с любой стороны (placement) и настраиваемым размером. " +
-            "Закрытие по Esc и оверлею, есть слот #footer.",
+            "Выезжающая панель с любой стороны (placement) и настраиваемым размером. " + "Закрытие по Esc и оверлею, есть слот #footer.",
         usage: '<Drawer v-model="open" title="Панель" placement="right" size="360px">Контент панели</Drawer>',
         props: [
             {
@@ -1261,9 +1218,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "loading",
         name: "Loading",
         group: "feedback",
-        description:
-            "Оверлей загрузки поверх контента (или на весь экран при fullscreen). " +
-            "Показывается, пока loading=true.",
+        description: "Оверлей загрузки поверх контента (или на весь экран при fullscreen). " + "Показывается, пока loading=true.",
         usage: '<Loading :loading="busy" text="Загрузка..."><div>Контент</div></Loading>',
         props: [
             {
@@ -1313,8 +1268,7 @@ export const components: Record<string, ComponentDoc> = {
         name: "message",
         group: "feedback",
         description:
-            "Всплывающие сообщения по центру верха экрана (программный API). " +
-            "Не требует ни шаблонов, ни компонента — только функцию.",
+            "Всплывающие сообщения по центру верха экрана (программный API). " + "Не требует ни шаблонов, ни компонента — только функцию.",
         usage: 'message.success("Сохранено")\nmessage.error("Ошибка", 5000) // duration в мс',
         methods: [
             { name: "success", params: "(content: string, duration?: number)" },
@@ -1374,8 +1328,7 @@ export const components: Record<string, ComponentDoc> = {
         name: "InputTag",
         group: "misc",
         description:
-            "Тег-инпут: ввод завершается Enter или запятой, Backspace на пустом поле " +
-            "удаляет последний тег, есть лимит количества.",
+            "Тег-инпут: ввод завершается Enter или запятой, Backspace на пустом поле " + "удаляет последний тег, есть лимит количества.",
         usage: '<InputTag v-model="tags" :max="5" placeholder="Enter / запятая" />',
         props: [
             {
@@ -1395,9 +1348,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "inputOtp",
         name: "InputOtp",
         group: "misc",
-        description:
-            "Поле одноразового кода: авто-переход по ячейкам, вставка из буфера, " +
-            "в ячейке — одна цифра.",
+        description: "Поле одноразового кода: авто-переход по ячейкам, вставка из буфера, " + "в ячейке — одна цифра.",
         usage: '<InputOtp v-model="code" :length="6" @complete="handleComplete" />',
         props: [
             {
@@ -1431,9 +1382,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "image",
         name: "Image",
         group: "misc",
-        description:
-            "Изображение с ленивой загрузкой (IntersectionObserver) и превью по клику. " +
-            "Показывает заглушку/состояние ошибки.",
+        description: "Изображение с ленивой загрузкой (IntersectionObserver) и превью по клику. " + "Показывает заглушку/состояние ошибки.",
         usage: '<Image src="https://picsum.photos/320/200" class="h-48 w-64" previewable />',
         props: [
             { name: "src", type: "string", required: true },
@@ -1463,8 +1412,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "scrollbar",
         name: "Scrollbar",
         group: "misc",
-        description:
-            "Контейнер со стилизованным тонким скроллбаром, ограничением высоты и опциональным скрытием полосы прокрутки.",
+        description: "Контейнер со стилизованным тонким скроллбаром, ограничением высоты и опциональным скрытием полосы прокрутки.",
         usage: '<Scrollbar max-height="120px" hide><p v-for="item in items" :key="item">{{ item }}</p></Scrollbar>',
         props: [
             {
@@ -1477,8 +1425,7 @@ export const components: Record<string, ComponentDoc> = {
                 name: "hide",
                 type: "boolean",
                 default: "false",
-                description:
-                    "Скрыть визуальную полосу прокрутки, сохранив возможность прокрутки.",
+                description: "Скрыть визуальную полосу прокрутки, сохранив возможность прокрутки.",
             },
         ],
         slots: [
@@ -1494,9 +1441,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "carousel",
         name: "Carousel",
         group: "misc",
-        description:
-            "Карусель слайдов (любой контент) со стрелками, точками-индикаторами и " +
-            "автопрокруткой.",
+        description: "Карусель слайдов (любой контент) со стрелками, точками-индикаторами и " + "автопрокруткой.",
         usage: '<Carousel autoplay :interval="3000">\n  <div>Слайд 1</div>\n  <div>Слайд 2</div>\n</Carousel>',
         props: [
             {
@@ -1524,9 +1469,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "mention",
         name: "Mention",
         group: "misc",
-        description:
-            "Текстовое поле с упоминаниями: ввод @имя открывает список пользователей, " +
-            "клик вставляет @имя в текст.",
+        description: "Текстовое поле с упоминаниями: ввод @имя открывает список пользователей, " + "клик вставляет @имя в текст.",
         usage: "<Mention v-model=\"text\" :users=\"['anna', 'igor']\" />",
         props: [
             {
@@ -1557,8 +1500,7 @@ export const components: Record<string, ComponentDoc> = {
         name: "Upload",
         group: "misc",
         description:
-            "Загрузка файлов: клик или drag&drop. Значение v-model — массив File[]. " +
-            "Умеет принимать несколько файлов или один.",
+            "Загрузка файлов: клик или drag&drop. Значение v-model — массив File[]. " + "Умеет принимать несколько файлов или один.",
         usage: '<Upload v-model="files" accept=".jpg,.png" />',
         props: [
             {
@@ -1586,9 +1528,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "cascader",
         name: "Cascader",
         group: "misc",
-        description:
-            "Каскадный выбор в несколько колонок (дерево). Итоговое значение — массив key'ей " +
-            "вдоль выбранного пути.",
+        description: "Каскадный выбор в несколько колонок (дерево). Итоговое значение — массив key'ей " + "вдоль выбранного пути.",
         usage: '<Cascader v-model="path" :options="tree" placeholder="Область / город" />',
         props: [
             {
@@ -1613,8 +1553,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "colorPicker",
         name: "ColorPicker",
         group: "misc",
-        description:
-            "Палитра цвета: нативный color input + hex-поле + пресеты. Значение — hex-строка.",
+        description: "Палитра цвета: нативный color input + hex-поле + пресеты. Значение — hex-строка.",
         usage: '<ColorPicker v-model="color" />',
         props: [
             {
@@ -1651,9 +1590,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "calendar",
         name: "Calendar",
         group: "misc",
-        description:
-            "Полноценный календарь месяца (не попап). Активная дата через v-model, " +
-            "ячейки кастомизируются слотом #cell.",
+        description: "Полноценный календарь месяца (не попап). Активная дата через v-model, " + "ячейки кастомизируются слотом #cell.",
         usage: '<Calendar v-model="date"><template #cell="{ cell }">{{ cell.date.getDate() }}</template></Calendar>',
         props: [
             {
@@ -1676,8 +1613,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "timeSelect",
         name: "TimeSelect",
         group: "misc",
-        description:
-            "Выбор времени из сетки слотов (start/end/step). Значение — строка «HH:MM».",
+        description: "Выбор времени из сетки слотов (start/end/step). Значение — строка «HH:MM».",
         usage: '<TimeSelect v-model="time" start="09:00" end="18:00" :step="30" />',
         props: [
             {
@@ -1703,9 +1639,7 @@ export const components: Record<string, ComponentDoc> = {
         key: "affix",
         name: "Affix",
         group: "misc",
-        description:
-            "«Прилипающий» блок: приклеивается к верху при скролле и «отлипает», " +
-            "когда заканчивается родительский блок.",
+        description: "«Прилипающий» блок: приклеивается к верху при скролле и «отлипает», " + "когда заканчивается родительский блок.",
         usage: '<Affix :offset="56" position="top"><Tag>Панель</Tag></Affix>',
         props: [
             {
@@ -1741,26 +1675,16 @@ export const components: Record<string, ComponentDoc> = {
             {
                 name: "scroll",
                 params: "(value: { scrollTop: number; fixed: boolean }) => void",
-                description:
-                    "Срабатывает при прокрутке окна или target-контейнера.",
+                description: "Срабатывает при прокрутке окна или target-контейнера.",
             },
         ],
-        slots: [
-            { name: "default", description: "Содержимое прилипающего блока." },
-        ],
+        slots: [{ name: "default", description: "Содержимое прилипающего блока." }],
         contributors: contributors(),
     },
 };
 
 /** Порядок групп для сайдбара/оглавления. */
-export const groupOrder: DocGroup[] = [
-    "basic",
-    "form",
-    "data",
-    "navigation",
-    "feedback",
-    "misc",
-];
+export const groupOrder: DocGroup[] = ["basic", "form", "data", "navigation", "feedback", "misc"];
 
 export const groupLabels: Record<DocGroup, string> = {
     basic: "Базовые",
@@ -1804,8 +1728,7 @@ export const componentDescriptionsEn: Record<string, string> = {
     dropdown: "A positioned action menu with placement and disabled items.",
     anchor: "A list of links for navigating to sections on the page.",
     tabs: "A tabbed interface with active and disabled tabs.",
-    backtop:
-        "A floating control that appears after scrolling and returns to top.",
+    backtop: "A floating control that appears after scrolling and returns to top.",
     alert: "A contextual message with status, title, and close action.",
     dialog: "A modal dialog with title, content, and footer slots.",
     drawer: "A slide-out panel with configurable placement and size.",
@@ -2030,8 +1953,7 @@ export const apiDescriptionsEn: Record<string, Record<string, string>> = {
         marker: "Show the active anchor marker.",
         type: "Marker style.",
         direction: "Anchor list direction.",
-        selectScrollTop:
-            "Scroll the selected anchor to the top of the container.",
+        selectScrollTop: "Scroll the selected anchor to the top of the container.",
     },
     tabs: {
         modelValue: "Active tab name.",

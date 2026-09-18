@@ -10,9 +10,7 @@ function isChecked(value: string | number) {
 }
 
 function toggle(value: string | number) {
-    const next = isChecked(value)
-        ? props.modelValue.filter((v) => v !== value)
-        : [...props.modelValue, value];
+    const next = isChecked(value) ? props.modelValue.filter((v) => v !== value) : [...props.modelValue, value];
     emit("update:modelValue", next);
 }
 

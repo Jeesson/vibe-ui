@@ -11,9 +11,7 @@ const selected = ref<string[]>(["vue"]);
 <template>
     <ComponentDoc :doc="doc">
         <template #examples>
-            <p class="mb-2 text-xs text-gray-400">
-                Выбрано: {{ selected.join(", ") || "—" }}
-            </p>
+            <p class="mb-2 text-xs text-gray-400">Выбрано: {{ selected.join(", ") || "—" }}</p>
             <CheckboxGroup v-model="selected">
                 <Checkbox value="vue">Vue</Checkbox>
                 <Checkbox value="react">React</Checkbox>

@@ -15,14 +15,7 @@ const slides = [
     <ComponentDoc :doc="doc">
         <template #examples>
             <Carousel class="h-40 max-w-sm" autoplay :interval="2500">
-                <div
-                    v-for="(cls, i) in slides"
-                    :key="i"
-                    :class="[
-                        'flex h-40 items-center justify-center text-lg font-medium',
-                        cls,
-                    ]"
-                >
+                <div v-for="(cls, i) in slides" :key="i" :class="['flex h-40 items-center justify-center text-lg font-medium', cls]">
                     Слайд {{ i + 1 }}
                 </div>
             </Carousel>

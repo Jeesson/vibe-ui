@@ -13,9 +13,7 @@ const on = ref(false);
             <div class="flex max-w-sm flex-col gap-3">
                 <Radio v-model="on">Standalone-кнопка</Radio>
                 <Radio v-model="on" disabled>Отключено</Radio>
-                <p class="text-xs text-gray-400">
-                    Внутри RadioGroup см. страницу «RadioGroup».
-                </p>
+                <p class="text-xs text-gray-400">Внутри RadioGroup см. страницу «RadioGroup».</p>
             </div>
         </template>
     </ComponentDoc>

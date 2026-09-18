@@ -40,8 +40,7 @@ onBeforeUnmount(() => {
     if (props.modelValue) unlockBodyScroll();
 });
 
-// Реактивно — placement может меняться, пока Drawer остаётся смонтированным
-// (например, демо переключает стороны одной и той же панелью).
+// Reactive placement allows changing direction while Drawer stays mounted.
 const isVertical = computed(() => props.placement === "top" || props.placement === "bottom");
 
 const panelPosition = {
@@ -54,10 +53,8 @@ const panelPosition = {
 
 <template>
     <Teleport to="body">
-        <!-- Один Transition: вложенный Transition не анимируется, если он
-         монтируется одновременно со своим ребёнком (оба v-if по modelValue) —
-         enter-хуки внутреннего просто не вызываются. Анимация панели
-         описана в CSS через потомков (.vibe-ui-drawer-panel). -->
+        <!-- Single Transition: nested Transition fails to animate when mounted
+         concurrently with child; panel animation is styled in CSS via descendants. -->
         <Transition name="vibe-ui-drawer">
             <div v-if="modelValue" class="fixed inset-0 z-50 bg-black/40" @click.self="close">
                 <div

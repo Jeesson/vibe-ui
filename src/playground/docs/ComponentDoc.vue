@@ -220,9 +220,9 @@ const methodRows = (list?: MethodDoc[]) => list ?? [];
 const slotRows = (list?: SlotDoc[]) => list ?? [];
 
 /**
- * Распознаёт строковые union-литералы вида `"top" | "bottom" | "left"`
- * и возвращает список значений для бейджа `enum [...]` с поповером.
- * Для обычных типов (string, boolean, …) — пустой массив.
+ * Recognizes string union literals like `"top" | "bottom" | "left"`
+ * and returns values for `enum [...]` badge tooltip.
+ * For regular types (string, boolean, etc.) returns empty array.
  */
 function enumValues(type?: string): string[] {
     if (!type) return [];
@@ -236,8 +236,8 @@ function enumValues(type?: string): string[] {
 }
 
 /**
- * Текст для тултипа enum-бейджа: значения в кавычках через `|`,
- * например `"top" | "bottom" | "left" | "right"`.
+ * Tooltip text for enum badge: values formatted with `|`,
+ * e.g. `"top" | "bottom" | "left" | "right"`.
  */
 function enumTip(type?: string): string {
     return enumValues(type)
@@ -261,7 +261,7 @@ function apiDescription(name: string, description?: string): string | undefined 
 
 <template>
     <div class="flex flex-col gap-6">
-        <!-- Шапка: имя + тег + описание -->
+        <!-- Header: name + tag + description -->
         <div>
             <div class="flex items-center gap-2">
                 <h2 class="text-lg font-semibold text-gray-900">
@@ -274,7 +274,7 @@ function apiDescription(name: string, description?: string): string | undefined 
             <p class="mt-1 text-sm text-gray-500">{{ localizedDescription }}</p>
         </div>
 
-        <!-- Примеры (живой демо-код из страницы компонента) -->
+        <!-- Examples (live demo code from component page) -->
         <section id="component-examples" class="scroll-mt-20 rounded-lg border border-gray-100 bg-white p-5">
             <div class="mb-2 flex items-center justify-between gap-3">
                 <h3 class="text-xs font-semibold tracking-wide text-gray-400 uppercase">

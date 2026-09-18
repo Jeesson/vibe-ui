@@ -12,9 +12,8 @@ export interface DropdownItem {
 const props = withDefaults(
     defineProps<{
         items: DropdownItem[];
-        // Шесть позиционок: сторона (top/bottom) × выравнивание (start/центр/end).
-        // Если выбранной стороне не хватает места на экране — панель сама
-        // переворачивается на противоположную.
+        // Six placements: side (top/bottom) x alignment (start/center/end).
+        // Automatically flips if there is not enough viewport space.
         placement?: PanelPlacement;
     }>(),
     { placement: "bottom-start" },

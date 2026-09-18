@@ -31,9 +31,8 @@ function onChange() {
     <label
         class="inline-flex items-center gap-2 text-sm select-none"
         :class="disabled ? 'cursor-not-allowed text-gray-400' : 'cursor-pointer text-gray-700'">
-        <!-- Настоящий input скрыт визуально (sr-only), но остаётся кликабельным и
-         доступным — клик в любой точке label, включая текст, надёжно попадает
-         в него по нативной семантике браузера, без самописной click-логики. -->
+        <!-- Real input is visually hidden (sr-only) but stays accessible and clickable
+         via native label semantics without custom click logic. -->
         <input type="radio" class="sr-only" :checked="selected" :disabled="disabled" @change="onChange" />
         <span
             class="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors"

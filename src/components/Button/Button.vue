@@ -6,8 +6,7 @@ withDefaults(
         variant?: "primary" | "secondary" | "ghost";
         size?: "sm" | "md" | "lg";
         disabled?: boolean;
-        // Любой svg-компонент-иконка: heroicons (@heroicons/vue/24/outline и др.)
-        // или lucide (@lucide/vue) — оба рендерят <svg> и подгоняются под размер.
+        // Any SVG icon component (e.g. heroicons or lucide); renders <svg> scaled to size.
         icon?: Component;
         iconRight?: Component;
     }>(),

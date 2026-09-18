@@ -21,7 +21,7 @@ function select(i: number) {
     emit("update:modelValue", i);
 }
 
-// Лёгкий "pop" на изменившихся звёздах при смене значения.
+// Subtle "pop" effect on changed stars when value changes.
 watch(
     () => props.modelValue,
     () => {

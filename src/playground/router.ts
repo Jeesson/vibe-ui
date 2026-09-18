@@ -1,13 +1,13 @@
 /**
  * router.ts
  * -----------------------------------------------------------------------------
- * Роутинг плейграунда на vue-router:
- *   /                        — обзор всех компонентов (OverviewPage.vue)
- *   /components/:slug        — страница одного компонента (ComponentPageView.vue)
- *   всё остальное            — редирект на /
+ * Playground routing via vue-router:
+ *   /                        — all components overview (OverviewPage.vue)
+ *   /components/:slug        — single component page (ComponentPageView.vue)
+ *   everything else          — redirect to /
  *
- * Конвертация legacy-ключей навигации ("overview" | "c-<key>", их эмитят
- * Sidebar и OverviewPage) в URL — pageKeyToPath() (см. ./pageKeyToPath.ts).
+ * Conversion of legacy navigation keys ("overview" | "c-<key>" emitted by
+ * Sidebar and OverviewPage) to URL — pageKeyToPath() (see ./component-pages.ts).
  * -----------------------------------------------------------------------------
  */
 import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router";
@@ -23,7 +23,7 @@ const routes: RouteRecordRaw[] = [
         name: "component",
         component: () => import("./pages/ComponentPageView.vue"),
     },
-    /* Legacy-пути старого самописного роутера (/basic, /form, ...) → на обзор. */
+    /* Legacy routes from custom router (/basic, /form, ...) -> redirect to overview. */
     { path: "/:pathMatch(.*)*", redirect: "/" },
 ];
 

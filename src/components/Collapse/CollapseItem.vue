@@ -20,11 +20,8 @@ const ctx = inject(CollapseKey, null);
             </span>
         </button>
 
-        <!--
-      Анимация высоты через CSS grid-template-rows (0fr -> 1fr).
-      Контент никогда не размонтируется (в отличие от v-if), поэтому
-      транзишн плавный и не зависит от JS-измерений scrollHeight.
-    -->
+        <!-- Height animation via CSS grid-template-rows (0fr -> 1fr). Content remains mounted, providing smooth transitions without JS
+        measurements. -->
         <div
             class="grid transition-[grid-template-rows] duration-300 ease-in-out"
             :style="{

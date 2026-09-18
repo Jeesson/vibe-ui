@@ -1,11 +1,11 @@
 /**
  * component-pages.ts
  * -----------------------------------------------------------------------------
- * Реестр страниц отдельных компонентов плейграунда.
+ * Registry of individual playground component pages.
  *
- * Каждой записи из docs/component-docs соответствует страница из pages/components,
- * а mapping ANCHORS задаёт оглавление правой колонки (секция на ComponentDoc.vue).
- * Роутер (router.ts) строит из этого реестра маршрут /components/:slug.
+ * Each entry in docs/component-docs maps to a page in pages/components,
+ * while ANCHORS configures the right column table of contents.
+ * The router (router.ts) builds the /components/:slug route from this registry.
  * -----------------------------------------------------------------------------
  */
 import type { Component } from "vue";
@@ -122,17 +122,17 @@ export const componentPages: Record<string, Component> = {
     affix: C_affix,
 };
 
-/** camelCase-ключ дока → kebab-slug URL: inputNumber → input-number. */
+/** camelCase doc key -> kebab-slug URL: inputNumber -> input-number. */
 export function toComponentSlug(key: string): string {
     return key.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
 }
 
-/** Slug URL → ключ дока (или null, если компонента нет). */
+/** URL slug -> doc key (or null if component not found). */
 export function componentKeyFromSlug(slug: string): string | null {
     return Object.keys(componentPages).find((key) => toComponentSlug(key) === slug) ?? null;
 }
 
-/** Ключ навигации ("overview" | "c-<key>") → путь роутера (+ опц. якорь). */
+/** Navigation key ("overview" | "c-<key>") -> router path (+ optional anchor). */
 export function pageKeyToPath(page: string, anchor?: string): string {
     let path = "/";
     if (page.startsWith("c-")) {
@@ -141,7 +141,7 @@ export function pageKeyToPath(page: string, anchor?: string): string {
     return anchor ? `${path}#${encodeURIComponent(anchor)}` : path;
 }
 
-/** Оглавление страницы компонента (якоря секций ComponentDoc.vue). */
+/** Component page table of contents (ComponentDoc.vue section anchors). */
 export const componentAnchors = [
     { href: "#component-examples", title: "Examples" },
     { href: "#component-api", title: "API" },

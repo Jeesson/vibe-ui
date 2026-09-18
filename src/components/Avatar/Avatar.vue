@@ -17,15 +17,15 @@ const sizeClasses = {
     lg: "h-12 w-12 text-base",
 };
 
-// Палитра фонов на основе оттенков (oklch), цвет стабильно выводится из initials/src,
-// так что один и тот же пользователь всегда получает один и тот же цвет.
+// Hue-based background palette (oklch) hashed from initials/src
+// ensures a user consistently receives the same color.
 const palette = [
-    "oklch(0.9 0.05 20)", // розовый
-    "oklch(0.9 0.05 60)", // оранжевый
-    "oklch(0.9 0.05 140)", // зелёный
-    "oklch(0.9 0.05 200)", // голубой
-    "oklch(0.9 0.05 260)", // синий
-    "oklch(0.9 0.05 300)", // фиолетовый
+    "oklch(0.9 0.05 20)", // pink
+    "oklch(0.9 0.05 60)", // orange
+    "oklch(0.9 0.05 140)", // green
+    "oklch(0.9 0.05 200)", // cyan
+    "oklch(0.9 0.05 260)", // blue
+    "oklch(0.9 0.05 300)", // purple
 ];
 const textPalette = [
     "oklch(0.45 0.15 20)",

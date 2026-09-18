@@ -4,9 +4,8 @@ import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/vue/24/outline";
 
 const props = withDefaults(defineProps<{ autoplay?: boolean; interval?: number }>(), { autoplay: false, interval: 3000 });
 
-// Количество слайдов считаем по реальным DOM-детям трека: если слайды
-// переданы через v-for, слот возвращает один Fragment-vnode, и подсчёт
-// по vnode'ам даёт count = 1 (тогда виден только один слайд).
+// Slide count is computed from real DOM children: if slides are passed via
+// v-for, the slot yields a single Fragment vnode resulting in count = 1.
 const trackRef = ref<HTMLElement | null>(null);
 const count = ref(0);
 

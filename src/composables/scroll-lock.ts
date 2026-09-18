@@ -2,10 +2,9 @@ let lockCount = 0;
 
 export function lockBodyScroll() {
     if (lockCount === 0) {
-        // Прокрутку фона блокируем, но НЕ прячем скроллбар и не сдвигаем
-        // контент: `scrollbar-gutter: stable` на <html> (см. styles/main.css)
-        // постоянно резервирует место под скроллбар, поэтому переключение
-        // overflow не вызывает скачка страницы.
+        // Lock background scroll without hiding scrollbar or shifting content:
+        // `scrollbar-gutter: stable` on <html> reserves scrollbar space so
+        // toggling overflow causes no layout shift.
         document.documentElement.style.overflow = "hidden";
     }
     lockCount++;

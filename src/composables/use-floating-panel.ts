@@ -11,13 +11,11 @@ export interface UseFloatingPanel {
     togglePanel: () => void;
 }
 
-// panelClass — класс корневого элемента телепортированной панели, по которому
-// onClickOutside узнаёт "это клик внутри панели, а не снаружи" (панель живёt
-// в body, а не внутри компонента, поэтому обычный rootRef.contains() её не видит).
+// panelClass — class of the teleported panel root element so onClickOutside
+// recognizes clicks inside the panel (since it lives in body outside rootRef).
 //
-// getPlacement — необязательный геттер явной позиционировки (6 вариантов
-// из PanelPlacement). Если задан — позиция считается по computePlacementRect
-// (с автопереворотом при нехватке места), иначе — прежний автопилл top/bottom.
+// getPlacement — optional getter for explicit placement (6 PanelPlacement options).
+// When provided, position uses computePlacementRect with auto-flip; otherwise auto top/bottom.
 export function useFloatingPanel(
     panelClass: string,
     panelHeight = 240,

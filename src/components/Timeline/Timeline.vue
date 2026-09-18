@@ -28,11 +28,8 @@ const ringClasses: Record<string, string> = {
 <template>
     <ul class="flex flex-col">
         <li v-for="(item, i) in items" :key="i" class="flex gap-3">
-            <!--
-        Точка и линия — колонки одного flex-row: line получает flex-1 и растягивается
-        ровно на высоту соседней текстовой колонки (align-items: stretch по умолчанию),
-        без магических пиксельных отступов и без "прыгающих" линий на разной высоте контента.
-      -->
+            <!-- Dot and line share a flex column: line uses flex-1 to match adjacent
+            content height without fixed pixel offsets or uneven line heights. -->
             <div class="flex flex-col items-center">
                 <slot name="dot" :item="item" :index="i">
                     <span

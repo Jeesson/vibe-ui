@@ -1,16 +1,16 @@
 /**
  * component-docs.ts
  * -----------------------------------------------------------------------------
- * Единый дата-движок документации vibe-ui.
+ * Central documentation data engine for vibe-ui.
  *
- * Содержит для каждого компонента:
- *   - короткое описание (description),
- *   - пример использования (usage, сниппет кода),
+ * Contains for each component:
+ *   - short description,
+ *   - usage example (code snippet),
  *   - API: props / events / methods / slots,
- *   - contributors (авторы компонента).
+ *   - contributors.
  *
- * Страница под каждый компонент строится шаблоном ComponentDoc.vue
- * на основе этой записи — добавлять новую документацию = добавить запись здесь.
+ * Component pages are built by ComponentDoc.vue using these entries;
+ * adding new documentation means adding an entry here.
  */
 
 export type DocGroup = "basic" | "form" | "data" | "navigation" | "feedback" | "misc";
@@ -20,7 +20,7 @@ export interface PropDoc {
     type: string;
     default?: string;
     description?: string;
-    /** true, если без значения компонент не работает (обязательный пропс) */
+    /** true if the component requires a value (required prop) */
     required?: boolean;
 }
 
@@ -52,10 +52,10 @@ export interface ComponentDoc {
     key: string;
     name: string;
     group: DocGroup;
-    /** кастомный регистрируемый тег (если компонент задаёт defineOptions name) */
+    /** custom registered tag (if component defines defineOptions name) */
     tag?: string;
     description: string;
-    /** краткий сниппет использования (вставляется как код) */
+    /** short usage snippet (rendered as code) */
     usage?: string;
     props?: PropDoc[];
     events?: EventDoc[];
@@ -66,9 +66,9 @@ export interface ComponentDoc {
 
 /* ---------------------------------------------------------------------------
  * Contributors.
- * Список по умолчанию для всех компонентов. Наполнять из git-history:
+ * Default list for all components. Populate from git history:
  *   > git shortlog -sn -- src/components/<Name>
- * GitHub-API недоступен (репозиторий приватный), поэтому здесь — автор проекта.
+ * Project author fallback when GitHub API is not available.
  * ------------------------------------------------------------------------- */
 const AUTHOR: Contributor[] = [
     {
@@ -81,7 +81,7 @@ const AUTHOR: Contributor[] = [
 const contributors = (extra: Contributor[] = []) => [...AUTHOR, ...extra];
 
 /* ---------------------------------------------------------------------------
- * Группы соответствуют разделам сайдбара (basic/form/data/navigation/feedback/misc).
+ * Groups correspond to sidebar sections (basic/form/data/navigation/feedback/misc).
  * ------------------------------------------------------------------------- */
 export const components: Record<string, ComponentDoc> = {
     /* ================================ BASIC ================================ */
@@ -1269,7 +1269,7 @@ export const components: Record<string, ComponentDoc> = {
         group: "feedback",
         description:
             "Всплывающие сообщения по центру верха экрана (программный API). " + "Не требует ни шаблонов, ни компонента — только функцию.",
-        usage: 'message.success("Сохранено")\nmessage.error("Ошибка", 5000) // duration в мс',
+        usage: 'message.success("Сохранено")\nmessage.error("Ошибка", 5000) // duration in ms',
         methods: [
             { name: "success", params: "(content: string, duration?: number)" },
             { name: "warning", params: "(content: string, duration?: number)" },
@@ -1683,7 +1683,7 @@ export const components: Record<string, ComponentDoc> = {
     },
 };
 
-/** Порядок групп для сайдбара/оглавления. */
+/** Group order for sidebar and table of contents. */
 export const groupOrder: DocGroup[] = ["basic", "form", "data", "navigation", "feedback", "misc"];
 
 export const groupLabels: Record<DocGroup, string> = {

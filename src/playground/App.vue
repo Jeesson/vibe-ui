@@ -15,7 +15,7 @@ const { t } = useLocale();
 const route = useRoute();
 const router = useRouter();
 
-/* Оглавление страницы обзора (якоря групп OverviewPage). */
+/* Overview page table of contents (group anchors from OverviewPage). */
 const overviewAnchors = [
     { href: "#ov-group-basic", title: "Basic" },
     { href: "#ov-group-form", title: "Form" },
@@ -26,19 +26,19 @@ const overviewAnchors = [
     { href: "#ov-group-datetime", title: "Date & Time" },
 ];
 
-/* Ключ дока текущего компонента (если активен маршрут /components/:slug). */
+/* Current component doc key (when /components/:slug route is active). */
 const componentKey = computed(() => (route.name === "component" ? componentKeyFromSlug(String(route.params.slug ?? "")) : null));
 
-/* Заголовок в Navbar: имя компонента или перевод «Обзор». */
+/* Navbar title: component name or localized "Overview". */
 const pageTitle = computed(() => (componentKey.value ? componentDocs[componentKey.value].name : t.value("overview.title")));
 
-/* Оглавление справа для текущего маршрута. */
+/* Right column table of contents for the current route. */
 const anchors = computed(() => (componentKey.value ? componentAnchors : overviewAnchors));
 
-/* Активный пункт сайдбара ("overview" | "c-<key>"). */
+/* Active sidebar item ("overview" | "c-<key>"). */
 const currentPage = computed(() => (componentKey.value ? `c-${componentKey.value}` : "overview"));
 
-/* Клик по сайдбару/карточке обзора → vue-router. */
+/* Sidebar/overview card click -> vue-router. */
 function navigate(page: string, anchor?: string) {
     router.push(pageKeyToPath(page, anchor));
 }
@@ -58,7 +58,7 @@ function navigate(page: string, anchor?: string) {
                 <RouterView />
             </main>
 
-            <!-- правая колонка — оглавление текущей страницы -->
+            <!-- Right column: current page table of contents -->
             <aside v-if="anchors.length" class="hidden w-48 shrink-0 py-8 pr-6 lg:block">
                 <div class="sticky top-20">
                     <p class="mb-2 text-xs font-medium tracking-wide text-gray-400 uppercase">

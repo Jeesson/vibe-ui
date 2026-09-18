@@ -5,14 +5,13 @@ export interface FloatingRect {
     placement: "top" | "bottom";
 }
 
-// Шесть позиционок плавающей панели: сторона (top/bottom) × выравнивание
-// (start = по левому краю триггера, center, end = по правому).
+// Six floating panel placements: side (top/bottom) x alignment
+// (start = left edge of trigger, center, end = right edge).
 export type PanelPlacement = "bottom-start" | "bottom" | "bottom-end" | "top-start" | "top" | "top-end";
 
-// Считает позицию плавающей панели относительно триггера в viewport-координатах
-// (используется с position: fixed после Teleport в body). Разворачивает панель
-// вверх, если снизу не хватает места, но сверху его больше, и поджимает левый
-// край, если панель шире триггера и вылезает за правый край экрана.
+// Computes floating panel position relative to trigger in viewport coordinates
+// (used with position: fixed after Teleport to body). Flips panel upwards if
+// bottom space is insufficient and clamps left edge to fit within screen bounds.
 export function computeFloatingRect(trigger: HTMLElement, panelHeight = 240, gap = 4, panelWidth?: number): FloatingRect {
     const rect = trigger.getBoundingClientRect();
     const spaceBelow = window.innerHeight - rect.bottom;
@@ -33,9 +32,8 @@ export function computeFloatingRect(trigger: HTMLElement, panelHeight = 240, gap
     };
 }
 
-// Позиционирование по явному placement из шести. Запрошенная сторона
-// сохраняется, если панели хватает места; иначе — автопереворот на
-// противоположную (bottom ⇄ top). Горизонталь всегда поджимается в экран.
+// Computes position from an explicit placement. Requested side is kept if space
+// permits; otherwise flips (bottom <-> top). Horizontal position is clamped to screen.
 export function computePlacementRect(
     trigger: HTMLElement,
     panelHeight = 240,

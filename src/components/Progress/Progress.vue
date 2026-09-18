@@ -38,9 +38,8 @@ const circleRadius = 36;
 const circumference = 2 * Math.PI * circleRadius;
 const dashOffset = computed(() => circumference * (1 - clamped.value / 100));
 
-// Dashboard — дуга-спидометр: 270° (зазор 90° снизу), старт с нижнего левого
-// края по часовой стрелке. Строится настоящим SVG path — у трека и заполнения
-// корректные скруглённые концы, без артефактов linecap в зазоре.
+// Dashboard speedometer arc: 270 deg (90 deg gap at bottom), clockwise from bottom-left.
+// Built with SVG path so track and progress have rounded caps without gap artifacts.
 const dashboardSweep = 270;
 const dashboardArcAngle = computed(() => (dashboardSweep * clamped.value) / 100);
 

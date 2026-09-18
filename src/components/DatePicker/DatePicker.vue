@@ -69,9 +69,8 @@ onBeforeUnmount(() => {
             class="focus:ring-primary-500 w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 outline-none focus:ring-2"
             @click="toggle" />
 
-        <!-- Teleport + fixed-позиционирование: панель сама разворачивается вверх,
-         если снизу не хватает места (например, у DatePicker в самом низу формы),
-         и поджимается по горизонтали, если вылезает за правый край экрана. -->
+        <!-- Teleport + fixed positioning: flips upwards when bottom space is
+         insufficient and clamps horizontally to prevent viewport overflow. -->
         <Teleport to="body">
             <div
                 v-if="open && rect"

@@ -59,8 +59,7 @@ function onInput(e: Event) {
 </template>
 
 <style>
-/* Прячем нативные стрелки type=number — свои кнопки уже есть, а нативные
-   в Chrome/Safari добавляли собственную ширину и визуально плавали. */
+/* Hide native type=number spin buttons since custom controls are provided. */
 .vibe-ui-number-input::-webkit-inner-spin-button,
 .vibe-ui-number-input::-webkit-outer-spin-button {
     -webkit-appearance: none;

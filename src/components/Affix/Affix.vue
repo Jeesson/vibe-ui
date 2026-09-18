@@ -23,10 +23,9 @@ const height = ref<number | null>(null);
 const left = ref<number | null>(null);
 let targetElement: HTMLElement | null = null;
 
-// Элемент прилипает к top: offset, пока не достигнут низ родительского блока —
-// тогда «отлипает» и уезжает вместе с контентом (как в Element Plus).
-// Ориентируемся на live getBoundingClientRect: не зависит от того, когда
-// и где элемент оказался в DOM, и корректно работает при ресайзе.
+// Element sticks to top: offset until parent container bottom is reached,
+// then unpins and scrolls with content (like Element Plus).
+// Uses live getBoundingClientRect for reliable sizing on mount and resize.
 function getScrollTop(): number {
     return targetElement?.scrollTop ?? window.scrollY;
 }

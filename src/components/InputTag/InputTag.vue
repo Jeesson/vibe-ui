@@ -27,7 +27,7 @@ function onEnter() {
     draft.value = "";
 }
 
-// Запятая тоже завершает тег — удобно при вставке готового списка через запятую.
+// Comma also completes a tag, convenient for pasting comma-separated lists.
 function onInput(e: Event) {
     const value = (e.target as HTMLInputElement).value;
     if (value.includes(",")) {

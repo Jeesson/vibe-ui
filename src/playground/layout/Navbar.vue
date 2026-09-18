@@ -38,7 +38,7 @@ onMounted(() => {
             </div>
 
             <div class="flex items-center gap-1">
-                <!-- переключение языка -->
+                <!-- Language switcher -->
                 <Dropdown
                     :items="[
                         { label: 'Русский', value: 'ru' },
@@ -73,7 +73,7 @@ onMounted(() => {
                     <MoonIcon v-else class="h-4.5 w-4.5" />
                 </button>
 
-                <!-- ссылка на GitHub -->
+                <!-- GitHub link -->
                 <a
                     href="https://github.com/Jeesson/vibe-ui"
                     target="_blank"
@@ -91,8 +91,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Точечная «сетка» поверх blur-подложки. Прозрачные точки в 1px — цвет
-   просвечивает из --bg-color (тот же, что у фона шапки). */
+/* Dot grid over blurred background. 1px transparent dots reveal --bg-color. */
 .vibe-ui-navbar {
     --bg-color: rgba(255, 255, 255, 0.8);
     background-image: radial-gradient(transparent 1px, var(--bg-color) 1px);

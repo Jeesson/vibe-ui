@@ -95,13 +95,8 @@ onBeforeUnmount(() => {
             </span>
         </button>
 
-        <!--
-      Teleport в body + position:fixed, координаты посчитаны от триггера.
-      Раньше список был position:absolute внутри самого компонента — если Select
-      стоял в форме внутри Dialog (у которого overflow-auto), браузер прокручивал
-      сам Dialog, чтобы "вместить" абсолютно спозиционированный список. Теперь
-      список живёт вне скроллящегося контейнера и не влияет на его scrollHeight.
-    -->
+        <!-- Teleport to body + position: fixed, coordinates calculated from trigger.
+        Prevents scrolling container expansion when nested inside modals/dialogs. -->
         <Teleport to="body">
             <ul
                 v-if="open && rect"

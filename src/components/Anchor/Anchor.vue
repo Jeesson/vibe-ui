@@ -126,8 +126,8 @@ const scrollTo = (href?: string) => {
         clearAnimate = null;
         isScrolling = false;
         currentTargetHref = "";
-        // Несколько нижних ссылок могут вести в одну предельную позицию.
-        // Сохраняем выбранную, пока пользователь действительно не прокрутит.
+        // Multiple bottom links can target the same maximum scroll position.
+        // Keep the selected link active until the user scrolls away.
         settledScrollTop = getScrollTop(container);
     });
 };
@@ -283,8 +283,8 @@ onMounted(() => {
         resizeObserver = new ResizeObserver(updateMarkerStyle);
         resizeObserver.observe(anchorRef.value);
     }
-    // Начальную позицию URL восстанавливает браузер/роутер: не запускаем
-    // конкурирующую анимацию, особенно у вложенного Anchor.
+    // Initial URL scroll position is handled by browser/router;
+    // avoid conflicting animations, especially for nested Anchors.
     handleScroll();
     updateMarkerStyle();
 });

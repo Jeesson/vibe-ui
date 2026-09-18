@@ -6,14 +6,14 @@ import { componentKeyFromSlug, componentPages } from "../component-pages";
 const route = useRoute();
 const router = useRouter();
 
-/* Slug из URL → страница компонента (валидность slug уже проверена
-   в ComponentPageView до рендера, null — fallback на редирект). */
+/* URL slug -> component page (validity pre-checked before render;
+   null triggers redirect fallback). */
 const page = computed(() => {
     const key = componentKeyFromSlug(String(route.params.slug ?? ""));
     return key ? componentPages[key] : null;
 });
 
-/* Неизвестный slug (например, старая ссылка) → на обзор. */
+/* Unknown slug (e.g. legacy link) -> redirect to overview. */
 if (!page.value) router.replace("/");
 </script>
 

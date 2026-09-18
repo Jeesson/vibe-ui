@@ -34,9 +34,9 @@ const groupIcons = {
 };
 
 /*
-    Сайдбар строится из единого дата-движка docs/component-docs:
-    группы — groupOrder/groupLabels, внутри каждой — отдельные страницы
-    компонентов ("c-<key>"), которыми управляет App.vue.
+    Sidebar is built from docs/component-docs:
+    groups are sorted via groupOrder, containing component pages ("c-<key>")
+    managed by App.vue.
 */
 const items = computed(() => {
     const groups = groupOrder.map((g) => ({

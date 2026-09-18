@@ -13,12 +13,10 @@ withDefaults(defineProps<{ maxHeight?: string; hide?: boolean }>(), {
 
 <style>
 /*
-  ВАЖНО: в Chrome 121+ заданные scrollbar-width/scrollbar-color полностью
-  отключают ::-webkit-scrollbar-* псевдоэлементы — браузер рисует системный
-  скроллбар (на Windows — со стрелками), и display:none на кнопках не работает.
-  Поэтому стандартные свойства применяем только в браузерах без поддержки
-  webkit-псевдоэлементов (Firefox), а Chrome/Edge/Safari получают полностью
-  кастомный тонкий скроллбар ниже — он изначально без стрелок.
+  IMPORTANT: in Chrome 121+, scrollbar-width/scrollbar-color disable
+  ::-webkit-scrollbar-* pseudo-elements, showing the system scrollbar with buttons.
+  Standard properties are applied only in browsers without webkit pseudo-elements (Firefox),
+  while Chrome/Edge/Safari use the custom thin scrollbar below without buttons.
 */
 @supports not selector(::-webkit-scrollbar) {
     .vibe-ui-scrollbar {
@@ -42,8 +40,7 @@ withDefaults(defineProps<{ maxHeight?: string; hide?: boolean }>(), {
 .vibe-ui-scrollbar::-webkit-scrollbar-thumb:hover {
     background-color: #9ca3af;
 }
-/* Стрелки-кнопки на Windows Chrome/Edge: без scroll lock стандартных свойств
-   webkit-стилизация активна, поэтому достаточно одного правила на все кнопки. */
+/* Scrollbar buttons on Windows Chrome/Edge: hide all buttons via a single rule. */
 .vibe-ui-scrollbar::-webkit-scrollbar-button {
     display: none;
     width: 0;

@@ -49,7 +49,7 @@ const displayLabel = computed(() => {
 function updateRect() {
     if (triggerRef.value) rect.value = computeFloatingRect(triggerRef.value, 260, 4, columns.value.length * COLUMN_WIDTH);
 }
-// Число колонок растёт по мере раскрытия дерева — пересчитываем позицию/ширину панели.
+// Column count expands as tree branches open; recalculate panel position and width.
 watch(columns, () => open.value && nextTick(updateRect));
 
 function toggle() {

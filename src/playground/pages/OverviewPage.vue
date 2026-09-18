@@ -19,14 +19,13 @@ interface Group {
 }
 
 /* ---------------------------------------------------------------------------
- * Обзор строится АВТОМАТИЧЕСКИ из док-движка (component-docs.ts):
- * новый компонент, добавленный туда, появится здесь сам.
- * Ниже — только уточнения: группа и превью-mock отдельных компонентов.
+ * Overview is generated automatically from component-docs.ts.
+ * Below are manual overrides: group assignments and preview mocks.
  * ------------------------------------------------------------------------- */
 
 type PageId = "basic" | "form" | "data" | "navigation" | "feedback" | "misc" | "datetime";
 
-/** Компоненты, которые в доках лежат в misc, но показываются на странице datetime. */
+/** Components placed under misc in docs, but displayed on datetime page. */
 const DATETIME_KEYS = new Set([
     "cascader",
     "colorPicker",
@@ -39,7 +38,7 @@ const DATETIME_KEYS = new Set([
     "affix",
 ]);
 
-/** Ручные уточнения по конкретным компонентам. */
+/** Manual overrides for specific components. */
 interface Override {
     name?: string;
     page?: PageId;
@@ -51,14 +50,14 @@ const OVERRIDES: Record<string, Override> = {
     form: { mock: "form" },
     formItem: { mock: "form" },
     dropdown: { mock: "menu" },
-    /* Демо Anchor/Backtop показываем в группе Navigation. */
+    /* Anchor/Backtop demo shown in Navigation group. */
     anchor: { page: "navigation", mock: "anchor" },
     backtop: { page: "navigation", mock: "backtop" },
     messageBox: { name: "MessageBox", mock: "dialog" },
     message: { name: "Message", mock: "toast" },
 };
 
-/** Превью-mock'и, отличные от дефолтного "input". */
+/** Preview mocks differing from the default "input". */
 const MOCKS: Record<string, string> = {
     button: "button",
     avatar: "avatar",

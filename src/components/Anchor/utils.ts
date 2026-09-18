@@ -22,9 +22,8 @@ export function getElement(selector?: string | HTMLElement | Window | null): HTM
     return selector;
 }
 
-// В оригинале решает, откуда читать scrollTop для данного target
-// относительно контейнера. Здесь контейнер уже разрешён заранее (Anchor
-// сам решает container === window или элемент), поэтому просто возвращаем его.
+// Originally resolves where to read scrollTop for target relative to container.
+// Here container is already pre-resolved, so return it directly.
 export function getScrollElement(_target: HTMLElement, container: HTMLElement | Window): HTMLElement | Window {
     return container;
 }
@@ -41,7 +40,7 @@ export function getMaxScrollTop(container: HTMLElement | Window): number {
     return Math.max(0, container.scrollHeight - container.clientHeight);
 }
 
-/** Порог у дна: вход за 2px, выход за 8px — без переключения от округления. */
+/** Bottom threshold: enter at 2px, exit at 8px to prevent rounding flicker. */
 export function resolveActiveHref(
     positions: { top: number; href: string }[],
     scrollTop: number,
@@ -63,7 +62,7 @@ export function resolveActiveHref(
         else break;
     }
     const current = sorted.findIndex((item) => item.href === currentHref);
-    // Гистерезис в 2px на обычных границах секций.
+    // 2px hysteresis for regular section boundaries.
     if (current !== -1 && current !== candidate) {
         const boundary = candidate > current ? sorted[candidate].top : sorted[current].top;
         if (Math.abs(top - boundary) <= 2) return currentHref;
@@ -80,8 +79,7 @@ export function getOffsetTopDistance(target: HTMLElement, scrollContainer: HTMLE
     return rect.top - containerRect.top - scrollContainer.clientTop + scrollContainer.scrollTop;
 }
 
-// Throttle через один rAF — не даёт handleScroll выполняться чаще кадра,
-// именно это глушит суб-пиксельный дребезг скролла.
+// Throttles via rAF to cap execution at 1/frame and reduce scroll jitter.
 export function throttleByRaf<T extends (...args: any[]) => void>(fn: T) {
     let rafId: number | null = null;
     const throttled = ((...args: Parameters<T>) => {
@@ -100,8 +98,7 @@ export function throttleByRaf<T extends (...args: any[]) => void>(fn: T) {
     return throttled;
 }
 
-// Возвращает функцию отмены — так же, как animateScrollTo в EP,
-// что позволяет scrollToAnchor прервать текущую анимацию при повторном клике.
+// Returns cancel function to allow interrupting ongoing animation on repeated click.
 export function animateScrollTo(
     container: HTMLElement | Window,
     from: number,
@@ -113,7 +110,7 @@ export function animateScrollTo(
     let cancelled = false;
     const startedAt = performance.now();
     const setScrollTop = (value: number) => {
-        // Исключаем вторую smooth-анимацию из CSS scroll-behavior.
+        // Prevent secondary smooth animation from CSS scroll-behavior.
         container.scrollTo({ top: value, behavior: "instant" });
     };
     const step = (now: number) => {

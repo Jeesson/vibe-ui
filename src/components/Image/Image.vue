@@ -8,8 +8,9 @@ const props = withDefaults(
         fit?: "cover" | "contain" | "fill";
         lazy?: boolean;
         previewable?: boolean;
+        errorText?: string;
     }>(),
-    { fit: "cover", lazy: true, previewable: false },
+    { fit: "cover", lazy: true, previewable: false, errorText: "Failed to load" },
 );
 
 const containerRef = ref<HTMLElement | null>(null);
@@ -49,7 +50,7 @@ onBeforeUnmount(() => observer?.disconnect());
             @error="errored = true"
             @click="previewable && (previewOpen = true)" />
         <div v-if="!loaded || errored" class="absolute inset-0 flex items-center justify-center text-gray-300">
-            <span v-if="errored" class="text-xs">Не удалось загрузить</span>
+            <span v-if="errored" class="text-xs">{{ errorText }}</span>
             <svg v-else viewBox="0 0 24 24" class="h-6 w-6 animate-pulse" fill="currentColor">
                 <path d="M4 5h16v14H4V5zm2 2v10h12V7H6zm2 8l3-4 2 2 3-4 3 6H8z" />
             </svg>

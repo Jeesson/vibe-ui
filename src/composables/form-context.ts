@@ -25,19 +25,20 @@ export interface FormContext {
 
 export const FormContextKey: InjectionKey<FormContext> = Symbol("vibe-ui-form");
 
+// Default messages (English) are overridable per-rule via `message`.
 export function runRules(value: unknown, rules: FormRule[] = []): string | true {
     for (const rule of rules) {
         if (rule.required && (value === "" || value === null || value === undefined)) {
-            return rule.message ?? "Обязательное поле";
+            return rule.message ?? "This field is required";
         }
         if (rule.pattern && typeof value === "string" && !rule.pattern.test(value)) {
-            return rule.message ?? "Неверный формат";
+            return rule.message ?? "Invalid format";
         }
         if (rule.min !== undefined && typeof value === "string" && value.length < rule.min) {
-            return rule.message ?? `Минимум ${rule.min} символов`;
+            return rule.message ?? `Must be at least ${rule.min} characters`;
         }
         if (rule.max !== undefined && typeof value === "string" && value.length > rule.max) {
-            return rule.message ?? `Максимум ${rule.max} символов`;
+            return rule.message ?? `Must be at most ${rule.max} characters`;
         }
         if (rule.validator) {
             const result = rule.validator(value);

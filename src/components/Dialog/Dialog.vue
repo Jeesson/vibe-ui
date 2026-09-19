@@ -56,7 +56,7 @@ onBeforeUnmount(() => {
                         <h3 class="text-base font-semibold text-gray-900">
                             {{ title }}
                         </h3>
-                        <button type="button" class="text-gray-400 hover:text-gray-600" aria-label="Закрыть" @click="close">
+                        <button type="button" class="text-gray-400 hover:text-gray-600" aria-label="Close" @click="close">
                             <XMarkIcon class="h-5 w-5" aria-hidden="true" />
                         </button>
                     </div>

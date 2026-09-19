@@ -8,10 +8,14 @@ export interface TableColumn {
     width?: string;
 }
 
-const props = defineProps<{
-    columns: TableColumn[];
-    data: Record<string, unknown>[];
-}>();
+const props = withDefaults(
+    defineProps<{
+        columns: TableColumn[];
+        data: Record<string, unknown>[];
+        emptyText?: string;
+    }>(),
+    { emptyText: "No data" },
+);
 
 const sortKey = ref<string | null>(null);
 const sortDir = ref<"asc" | "desc">("asc");
@@ -66,7 +70,7 @@ const rows = computed(() => {
                     </td>
                 </tr>
                 <tr v-if="!rows.length">
-                    <td :colspan="columns.length" class="px-3 py-6 text-center text-gray-400">Нет данных</td>
+                    <td :colspan="columns.length" class="px-3 py-6 text-center text-gray-400">{{ emptyText }}</td>
                 </tr>
             </tbody>
         </table>

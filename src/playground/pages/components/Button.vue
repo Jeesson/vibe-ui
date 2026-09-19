@@ -3,15 +3,14 @@ import ComponentDoc from "../../docs/ComponentDoc.vue";
 import DocExample from "../../docs/DocExample.vue";
 import { components as docs } from "../../docs/component-docs";
 import Button from "../../../components/Button/Button.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
-import { ChevronRight } from "@lucide/vue";
+import { ChevronRightIcon, PlusIcon } from "@heroicons/vue/24/outline";
 const doc = docs.button;
 const primarySource = '<Button variant="primary">Primary</Button>';
 const secondarySource = '<Button variant="secondary">Secondary</Button>';
 const ghostSource = '<Button variant="ghost">Ghost</Button>';
 const disabledSource = "<Button disabled>Disabled</Button>";
 const iconSource = '<Button :icon="PlusIcon">Добавить</Button>';
-const iconRightSource = '<Button variant="secondary" :icon-right="ChevronRight">Далее</Button>';
+const iconRightSource = '<Button variant="secondary" :icon-right="ChevronRightIcon">Далее</Button>';
 </script>
 
 <template>
@@ -36,7 +35,7 @@ const iconRightSource = '<Button variant="secondary" :icon-right="ChevronRight">
                     <Button :icon="PlusIcon">Добавить</Button>
                 </DocExample>
                 <DocExample title="Иконка справа" :source="iconRightSource">
-                    <Button variant="secondary" :icon-right="ChevronRight">Далее</Button>
+                    <Button variant="secondary" :icon-right="ChevronRightIcon">Далее</Button>
                 </DocExample>
             </div>
         </template>

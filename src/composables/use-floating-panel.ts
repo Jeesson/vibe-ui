@@ -14,12 +14,15 @@ export interface UseFloatingPanel {
 // panelClass — class of the teleported panel root element so onClickOutside
 // recognizes clicks inside the panel (since it lives in body outside rootRef).
 //
+// panelWidth — fixed number, or a getter when the width depends on the current
+// state (e.g. Cascader grows with the number of columns).
+//
 // getPlacement — optional getter for explicit placement (6 PanelPlacement options).
 // When provided, position uses computePlacementRect with auto-flip; otherwise auto top/bottom.
 export function useFloatingPanel(
     panelClass: string,
     panelHeight = 240,
-    panelWidth?: number,
+    panelWidth?: number | (() => number),
     getPlacement?: () => PanelPlacement,
 ): UseFloatingPanel {
     const open = ref(false);
@@ -28,10 +31,11 @@ export function useFloatingPanel(
 
     function updateRect() {
         if (!triggerRef.value) return;
+        const width = typeof panelWidth === "function" ? panelWidth() : panelWidth;
         const placement = getPlacement?.();
         rect.value = placement
-            ? computePlacementRect(triggerRef.value, panelHeight, 4, panelWidth, placement)
-            : computeFloatingRect(triggerRef.value, panelHeight, 4, panelWidth);
+            ? computePlacementRect(triggerRef.value, panelHeight, 4, width, placement)
+            : computeFloatingRect(triggerRef.value, panelHeight, 4, width);
     }
 
     function openPanel() {

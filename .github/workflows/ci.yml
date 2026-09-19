@@ -1,0 +1,33 @@
+name: CI
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+
+jobs:
+    verify:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+              with:
+                  bun-version: latest
+
+            - name: Install dependencies
+              run: bun install --frozen-lockfile
+
+            - name: Check for stale relative imports
+              run: bun run verify:imports
+
+            - name: Type-check
+              run: bunx vue-tsc --noEmit
+
+            - name: Build library
+              run: bun run build:library
+
+            - name: Build playground
+              run: bun run build:playground

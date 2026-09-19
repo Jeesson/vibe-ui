@@ -48,7 +48,6 @@ import C_dialog from "./pages/components/Dialog.vue";
 import C_drawer from "./pages/components/Drawer.vue";
 import C_loading from "./pages/components/Loading.vue";
 import C_messageBox from "./pages/components/MessageBox.vue";
-import C_message from "./pages/components/Message.vue";
 import C_toast from "./pages/components/Toast.vue";
 import C_autocomplete from "./pages/components/Autocomplete.vue";
 import C_inputTag from "./pages/components/InputTag.vue";
@@ -104,7 +103,6 @@ export const componentPages: Record<string, Component> = {
     drawer: C_drawer,
     loading: C_loading,
     messageBox: C_messageBox,
-    message: C_message,
     toast: C_toast,
     autocomplete: C_autocomplete,
     inputTag: C_inputTag,

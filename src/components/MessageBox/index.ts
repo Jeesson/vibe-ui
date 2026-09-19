@@ -21,10 +21,10 @@ export function confirm(message: string, options: ConfirmOptions = {}): Promise<
         const app = createApp({
             render() {
                 return h(MessageBoxDialog, {
-                    title: options.title ?? "Подтвердите действие",
+                    title: options.title ?? "Confirm action",
                     message,
-                    confirmText: options.confirmText ?? "Ок",
-                    cancelText: options.cancelText ?? "Отмена",
+                    confirmText: options.confirmText ?? "OK",
+                    cancelText: options.cancelText ?? "Cancel",
                     type: options.type ?? "default",
                     onConfirm: () => {
                         destroy();

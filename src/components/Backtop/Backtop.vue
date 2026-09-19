@@ -36,7 +36,7 @@ onBeforeUnmount(() => getScrollEl().removeEventListener("scroll", onScroll));
         <button
             v-if="visible"
             type="button"
-            aria-label="Наверх"
+            aria-label="Back to top"
             class="hover:text-primary-600 fixed right-6 bottom-6 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-500 shadow-lg"
             @click="scrollToTop">
             <ArrowUpIcon class="h-4 w-4" aria-hidden="true" />

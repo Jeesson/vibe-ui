@@ -40,7 +40,9 @@ export function getMaxScrollTop(container: HTMLElement | Window): number {
     return Math.max(0, container.scrollHeight - container.clientHeight);
 }
 
-/** Bottom threshold: enter at 2px, exit at 8px to prevent rounding flicker. */
+/**
+ * Bottom threshold: enter at 2px, exit at 8px to prevent rounding flicker.
+ */
 export function resolveActiveHref(
     positions: { top: number; href: string }[],
     scrollTop: number,

@@ -7,7 +7,10 @@ export interface AnchorLinkState {
 
 export interface AnchorContext {
     direction: Ref<"vertical" | "horizontal">;
-    currentAnchor: Ref<string>;
+    /** All currently active hrefs (several can be active in visibleRatio mode). */
+    activeHrefs: Ref<Set<string>>;
+    /** Current marker type, so AnchorLink can draw the "fill" pill itself. */
+    markerType: Ref<"default" | "fill" | "dot">;
     addLink: (state: AnchorLinkState) => void;
     removeLink: (href: string) => void;
     handleClick: (e: MouseEvent, href?: string) => void;

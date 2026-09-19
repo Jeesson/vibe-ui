@@ -1,12 +1,18 @@
 <script setup lang="ts">
+import { ref } from "vue";
+
 withDefaults(defineProps<{ maxHeight?: string; hide?: boolean }>(), {
     maxHeight: "240px",
     hide: false,
 });
+
+const rootRef = ref<HTMLElement | null>(null);
+
+defineExpose({ rootEl: rootRef });
 </script>
 
 <template>
-    <div class="vibe-ui-scrollbar overflow-auto" :class="hide && 'vibe-ui-scrollbar--hidden'" :style="{ maxHeight }">
+    <div ref="rootRef" class="vibe-ui-scrollbar overflow-auto" :class="hide && 'vibe-ui-scrollbar--hidden'" :style="{ maxHeight }">
         <slot />
     </div>
 </template>

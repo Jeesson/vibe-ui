@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, computed, watch, nextTick } from "vue";
 import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/vue/24/outline";
 import Scrollbar from "../Scrollbar/Scrollbar.vue";
-import { computeFloatingRect, type FloatingRect } from "../../composables/floating";
+import { useFloatingPanel } from "../../composables/use-floating-panel";
 
 export interface CascaderOption {
     label: string;
@@ -20,9 +20,6 @@ const emit = defineEmits<{ "update:modelValue": [string[]] }>();
 
 const COLUMN_WIDTH = 160;
 
-const open = ref(false);
-const triggerRef = ref<HTMLElement | null>(null);
-const rect = ref<FloatingRect | null>(null);
 const activePath = ref<CascaderOption[]>([]);
 
 const columns = computed<CascaderOption[][]>(() => {
@@ -46,16 +43,21 @@ const displayLabel = computed(() => {
     return labels.join(" / ");
 });
 
-function updateRect() {
-    if (triggerRef.value) rect.value = computeFloatingRect(triggerRef.value, 260, 4, columns.value.length * COLUMN_WIDTH);
-}
-// Column count expands as tree branches open; recalculate panel position and width.
-watch(columns, () => open.value && nextTick(updateRect));
+// Column count grows with the active path; useFloatingPanel owns positioning,
+// outside-click and resize/scroll tracking. Width is a getter so the panel
+// tracks the number of expanded columns.
+const { open, triggerRef, rect, updateRect, togglePanel, closePanel } = useFloatingPanel(
+    "vibe-ui-cascader-panel",
+    260,
+    () => columns.value.length * COLUMN_WIDTH,
+);
 
-function toggle() {
-    open.value = !open.value;
-    if (open.value) nextTick(updateRect);
-}
+// Recalculate panel position/width when the column tree changes.
+watch(columns, () => open.value && nextTick(updateRect));
+// Reset the active path on any external close (incl. backdrop / outside click).
+watch(open, (isOpen) => {
+    if (!isOpen) activePath.value = [];
+});
 
 function hover(depth: number, option: CascaderOption) {
     activePath.value = [...activePath.value.slice(0, depth), option];
@@ -64,28 +66,9 @@ function hover(depth: number, option: CascaderOption) {
             "update:modelValue",
             activePath.value.map((o) => o.value),
         );
-        open.value = false;
-        activePath.value = [];
+        closePanel();
     }
 }
-
-function onClickOutside(e: MouseEvent) {
-    const target = e.target as HTMLElement;
-    if (triggerRef.value?.contains(target)) return;
-    if (target.closest?.(".vibe-ui-cascader-panel")) return;
-    open.value = false;
-    activePath.value = [];
-}
-onMounted(() => {
-    document.addEventListener("click", onClickOutside);
-    window.addEventListener("scroll", updateRect, true);
-    window.addEventListener("resize", updateRect);
-});
-onBeforeUnmount(() => {
-    document.removeEventListener("click", onClickOutside);
-    window.removeEventListener("scroll", updateRect, true);
-    window.removeEventListener("resize", updateRect);
-});
 </script>
 
 <template>
@@ -94,9 +77,9 @@ onBeforeUnmount(() => {
             ref="triggerRef"
             type="button"
             class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left"
-            @click="toggle">
+            @click="togglePanel">
             <span :class="!displayLabel && 'text-gray-400'">
-                {{ displayLabel || placeholder || "Выберите" }}
+                {{ displayLabel || placeholder || "Select" }}
             </span>
             <ChevronDownIcon class="h-4 w-4 text-gray-400" aria-hidden="true" />
         </button>

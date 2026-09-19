@@ -12,17 +12,17 @@
     --font-sans: "Inter", system-ui, sans-serif;
 }
 
-/* dark/light режим: класс `.dark` на <html> */
+/* dark/light theme: the `.dark` class on <html> */
 @custom-variant dark (&:where(.dark, .dark *));
 
 .dark {
     color-scheme: dark;
 
     /*
-        Инверсия серой шкалы. Утилиты Tailwind v4 компилируются в
-        var(--color-gray-*), поэтому переопределение переменных
-        автоматически перекрашивает bg/text/border/ring/divide и
-        hover-варианты во всех компонентах.
+        Grayscale inversion. Tailwind v4 utilities compile to
+        var(--color-gray-*), so overriding the variables
+        automatically recolors bg/text/border/ring/divide and
+        their hover variants across every component.
     */
     --color-gray-50: oklch(0.21 0.02 264);
     --color-gray-100: oklch(0.26 0.02 264);
@@ -35,12 +35,12 @@
     --color-gray-800: oklch(0.92 0.01 264);
     --color-gray-900: oklch(0.97 0.01 264);
 
-    /* primary: светлая подложка -> тёмная, акцентный текст -> светлый */
+    /* primary: light surface -> dark, accent text -> light */
     --color-primary-50: oklch(0.3 0.06 264);
     --color-primary-100: oklch(0.36 0.08 264);
     --color-primary-700: oklch(0.68 0.16 264);
 
-    /* поверхности статусов: заливка -50 -> тёмная, текст -700/-800 -> светлый */
+    /* status surfaces: -50 fill -> dark, -700/-800 text -> light */
     --color-green-50: oklch(0.3 0.05 155);
     --color-green-200: oklch(0.4 0.07 155);
     --color-green-700: oklch(0.85 0.13 155);
@@ -70,8 +70,8 @@
     --color-violet-700: oklch(0.83 0.12 300);
 }
 
-/* bg-white компилируется в var(--color-white), общий для text-white
-   на кнопках — поэтому светлую поверхность перекрашиваем точечно. */
+/* bg-white compiles to var(--color-white), shared with text-white
+   on buttons — so the light surface is repainted selectively. */
 .dark .bg-white {
     background-color: oklch(0.24 0.03 264);
 }
@@ -82,9 +82,9 @@
     background-color: oklch(0.32 0.03 264);
 }
 
-/* Сохранение места под скроллбар при блокировке прокрутки оверлеями
-   (Drawer, Dialog, ..). Паз всегда зарезервирован — скроллбар не
-   появляется/не исчезает при открытии модалок, контент не прыгает. */
+/* Reserve scrollbar space while overlays lock scrolling
+   (Drawer, Dialog, ...). The gutter is always reserved — the scrollbar
+   does not appear/disappear when modals open and content does not jump. */
 html {
     scrollbar-gutter: stable;
 }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ description?: string }>(), {
-    description: "Нет данных",
+    description: "No data",
 });
 </script>
 

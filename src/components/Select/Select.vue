@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, nextTick } from "vue";
-import { computeFloatingRect, type FloatingRect } from "../../composables/floating";
+import { computed } from "vue";
+import { useFloatingPanel } from "../../composables/use-floating-panel";
 
 export interface SelectOption {
     label: string;
@@ -15,8 +15,9 @@ const props = withDefaults(
         placeholder?: string;
         disabled?: boolean;
         clearable?: boolean;
+        emptyText?: string;
     }>(),
-    { placeholder: "Выберите", disabled: false, clearable: false },
+    { placeholder: "Select", disabled: false, clearable: false, emptyText: "No data" },
 );
 
 const emit = defineEmits<{
@@ -24,28 +25,21 @@ const emit = defineEmits<{
     change: [string | number | null];
 }>();
 
-const open = ref(false);
-const rootRef = ref<HTMLElement | null>(null);
-const triggerRef = ref<HTMLElement | null>(null);
-const rect = ref<FloatingRect | null>(null);
+// Teleported panel: useFloatingPanel owns positioning, outside-click and resize/scroll tracking.
+const { open, triggerRef, rect, togglePanel, closePanel } = useFloatingPanel("vibe-ui-select-panel", 240);
 
 const selectedLabel = computed(() => props.options.find((o) => o.value === props.modelValue)?.label ?? "");
 
-function updateRect() {
-    if (triggerRef.value) rect.value = computeFloatingRect(triggerRef.value, 240);
-}
-
 function toggle() {
     if (props.disabled) return;
-    open.value = !open.value;
-    if (open.value) nextTick(updateRect);
+    togglePanel();
 }
 
 function select(option: SelectOption) {
     if (option.disabled) return;
     emit("update:modelValue", option.value);
     emit("change", option.value);
-    open.value = false;
+    closePanel();
 }
 
 function clear(e: Event) {
@@ -53,28 +47,10 @@ function clear(e: Event) {
     emit("update:modelValue", null);
     emit("change", null);
 }
-
-function onClickOutside(e: MouseEvent) {
-    const target = e.target as Node;
-    if (rootRef.value?.contains(target)) return;
-    if ((e.target as HTMLElement)?.closest?.(".vibe-ui-select-panel")) return;
-    open.value = false;
-}
-
-onMounted(() => {
-    document.addEventListener("click", onClickOutside);
-    window.addEventListener("scroll", updateRect, true);
-    window.addEventListener("resize", updateRect);
-});
-onBeforeUnmount(() => {
-    document.removeEventListener("click", onClickOutside);
-    window.removeEventListener("scroll", updateRect, true);
-    window.removeEventListener("resize", updateRect);
-});
 </script>
 
 <template>
-    <div ref="rootRef" class="relative inline-block w-full text-sm">
+    <div class="relative inline-block w-full text-sm">
         <button
             ref="triggerRef"
             type="button"
@@ -121,7 +97,7 @@ onBeforeUnmount(() => {
                     @click="select(option)">
                     {{ option.label }}
                 </li>
-                <li v-if="!options.length" class="px-3 py-2 text-gray-400">Нет данных</li>
+                <li v-if="!options.length" class="px-3 py-2 text-gray-400">{{ emptyText }}</li>
             </ul>
         </Teleport>
     </div>

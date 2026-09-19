@@ -66,7 +66,7 @@ const panelPosition = {
                         <h3 class="text-base font-semibold text-gray-900">
                             {{ title }}
                         </h3>
-                        <button type="button" class="text-gray-400 hover:text-gray-600" aria-label="Закрыть" @click="close">✕</button>
+                        <button type="button" class="text-gray-400 hover:text-gray-600" aria-label="Close" @click="close">✕</button>
                     </div>
                     <div class="flex-1 overflow-auto px-5 py-4 text-sm text-gray-700">
                         <slot />

@@ -6,7 +6,7 @@ withDefaults(
         variant?: "primary" | "secondary" | "ghost";
         size?: "sm" | "md" | "lg";
         disabled?: boolean;
-        // Any SVG icon component (e.g. heroicons or lucide); renders <svg> scaled to size.
+        // Any SVG icon component (e.g. heroicons); renders <svg> scaled to size.
         icon?: Component;
         iconRight?: Component;
     }>(),

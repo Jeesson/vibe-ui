@@ -90,8 +90,7 @@ export const components: Record<string, ComponentDoc> = {
         name: "Button",
         group: "basic",
         description:
-            "Кнопка с тремя вариантами (primary/secondary/ghost) и тремя размерами. " +
-            "Поддерживает иконки из heroicons или lucide слева и справа.",
+            "Кнопка с тремя вариантами (primary/secondary/ghost) и тремя размерами. " + "Поддерживает иконки из heroicons слева и справа.",
         usage:
             '<Button variant="primary">Primary</Button>\n' +
             '<Button variant="secondary">Secondary</Button>\n' +
@@ -124,7 +123,7 @@ export const components: Record<string, ComponentDoc> = {
             {
                 name: "icon",
                 type: "Component",
-                description: "SVG-иконка слева (heroicons/lucide).",
+                description: "SVG-иконка слева (heroicons).",
             },
             {
                 name: "iconRight",
@@ -430,6 +429,12 @@ export const components: Record<string, ComponentDoc> = {
                 type: "boolean",
                 default: "false",
                 description: "Показывать кнопку очистки выбранного значения.",
+            },
+            {
+                name: "emptyText",
+                type: "string",
+                default: '"No matches"',
+                description: "Текст при отсутствии совпадений.",
             },
         ],
         events: [
@@ -826,6 +831,12 @@ export const components: Record<string, ComponentDoc> = {
                 required: true,
                 description: "Строки данных.",
             },
+            {
+                name: "emptyText",
+                type: "string",
+                default: '"No data"',
+                description: "Текст при отсутствии строк.",
+            },
         ],
         slots: [
             {
@@ -931,6 +942,12 @@ export const components: Record<string, ComponentDoc> = {
                 type: "string",
                 required: true,
                 description: "Ключ активного пункта.",
+            },
+            {
+                name: "expandAll",
+                type: "boolean",
+                default: "false",
+                description: "Все подменю раскрыты по умолчанию.",
             },
         ],
         events: [{ name: "update:modelValue", params: "string" }],
@@ -1040,7 +1057,7 @@ export const components: Record<string, ComponentDoc> = {
             },
             {
                 name: "type",
-                type: '"default" | "dot"',
+                type: '"default" | "fill" | "dot"',
                 default: '"default"',
                 description: "Тип маркера.",
             },
@@ -1055,6 +1072,13 @@ export const components: Record<string, ComponentDoc> = {
                 type: "boolean",
                 default: "false",
                 description: "Прокручивать выбранный якорь к началу контейнера.",
+            },
+            {
+                name: "visibleRatio",
+                type: "number",
+                default: "0",
+                description:
+                    "Доля высоты секции (0–1): секция активна, когда видна минимум на эту долю. Активных секций может быть несколько — маркер растягивается на их диапазон. 0 — отключено.",
             },
         ],
         events: [
@@ -1263,21 +1287,6 @@ export const components: Record<string, ComponentDoc> = {
         ],
         contributors: contributors(),
     },
-    message: {
-        key: "message",
-        name: "message",
-        group: "feedback",
-        description:
-            "Всплывающие сообщения по центру верха экрана (программный API). " + "Не требует ни шаблонов, ни компонента — только функцию.",
-        usage: 'message.success("Сохранено")\nmessage.error("Ошибка", 5000) // duration in ms',
-        methods: [
-            { name: "success", params: "(content: string, duration?: number)" },
-            { name: "warning", params: "(content: string, duration?: number)" },
-            { name: "error", params: "(content: string, duration?: number)" },
-            { name: "info", params: "(content: string, duration?: number)" },
-        ],
-        contributors: contributors(),
-    },
     toast: {
         key: "toast",
         name: "Toast",
@@ -1404,6 +1413,12 @@ export const components: Record<string, ComponentDoc> = {
                 type: "boolean",
                 default: "false",
                 description: "Открывать полноэкранный превью по клику.",
+            },
+            {
+                name: "errorText",
+                type: "string",
+                default: '"Failed to load"',
+                description: "Текст заглушки при ошибке загрузки.",
             },
         ],
         contributors: contributors(),
@@ -1757,7 +1772,7 @@ export const apiDescriptionsEn: Record<string, Record<string, string>> = {
         variant: "Button visual style.",
         size: "Button size.",
         disabled: "Disables the button.",
-        icon: "Left-side SVG icon from Heroicons or Lucide.",
+        icon: "Left-side SVG icon from Heroicons.",
         iconRight: "Right-side SVG icon.",
         click: "Emitted when the button is clicked.",
         default: "Button label or content.",
@@ -1951,9 +1966,11 @@ export const apiDescriptionsEn: Record<string, Record<string, string>> = {
         bound: "Pixel threshold used to activate an anchor.",
         duration: "Scroll animation duration in milliseconds.",
         marker: "Show the active anchor marker.",
-        type: "Marker style.",
+        type: "Marker style: bar (default), pill highlight on each active link (fill) or dot.",
         direction: "Anchor list direction.",
         selectScrollTop: "Scroll the selected anchor to the top of the container.",
+        visibleRatio:
+            "Fraction (0–1): a section is active while at least this share of its height is visible. Several sections can be active at once; the marker stretches over the active range. 0 disables.",
     },
     tabs: {
         modelValue: "Active tab name.",
@@ -2059,9 +2076,10 @@ export const apiDescriptionsEn: Record<string, Record<string, string>> = {
         cancel: "Emitted when the user cancels.",
     },
     message: {
-        type: "Message status.",
-        duration: "Time in milliseconds before dismissal.",
-        close: "Emitted when the message is closed.",
+        success: "Show a success message.",
+        warning: "Show a warning message.",
+        error: "Show an error message.",
+        info: "Show an informational message.",
     },
     toast: {
         position: "Toast placement.",

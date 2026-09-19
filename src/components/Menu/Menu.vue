@@ -10,7 +10,7 @@ export interface MenuItem {
     icon?: Component;
 }
 
-defineOptions({ name: "MyUiMenu" });
+defineOptions({ name: "VibeUiMenu" });
 
 const props = withDefaults(
     defineProps<{
@@ -69,7 +69,7 @@ function select(item: MenuItem) {
             <div
                 v-if="item.children?.length && (props.expandAll || openKeys.has(item.key))"
                 class="mt-0.5 ml-3 border-l border-gray-100 pl-2">
-                <MyUiMenu
+                <VibeUiMenu
                     :items="item.children"
                     :model-value="modelValue"
                     :expand-all="props.expandAll"

@@ -45,8 +45,8 @@ function formatSize(bytes: number) {
             @dragover.prevent="dragging = true"
             @dragleave.prevent="dragging = false"
             @drop.prevent="onDrop">
-            <span class="text-sm text-gray-600">Перетащи файлы сюда или нажми, чтобы выбрать</span>
-            <span class="text-xs text-gray-400">{{ accept ?? "Любые файлы" }}</span>
+            <span class="text-sm text-gray-600">Drop files here or click to select</span>
+            <span class="text-xs text-gray-400">{{ accept ?? "Any file" }}</span>
             <input
                 ref="inputRef"
                 type="file"

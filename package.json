@@ -52,17 +52,17 @@
         "build": "bun run build:library",
         "build:library": "vue-tsc --noEmit && vue-tsc -p tsconfig.build.json && vite build --config vite.library.config.ts",
         "build:playground": "vite build --config vite.playground.config.ts",
-        "preview": "vite preview --config vite.playground.config.ts"
+        "preview": "vite preview --config vite.playground.config.ts",
+        "verify:imports": "node scripts/check-imports.mjs",
+        "verify": "bun run verify:imports && vue-tsc --noEmit"
     },
     "dependencies": {
         "@heroicons/vue": "^2.2.0",
-        "@lucide/vue": "^1.47.0",
-        "@types/node": "^26.6.1",
-        "vue-router": "5.3.1",
         "vue-sonner": "^2.0.9"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.3.3",
+        "@types/node": "^26.6.2",
         "@vitejs/plugin-vue": "^6.0.9",
         "prettier-plugin-tailwindcss": "^0.8.1",
         "tailwindcss": "^4.3.3",
@@ -70,6 +70,7 @@
         "vite": "^8.3.0",
         "vite-plugin-dts": "^5.1.0",
         "vue": "^3.5.43",
+        "vue-router": "5.3.1",
         "vue-tsc": "^3.3.11"
     }
 }

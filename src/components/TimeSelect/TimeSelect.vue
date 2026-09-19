@@ -47,7 +47,7 @@ function select(v: string) {
             class="flex w-full items-center justify-between rounded-md border border-gray-300 bg-white px-3 py-2 text-left"
             @click="togglePanel">
             <span :class="!modelValue && 'text-gray-400'">
-                {{ modelValue || placeholder || "Выберите время" }}
+                {{ modelValue || placeholder || "Select time" }}
             </span>
             <ChevronDownIcon class="h-4 w-4 text-gray-400" />
         </button>
